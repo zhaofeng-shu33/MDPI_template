@@ -565,16 +565,16 @@ The iteration time $N$ should also be specified in advance.
 	Inputs: the graph $G$, inverse temperature $\beta$, disassortative power $\gamma$ \\
 	Output: $\hat{X}$
 	\begin{algorithmic}[1]
-		\STATE random initialize $\sigma \in W^n$
+		\STATE random initialize $\sigma \in W^n$ \vskip 0.5em
 		\FOR{$i=1,2,\dots, N$}
-		\STATE propose a new state $\bar{\sigma}'$ according to Lemma \ref{lem:lemmaDiff} where $s, r$ are randomly chosen
-		\STATE compute $\Delta H(r,s) = H(\bar{\sigma}') - H(\bar{\sigma})$ using \eqref{eq:DeltaH}
+		\STATE propose a new state $\bar{\sigma}'$ according to Lemma \ref{lem:lemmaDiff} where $s, r$ are randomly chosen \vskip 0.5em
+		\STATE compute $\Delta H(r,s) = H(\bar{\sigma}') - H(\bar{\sigma})$ using \eqref{eq:DeltaH} \vskip 0.5em
 		\IF{$\Delta H(r,s)<0$}
-		\STATE $\sigma_r \leftarrow w^s \cdot \sigma_r$
+		\STATE $\sigma_r \leftarrow w^s \cdot \sigma_r$ \vskip 0.5em
 		\ELSE
-		\STATE with probability $\exp(-\beta \Delta H(r,s))$
-			such that $\sigma_r \leftarrow w^s \cdot \sigma_r$
-		\ENDIF
+		\STATE with probability $\exp(-\beta \Delta H(r,s))$ 
+			such that $\sigma_r \leftarrow w^s \cdot \sigma_r$ \vskip 0.5em
+		\ENDIF \vskip 0.5em
 		\ENDFOR
 	\end{algorithmic}
 \end{algorithm}
@@ -1234,7 +1234,8 @@ P_F = & \sum_{r=2}^n P_F^{(r)} \leq (1+o(1)) \sum_{r=2}^{\infty} (k-1)^r n^{rg(\
 \begin{tabular}{@{}ll}
 SBM & Stochastic Block Model\\
 SSBM & Symmetric Stochastic Block Model\\
-ML & maximum likelihood
+ML & maximum likelihood \\
+MQ & maximum modularity
 \end{tabular}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

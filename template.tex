@@ -602,6 +602,594 @@ In this paper, we have given one convergent estimator (in Theorem \ref{thm:ab12}
 We give the exact recovery error upper bound for all the later three estimators (in Theorem \ref{thm:phase_transition}, \ref{thm:error_rate})
 and study their relationships. By introducing Ising model, our work makes a new path to study the exact recovery problem for SBM. More
 theoretical and empirical work will be done in the future such as the convergence analysis on modularity (in \eqref{eq:Qtransform}), the necessary iteration time (in Algorithm \ref{alg:m}) for Metropolis sampling, and so on.
+
+\section{Proof of Main Theorems}
+\subsection{Proof of Theorem \ref{thm:ab12}}
+\begin{Lemma}\label{lem:ER_tr_counting}
+	Consider Erdos Renyi random graph $G$ with $n$ nodes, in which edges are placed independently with probability $p$ \cite{erdHos1960evolution}. Suppose
+	$p=\A$, the number of edges is denoted by $|E|$ while the number of triangles is $T$. Then
+	$\frac{|E|}{n \log n} \to \frac{a}{2}$ and $\frac{T}{\log^3 n} \to \frac{a^3}{6}$ in probability.
+\end{Lemma}
+\begin{proof}
+		Let $X_{ij}$ represents a Bernoulli random variable with parameter $p$. Then $|E| = \sum_{i,j} X_{ij}$, $X_{ij}$ are i.i.d.
+	$\mathbb{E}[T(G)] = \frac{n(n-1)}{2}p = \frac{(n-1)\log n}{2}a$ and $\Var[|E|] = \frac{n(n-1)}{2} p(1-p) < a\frac{(n-1)\log n}{2}$
+	Then by Chebyshev's inequality
+	\begin{align*}
+	P(\Big|\frac{|E|}{n \log n } - \frac{a}{2} \frac{n-1}{n}\Big| > \epsilon) & \leq
+	\frac{\Var[|E| /(n \log n )]}{\epsilon^2} \\
+	& < \frac{a(n-1)}{2n^2\epsilon^2\log n}
+	\end{align*}
+	For a given $\epsilon$, when $n$ is sufficiently large,
+	\begin{align*}
+	P(\Big|\frac{|E|}{n \log n } - \frac{a}{2} \Big| > \epsilon) & <
+	P(\Big|\frac{|E|}{n \log n } - \frac{a}{2} \frac{n-1}{n}\Big| > 2\epsilon) \\
+	& \leq \frac{n-1}{8n^2 \epsilon^2 \log n}
+	\end{align*}
+	Therefore, by the definition of convergence in probability, we have $\frac{|E|}{n \log n} \to \frac{a}{2}$ as $n\to \infty$.
+	
+	Let $X_{ijk}$ represents a Bernoulli random variable with parameter $p^3$.
+	Then $T = \sum_{i,j,k} X_{ijk}$.
+	It is easy to compute that $\mathbb{E}[T] = \binom{n}{3}p^3$. Since $X_{ijk}$ are not independent, the variance of $T$ needs careful calculation.
+	From \cite{holland1977method} we know that
+	% Mordern version: https://stats.stackexchange.com/questions/338267/distribution-and-variance-of-count-of-triangles-in-random-graph
+	\begin{align*}
+	\Var[T] & = \binom{n}{3} p^3 + 12 \binom{n}{4} p^5 + 30 \binom{n}{5} p^6 + 20 \binom{n}{6} p^6\\
+	 &- \binom{n}{3}^2 p^6   = O(\log^3 n)
+	\end{align*}
+	Therefore
+	by Chebyshev's inequality
+	\begin{align*}
+	P(\Big|\frac{T}{\log^3 n } - \frac{a^3}{6} \frac{(n-1)(n-2)}{n^2}\Big| > \epsilon) &\leq \frac{\Var[T /\log^3 n ]}{\epsilon^2} \\ 
+	& = \frac{1}{\epsilon^2}O(\frac{1}{\log^3 n})
+	\end{align*}
+	Hence, $\frac{T}{\log^3 n} \to \frac{a^3}{6}$.
+\end{proof}
+The convergence of $|E|$ in ER graph can be extended directly to SBM since the existence of each edge is independent.
+But for $T$, it is a little tricky since the existence of each triangle is dependent with each other. The following two lemmas
+give the formula for the variance of inter-community triangles in SBM.
+\begin{Lemma}\label{lem:SBM_tr_counting_cross}
+	Consider a 2 community SBM $(2n, p, q)$ and count the number of triangles $T$ which has a node in $S_1$ and an edge in $S_2$.
+Then the variance of $T$ is
+\begin{align}
+\Var[T] & = \frac{n^2(n-1)}{2}q^2p + n^2(n-1)(n-2)p^2q^3 \notag \\
+& + \frac{n^2(n-1)^2}{2}q^4p - \frac{n^2(n-1)(3n-4)}{2}q^4 p^2 \label{eq:SBM_tr_counting_cross}
+\end{align}
+\end{Lemma}
+\begin{Lemma}\label{lem:SBM_tr_counting_3}
+	Consider a 3 community SBM$(3n, p, q)$ and count the number of triangles $T$ which has a node in $S_1$, one node in $S_2$ and one node in $S_3$.
+	Then the variance of $T$ is
+	\begin{equation*}\label{eq:SBM_tr_counting_three}
+	\Var[T] = n^3 q^3  + 3n^3(n-1) q^4  + 3 n^3 (n-1)^2 q^5 - n^3(3n^2-3n+1)q^6
+	\end{equation*}
+\end{Lemma}
+The proof of the above two lemmas uses some counting techniques similar to that in \cite{holland1977method}, and we omit it here.
+\begin{Lemma}\label{lem:sbmV}
+	For a SBM$(n, k, p, q)$ where $p=\frac{a\log n}{n}, q = \frac{b\log n}{n}$. The number of triangles is $T$.
+	Then $\frac{T}{(\log n)^3}$ converges to $\frac{1}{k^2}(\frac{a^3}{6} + \frac{k-1}{2}ab^2 + (k-1)(k-2)\frac{b^3}{6} )$ in probability as $n \to \infty$.
+\end{Lemma}
+\begin{proof}
+	We split $T$ into three parts, the first is the number of triangles within community $i$, $T_i$. There are $k$ terms of $T_i$.
+	The second is the number of triangles which have one node in community $i$ and one edge in community $j$, $T_{ij}$. There are $k(k-1)$ terms of $T_{ij}$. The third is the number of triangles which have one node in community $i$, one node in community $j$ and one node in community $k$.
+	
+	We only need to show that
+	\begin{align}
+	\frac{T_i}{\log ^3 n} &\to \frac{(a/k)^3}{6} \\
+	\frac{T_{ij}}{\log^3 n}& \to \frac{1}{2}(a/k)(b/k)^2\\
+	\frac{T_{ijk}}{\log^3 n} & \to (b/k)^3
+	\end{align}
+	The convergence of $\frac{T_i}{\log ^3 n}$ comes from Lemma \ref{lem:ER_tr_counting}.
+	For $T_{ij}$ we use the conclusion from Lemma \ref{lem:SBM_tr_counting_cross}.
+	We replace $n$ with $n/k$, $p=a\frac{\log n}{n}$, $q=b\frac{\log n}{n}$ in Equation \eqref{eq:SBM_tr_counting_cross}.
+	$\Var[T_{ij}] \sim \frac{ab^2}{2k^3} \log^3 n$. Since the expectation of $\frac{T_{ij}}{\log^3 n}$ is $(n/k)\binom{n/k}{2}pq^2/(\log^3 n)
+	=\frac{n-1}{2n}\frac{ab^2}{k^3}$. By Chebyshev's inequality we can show that 
+	\begin{align*}
+	P( \Big|\frac{T_{ij}}{\log^3 n} - \frac{n-1}{2n}\frac{ab^2}{k^3} \Big| > \epsilon) &\leq \frac{\Var[T_{ij} / \log^3 n]}{\epsilon^2} \\
+	& = \frac{1}{\epsilon^2}
+	O(\frac{1}{\log^3 n})
+	\end{align*}
+	Therefore, $\frac{T_{ij}}{\log^3 n} $ converges to $\frac{1}{2}(a/k)(b/k)^2$
+	
+	To prove $\frac{T_{ijk}}{\log^3 n}\to (b/k)^3$, from Lemma \ref{lem:SBM_tr_counting_3} we can get $\Var[T_{ijk}] = O(\log^5 n)$
+	$$
+	P( \Big|\frac{T_{ijk}}{\log^3 n} -\frac{b^3}{k^3} \Big| > \epsilon) \leq \frac{\Var[T_{ijk} / \log^3 n]}{\epsilon^2} = \frac{1}{\epsilon^2}
+	O(\frac{1}{\log n})
+	$$
+\end{proof}
+\begin{proof}[Proof of Theorem \ref{thm:ab12}]
+	Let $e^*_1 = \frac{a+(k-1)b}{2k}$, $k^2 e^*_2 = \frac{a^3}{6} + \frac{k-1}{2}ab^2 + (k-1)(k-2)\frac{b^3}{6}$
+	and $e_1 = \frac{T_1}{n\log n}, e_2 = \frac{T_2}{\log^3 n}$.
+	From Lemma \ref{lem:ER_tr_counting}, $e_1 \to e^*_1$.
+	From Lemma \ref{lem:sbmV}, $e_2 \to e^*_2$ as $n\to \infty$.
+	Using $x=2ke_1 - (k-1)y$ we can get
+\begin{equation}
+g(y): = (k-1)(y^3 - 6 e_1 y^2 + 12 e_1^2 y) + 6 e_2 - 8 k e_1^3 = 0
+\end{equation}
+This equation has unique real root since $g(y)$ is increasing on $\mathbb{R}$:  $g'(y) = 3(k-1)(y-2e_1)^2 \geq 0 $.
+Next we show the root lies within $(0, 2e_1)$.
+\begin{align*}
+&\lim_{n\to \infty}g(0) =  6e^*_2 - 8k(e^*_1)^3 =-\frac{3}{k^2}(k-1)(k-2)ab^2 \\
+&-\frac{3(k-1)}{k^2}a^2b - \frac{k-1}{k^2} ((k-2)-(k-1)^2)b^3 < 0 \\
+&\lim_{n\to \infty}g(2e_1) = 6e^*_2 - 8(e^*_1)^3 = \frac{(k-1)(a-b)^3}{k^3} > 0
+% verified with sympy
+\end{align*}
+
+Therefore, we can get a unique solution $y$ within $(0, 2e_1)$. Since $(a,b)$ is a solution for the equation array. The conclusion follows.
+
+By taking expectation on both sizes of \eqref{eq:e_1}, \eqref{eq:e_2} we can show $\mathbb{E}[\hat{a}] = a,
+\mathbb{E}[\hat{b}] = b$. By the continuous property of $g(y)$, $\hat{b} \to b$ and $\hat{a} \to a$ follows similarly.
+\end{proof}
+\subsection{Proof of Theorem \ref{thm:phase_transition}}
+\begin{proof}[Proof of Lemma \ref{lem:lemmaDiff}]
+	First we rewrite the energy term in \eqref{eq:energy} as:
+	\begin{equation*}
+	H(\bar{\sigma}) = \gamma \frac{\log n}{n} \sum_{i < j} \delta(\bar{\sigma}_i, \bar{\sigma}_j)
+	- (1 + \gamma\frac{\log n}{n}) \sum_{ \{i, j\} \in E(G)} \delta(\bar{\sigma}_i, \bar{\sigma}_j)
+	\end{equation*}
+	Then calculating the energy difference term by:
+	\begin{align*}
+	H(\bar{\sigma}') - H(\bar{\sigma}) &= (1 + \gamma\frac{\log n}{n}) \\
+	&\cdot \sum_{i \in N_r(G)} (\delta(\bar{\sigma}_r, \bar{\sigma}_i) -
+	\delta(\omega^s \cdot \bar{\sigma}_r, \bar{\sigma}_i)) \\
+	&+ \gamma \frac{\log n}{n}\sum_{i\neq r}
+	( \delta(\omega^s \cdot \bar{\sigma}_r, \bar{\sigma}_i) -
+	\delta( \bar{\sigma}_r, \bar{\sigma}_i) ) \\
+	& = (1 + \gamma\frac{\log n}{n})\sum_{i \in N_r(G)} J_s(\bar{\sigma}_r, \bar{\sigma}_i) \\
+	&+ \gamma \frac{\log n}{n}\sum_{i=1}^n
+	( \delta(\omega^s \cdot \bar{\sigma}_r, \bar{\sigma}_i) -
+	\delta( \bar{\sigma}_r, \bar{\sigma}_i) +1) \\
+	&= (1+\gamma \frac{\log n}{n})\sum_{i \in N_r(G)} J_s(\bar{\sigma}_r, \bar{\sigma}_i)\\
+	&+ \gamma \frac{\log n}{n} (m(\omega^s \cdot \bar{\sigma}_r)-m(\bar{\sigma}_r)+1)
+	\end{align*}
+\end{proof}
+Before diving into the technical proof of Theorem \ref{thm:phase_transition}, we need to introduce some extra
+notations. When $\bar{\sigma}$ differs from $X$ only at position $r$, taking $\bar{\sigma}=X$ in Lemma \ref{lem:lemmaDiff}, we have
+\begin{equation}\label{eq:energy_diff}
+H(\bar{\sigma}') - H(\bar{\sigma}) = (1+\gamma \frac{\log n}{n})(A^0_r - A^s_r) + \gamma\frac{\log n}{n}
+\end{equation}
+where $A^s_r$ is defined as $A^s_r = |\{j \in [n]\backslash \{r\}: \{j, r\} \in E(G), X_j = \omega^s \cdot X_r \}|$.
+Since the existence of each edge in $G$ is independent, $A^s_r \sim \textrm{Bernoulli}(\frac{n}{k}, \B ) $ for $s\neq 0$
+and $A^s_0 \sim \textrm{Bernoulli}(\frac{n}{k}-1, \A )$.
+
+% Some additional notation is needed for the proof.
+For general case, we can write
+\begin{equation}\label{eq:Hgeneral}
+H(\bar{\sigma}) - H(X)=
+(1 + \gamma \frac{ \log n}{n})[A_{\bar{\sigma}} - B_{\bar{\sigma}}] + \gamma\frac{ \log n}{n} N_{\bar{\sigma}}
+\end{equation}
+in which we use $A_{\bar{\sigma}}$ (or $B_{\bar{\sigma}}$) to represent the binomial random variable with parameter $\A$ (or $\B$)
+respectively and $N_{\bar{\sigma}}$ is a deterministic positive number depending on $\bar{\sigma}$ but irrelevant with the graph structure.
+The following lemma gives the expression of $A_{\bar{\sigma}}, B_{\bar{\sigma}}$ and $N_{\bar{\sigma}}$:
+\begin{Lemma}\label{lem:minus}
+	For SSBM$(n,k,p,q)$, suppose the ground truth label is $X$ while $\bar{\sigma}$ differs from $X$ in $|\cI|:=\Dist(\bar{\sigma}, X)$ coordinate.
+	Let $I_{ij} = |\{r\in [n] | X_r = w^i, \sigma_r = w^j \}$ for $i\neq j$ and $I_{ii} = 0$. We further denote the row sum as $I_i = \sum_{j=0}^{k-1} I_{ij}$ and
+	the column sum as $I'_i = \sum_{j=0}^{k-1} I_{ji}$.
+	Then
+	\begin{align}
+	N_{\bar{\sigma}} &= \frac{1}{2}\sum_{i=0}^{k-1} (I_i - I_i')^2 \label{eq:N_w} \\
+	B_{\bar{\sigma}} & \sim \textrm{Bernoulli}(\frac{n}{k}|\cI| + \frac{1}{2}\sum_{i=0}^{k-1}  (-2 I'_i I_i  + I'^2_i - \sum_{j=0}^{k-1} I^2_{ji}) , q)\\
+	A_{\bar{\sigma}} & \sim \textrm{Bernoulli}(\frac{n}{k}|\cI| - \frac{1}{2}\sum_{i=0}^{k-1}  (I^2_i + \sum_{j=0}^{k-1} I^2_{ij}), p) \label{eq:A_w}
+	\end{align}
+\end{Lemma}
+The proof of Lemma \ref{lem:minus} is mainly of careful counting techniques, and we omit it here.
+When $|\cI|$ is small compared with $n$, we have the following Lemma, which is an extension of Proposition 6 in \cite{ye2020exact}. 
+\begin{Lemma}\label{lem:enhanced_fb}
+	For $t\in [\frac{1}{k}(b-a), 0]$
+	and $ |\cI| \le n/\sqrt{\log n}$
+	\begin{equation} \label{eq:upmpt}
+	\begin{aligned}
+	& P_G(B_{\bar{\sigma}}-A_{\bar{\sigma}}\ge t |\cI| \log n)  \\
+	\le & \exp\Big(|\cI|\log n
+	\Big(f_{\beta}(t) - \beta t -1	+ O(\frac{1}{\sqrt{\log n}}) \Big)\Big)
+	\end{aligned}
+	\end{equation}
+	where $f_{\beta}(t) = \min_{s\geq 0} (g(s) - st) + \beta t \leq \tilde{g}(\beta) $.
+\end{Lemma}
+Corresponding to the three cases of Theorem \ref{thm:phase_transition}, we use three non-trivial lemmas to 
+establish the properties of Ising model.
+\begin{Lemma}\label{lem:sigmaX}
+	Let $\gamma > b$. When $\Dist(\bar{\sigma}, X) \geq \frac{n}{\sqrt{\log n}}$ and $D(\bar{\sigma}, X)$. The event
+	$P_{\sigma | G}(\sigma = \bar{\sigma} ) > \exp(-Cn) P_{\sigma | G}(\sigma = X)$
+	happens with probability (w.r.t. SSBM) less than $\exp(-\tau(\alpha,\beta) n \sqrt{\log  n} )$
+	where $C$ is an arbitrary constant and $\tau(\alpha,\beta)$ is a positive number.
+\end{Lemma}
+\begin{proof}
+	We denote the event $P_{\sigma | G}(\sigma = \bar{\sigma} ) > \exp(-Cn) P_{\sigma | G}(\sigma = X)$ as $\widetilde{D}(\bar{\sigma}, C)$.
+	By \eqref{eq:Hgeneral}, $\widetilde{D}(\bar{\sigma}, C)$
+	is equivalent to
+	\begin{equation}\label{eq:BwA}
+	(1 + \frac{\gamma \log n}{n})[B_{\bar{\sigma}} - A_{\bar{\sigma}}] >  \frac{\gamma \log n}{n} N_{\bar{\sigma}}  - \frac{C}{\beta} n
+	\end{equation}
+	We claim that $\bar{\sigma}$ must satisfy at least one of the following two conditions:
+	\begin{enumerate}
+		\item $\exists i\neq j$ s.t. $\frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}} \leq I_{ij} \leq \frac{n}{k} - \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}}$
+		\item $\exists i \neq j$ s.t. $I_{ij} > \frac{n}{k} - \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}}$ and $I_{ji} < \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}}$
+	\end{enumerate}
+	If neither of the above two condition holds, then from condition 1 we have
+	$I_{ij} < \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}}$ or $I_{ij} > \frac{n}{k} - \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}}$ for any $0 \leq i,j\leq k-1$.
+	Since $\sum_{i,j} I_{ij} = |\cI| \geq \frac{n}{\sqrt{\log n}}$ there exists $i,j$ such that $I_{ij} > \frac{n}{k} - \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}}$.
+	Under such condition, if $I_{ji} > \frac{n}{k} - \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}}$.
+	Let $X'$ be the vector which exchanges value of $w^i$ with $w^j$ in $X$. We consider
+	\begin{align}
+	 \Dist(\bar{\sigma}, X') & - \Dist(\bar{\sigma}, X)= |\{ r \in [n]|X_r=w^i, \bar{\sigma}_r \neq w^j \}| \notag\\
+	&+ |\{ r \in [n]|X_r=w^j, \bar{\sigma}_r \neq w^i \}| \notag\\
+	&-|\{ r \in [n]|X_r=w^i, \bar{\sigma}_r \neq w^i \}| \notag\\
+	&- |\{ r \in [n]|X_r=w^j, \bar{\sigma}_r \neq w^j \}| \notag\\
+	& = \frac{n}{k} - I_{ij} +  \frac{n}{k} - I_{ji} - I_i - I_j\label{eq:distsmall} \\
+	& < \frac{2}{k(k-1)}\frac{n}{\sqrt{\log n}} - I_i - I_j < 0\notag
+	\end{align}
+	which contracts with that $\bar{\sigma}$ is nearest to $X$.
+	Therefore, we should have $I_{ji} < \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}}$.
+	Now the $(i, j)$ pair satisfies condition 2, which contracts with that $\bar{\sigma}$ satisfies neither of the two conditions.
+	
+	Under condition 1, we can get a lower bound on $|A_{\bar{\sigma}}|$ from \eqref{eq:A_w}. Let $I'_{ij} = I_{ij}$ for $i\neq j$ and
+	$I'_{ii} = \frac{n}{k} - I_i$. Then we can simply $|A_{\bar{\sigma}}|$ as:
+	\begin{align*}
+	|A_{\bar{\sigma}}| &= \frac{n}{k}|\cI| - \frac{1}{2}\sum_{i=0}^{k-1}  (I^2_i + \sum_{j=0}^{k-1} I^2_{ij}) \\
+	&= \frac{n^2}{2k} - \frac{1}{2} \sum_{i=0}^{k-1} \sum_{j=0}^{k-1} I'^2_{ij}
+	\end{align*}
+	We further have $\sum_{i=0}^{k-1} \sum_{j=0}^{k-1} I'^2_{ij} \leq (k-1)\frac{n^2}{k^2} + (\frac{n}{k} - I_{ij})^2 + I^2_{ij}$ where
+	$I_{ij}$ satisfies condition 1. Therefore, $\sum_{i=0}^{k-1} \sum_{j=0}^{k-1} I'^2_{ij} \leq (k-1)\frac{n^2}{k^2} + (\frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}})^2
+	+ (\frac{n}{k} - \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}})^2 = \frac{n^2}{k} - \frac{2n^2}{k^2 (k-1)\sqrt{\log n}}(1+o(1))$.
+	As a result
+	\begin{equation}\label{eq:Asigma}
+	A_{\bar{\sigma}} \geq \frac{n^2}{k^2 (k-1)\sqrt{\log n}}(1+o(1))
+	\end{equation}
+	
+	
+	Under condition 2, we can get a lower bound on $N_{\bar{\sigma}}$. Since
+	$\Dist(\bar{\sigma}, X') - \Dist(\bar{\sigma}, X) \geq 0$, from \eqref{eq:distsmall} we have
+	$I_{ij} + I_{ji} + I_{i} + I_j \leq \frac{2n}{k} $.
+	Since $I_i \geq I_{ij} > \frac{n}{k} - \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}}$,
+	we have $I_j \leq \frac{2}{k(k-1)}\frac{n}{\sqrt{\log n} }$.
+	Now consider $I'_j - I_j \geq  \frac{n}{k} - \frac{3}{k(k-1)}\frac{n}{\sqrt{\log n} }$.
+	From \eqref{eq:N_w}: $N_{\bar{\sigma}} \geq \frac{1}{2}(\frac{n}{k} - \frac{3}{k(k-1)}\frac{n}{\sqrt{\log n}})^2 = \frac{n^2}{2k^2}(1+o(1))$.
+	
+	Now we use Chernoff inequality to bound \eqref{eq:BwA}, we can omit $\frac{\gamma \log n}{n}$ on the left hand since it is far smaller than $1$.
+	Let $Z \sim \textrm{Bernoulli}(\A), Z' \sim \textrm{Bernoulli}(\B)$, then
+	\begin{align*}
+	&P_G(\widetilde{D}(\bar{\sigma}, C))
+	\leq (\mathbb{E}[\exp(sZ)])^{|B_{\bar{\sigma}}|}(\mathbb{E}[\exp(-sZ')])^{|A_{\bar{\sigma}}|}\\
+	&\cdot \exp(-s(\frac{\gamma \log n}{n} N_{\bar{\sigma}}  - \frac{C}{\beta}n)) \\
+	& \leq \exp\Big(|B_{\bar{\sigma}}|\frac{b\log n}{n}(e^s -1) + |A_{\bar{\sigma}}|\frac{a\log n}{n} (e^{-s} - 1) \\
+	&-s(\frac{\gamma \log n}{n} N_{\bar{\sigma}}  - \frac{C}{\beta}n)\Big) \\
+	\end{align*}
+	Using $|B_{\bar{\sigma}}| = N_{\bar{\sigma}} + |A_{\bar{\sigma}}|$ we can further simplify the exponential term as
+	$$
+	\frac{\log n}{n} [|A_{\bar{\sigma}}|(b(e^s -1)+ a(e^{-s} - 1)) +
+	N_{\bar{\sigma}} (b(e^s - 1)-\gamma s)]  + s \frac{C}{\beta}n
+	$$
+	Now we investigate the function $g_1(s) = b(e^s -1)+ a(e^{-s} - 1)$ and $g_2(s) = b(e^s - 1)-\gamma s$.
+	Both functions take zero values at $s=0$ and $g_1'(s) = (be^s - ae^{-s}), g_2'(s) = be^s -\gamma$.
+	Therefore, $g_1'(0) = b-a<0, g_2'(0) = b - \gamma < 0$ and we can choose $s^*>0$ such that $g_1(s^*) < 0,g_2(s^*) < 0$.
+	To compensate the influence of the term $sCn/\beta$ we only need to make sure that the order of $\frac{\log n}{n} \min\{|A_{\bar{\sigma}}|, N_{\bar{\sigma}}\}$ is larger than $n$.
+	This requirement is satisfied since either $|A_{\bar{\sigma}}|\geq \frac{n^2}{k^2 (k-1)\sqrt{\log n}}(1+o(1))$ or $N_{\bar{\sigma}} \geq \frac{n^2}{2k^2}(1+o(1))$.
+\end{proof}
+\begin{Lemma}\label{prop:small}
+	If $\gamma>b$, $\beta>\beta^\ast$,
+	For $1\leq r \leq \frac{n}{\sqrt{\log n}}$
+	and $\forall \epsilon > 0$, there is a set $\cG^{(r)}$ such that
+	\begin{equation}\label{eq:Gr}
+	P_G(\cG^{(r)}_n) \ge 1 - n^{r(\tilde{g}(\beta)/2 + \epsilon)}
+	\end{equation}
+	and
+	for every $G\in\cG^{(r)}_n$,
+	\begin{equation}\label{eq:psigmaX}
+	\frac{P_{\sigma|G}(\Dist(\sigma, X)=r | D(\sigma, X))}
+	{P_{\sigma|G}(\sigma=X | D(\sigma, X))} <
+	n^{r \tilde{g}(\beta) /2}
+	\end{equation}
+	For $r> \frac{n}{\sqrt{\log n}}$, there is a set $\cG^{(r)}$ such that
+	\begin{equation}\label{eq:Gr1}
+	P(G\in\cG^{(r)}_n) \ge 1 - e^{-n}
+	\end{equation}
+	and
+	for every $G\in\cG^{(r)}_n$,
+	\begin{equation}\label{eq:psigmaX1}
+	\frac{P_{\sigma|G}(\Dist(\sigma, X)=r | D(\sigma, X))}
+	{P_{\sigma|G}(\sigma=X | D(\sigma, X))} <
+	e^{-n}
+	\end{equation}
+\end{Lemma}
+
+
+\begin{proof}
+We distinguish the discussion between two cases: $r\leq \frac{n}{\sqrt{\log n}}$
+and $r > \frac{n}{\sqrt{\log n}}$.
+
+When $r\leq \frac{n}{\sqrt{\log n}}$, we can show that $\Dist(\sigma, X) = r$ implies $D(\sigma, X)$ by using the triangle
+inequality of $\Dist$. For $f \in S_k \backslash \{ \textrm{id} \}$ where $\textrm{id}$ is the identity mapping, we have
+$$
+\frac{2n}{k} \leq \Dist(f(X), X) \leq \Dist(\sigma, f(X)) + \Dist(\sigma, X)
+$$
+Therefore, $\Dist(\sigma, f(X)) \geq \frac{2n}{k} - \frac{n}{\sqrt{\log n}} \geq \Dist(\sigma, X)$ and
+\eqref{eq:psigmaX} is equivalent with
+\begin{equation}\label{eq:psigmaX2}
+\frac{P_{\sigma|G}(\Dist(\sigma, X)=r)}
+{P_{\sigma|G}(\sigma=X)} <
+n^{r \tilde{g}(\beta) /2}
+\end{equation}
+The left hand side can be written as:
+\begin{align*}
+\frac{P_{\sigma|G}(\Dist(\sigma, X)=r)}
+{P_{\sigma|G}(\sigma=X)}  &= \sum_{\Dist(\bar{\sigma}, X)=r}\exp(-\beta(H(\bar{\sigma})-H(X)))\\
+\textrm{ by \eqref{eq:Hgeneral} } &\leq \sum_{\Dist(\bar{\sigma}, X)=r}\exp(\beta_n(B_{\bar{\sigma}}-A_{\bar{\sigma}}))
+\end{align*}
+where $\beta_n = \beta(1+\gamma\frac{\log n}{n})$.
+
+Define $\Xi_n(r): = \sum_{\Dist(\bar{\sigma}, X)=r}\exp(\beta_n(B_{\bar{\sigma}}-A_{\bar{\sigma}}))$ and we only need to show that
+\begin{equation}
+P_{G}(\Xi_n(r) \geq n^{r \tilde{g}(\beta) /2}) \leq  n^{r (\tilde{g}(\beta) /2 + \epsilon)}
+\end{equation}
+Define the event $\Lambda_n(G,r):=\{B_{\bar{\sigma}} -A_{\bar{\sigma}} < 0, \forall \bar{\sigma}\, s.t. \Dist(\bar{\sigma}, X)=r\}$,
+we proceed as follows:
+\begin{align*}
+P_{G}(\Xi_n(r) \geq n^{r \tilde{g}(\beta) /2}) &\leq
+P_G(\Lambda_n(G,r)^c) \\
+&+ P_G(\Xi_n(r) \geq n^{r \tilde{g}(\beta) /2} |\Lambda_n(G,r) )
+\end{align*}
+For the first term, since $|\{ \bar{\sigma} | \Dist(\bar{\sigma}, X) = r \}|=(k-1)^r n^r$,
+by Lemma \ref{lem:enhanced_fb},
+$P_G(\Lambda_n(G,r)^c) \leq (k-1)^r n^{rg(\bar{\beta})} \leq n^{r (\tilde{g}(\beta) /2 + \epsilon/2)}$.
+For the second term, we use Markov inequality:
+\begin{align*}
+P_G(\Xi_n(r) \geq n^{r \tilde{g}(\beta) /2} |\Lambda_n(G,r) )
+\leq \mathbb{E}[\Xi_n(r)|\Lambda_n(G,r)]n^{-r \tilde{g}(\beta) /2} 
+\end{align*}
+The conditional expectation can be estimated as follows:
+\begin{align*}
+&\mathbb{E}[\Xi_n(r)|\Lambda_n(G,r)]=
+\sum_{\Dist(\bar{\sigma}, X) = r}\sum_{tr\log n = -\infty }^{-1} \\
+& P_G(B_{\bar{\sigma}} -A_{\bar{\sigma}}=tr\log n)\exp(\beta_n tr \log n) \\
+& \leq (k-1)^r n^{r+r\beta_n(b-a)/k} +
+\sum_{\Dist(\bar{\sigma}, X) = r}\sum_{tr\log n = r\frac{b-a}{k}\log n }^{-1} \\
+& P_G(B_{\bar{\sigma}} -A_{\bar{\sigma}}=tr\log n)\exp(\beta_n tr \log n)
+\end{align*}
+$r+r\beta_n(b-a)/k = f_{\beta_n}(\frac{b-a}{k}) < \tilde{g}(\beta_n)$, therefore,
+$(k-1)^r n^{r+r\beta_n (b-a)/k}n^{-r \tilde{g}(\beta) /2} \leq n^{r (\tilde{g}(\beta) /2 + \epsilon/2)} $.
+Using Lemma \ref{lem:enhanced_fb}, we have
+\begin{align*}
+P_G(B_{\bar{\sigma}} -A_{\bar{\sigma}}=tr\log n)\exp(\beta_n rt \log n) \leq 
+n^{r(f_{\beta_n}(t)-1 + O(\frac{1}{\sqrt{\log n}}))}
+\end{align*}
+Since $\beta_n \to \beta$, $\forall \epsilon$, when $n$ is sufficiently large
+we have $\tilde{g}(\beta_n) \leq \tilde{g}(\beta) + \epsilon /2$.
+Therefore,
+\begin{align*}
+&\sum_{\Dist(\bar{\sigma}, X) = r}\sum_{\substack{tr\log n = \\ r(b-a)/k\log n} }^{-1}
+P_G(B_{\bar{\sigma}} -A_{\bar{\sigma}}=t\log n)\exp(\beta_n rt \log n) \\
+& \leq  n^{r(\tilde{g}(\beta_n) - \tilde{g}(\beta)/2)}\\
+& \leq  n^{r(\tilde{g}(\beta)/2 + \epsilon/2)} O(\log n) (k-1)^r
+\end{align*}
+Combining the above equations, we have
+\begin{align*}
+P_{G}(\Xi_n(r) \geq n^{r \tilde{g}(\beta) /2}) &\leq  n^{r(\tilde{g}(\beta)/2 + \epsilon/2)} O(\log n) (k-1)^r\\
+&\leq n^{r(\tilde{g}(\beta)/2 + \epsilon)}
+\end{align*}
+When $r>\frac{n}{\sqrt{\log n}}$, using Lemma \ref{lem:sigmaX}, we can choose a sufficiently large constant $C>1$
+such that $k^n\exp(-Cn) < e^{-n}$
+\begin{align*}
+\frac{P_{\sigma|G}(\Dist(\sigma, X)=r | D(\sigma, X))}
+{P_{\sigma|G}(\sigma=X | D(\sigma, X))} &= \sum_{\substack{D(\sigma, X) \\ \Dist(\sigma, X)=r}} \frac{P_{\sigma | G}(\sigma = \bar{\sigma}) }{P_{\sigma | X}(\sigma = X)} \\
+&> \exp(-n)
+\end{align*}
+happens with probability less than $e^{-n}$. Therefore, \eqref{eq:psigmaX1} holds.
+\end{proof}
+
+If $\gamma > b$ and $\beta < \beta^*$, we have the following lemma:
+\begin{Lemma}\label{lem:7}
+	If $\gamma > b$ and $\beta < \beta^*$, there is a set $\cG^{(1)}_n$ such that
+	$P_G(\cG^{(1)}_n) \geq 1-n^{g(\bar{\beta})}$
+	and
+	\begin{align}
+	\mathbb{E}[\sum_{r=1}^n \exp(\beta_n (A_r^s - A_r^0)) | G \in \cG^{(1)}_n] &= (1+o(1))n^{g(\beta_n)} \\
+	\Var[\sum_{r=1}^n \exp(\beta_n (A_r^s - A_r^0)) | G \in \cG^{(1)}_n] &\leq (1+o(1)) n^{g(2\beta_n)} 
+	\end{align}
+\end{Lemma}
+
+\begin{Lemma}\label{prop:large2}
+	If $\gamma > b$ and $\beta < \beta^*$, there is a set $\cG'_n$ such that
+	\begin{equation}
+	P_G(\cG'_n) \geq 1 - (1+o(1))\max\{n^{g(\bar{\beta})}, n^{\tilde{g}(2\beta_n) - 2g(\beta_n) + \epsilon} \}
+	\end{equation}
+	and for every $G \in \cG'_n$,
+	\begin{equation}\label{eq:diff1g}
+	\frac{P_{\sigma|G}(\Dist(\sigma, X)=1 | D(\sigma, X))}
+	{P_{\sigma|G}(\sigma=X | D(\sigma, X))} \geq (1+o(1))n^{g(\beta_n)}
+	\end{equation}
+	
+\end{Lemma}
+\begin{proof}
+The left hand of \eqref{eq:diff1g} can be rewritten as:
+\begin{equation}\label{eq:knd}
+	\frac{P_{\sigma|G}(\Dist(\sigma, X)=1)}
+{P_{\sigma|G}(\sigma=X)}= (1+o(1))\sum_{s=1}^{k-1}\sum_{r=1}^n \exp(\beta_n (A_r^s - A_r^0))
+\end{equation}
+Let $\cG^{(1)}_n$ be defined in Lemma \ref{lem:7}
+and $\cG^{(2)}_n: = \{|\sum_{r=1}^n \exp(\beta_n (A_r^s - A_r^0)) - (1+o(1))n^{g(\beta_n)}  | \leq n^{g(\beta_n) - \epsilon / 2} \}$,
+
+Using Chebyshev's inequality, we have
+\begin{equation*}
+P_G(G \not\in \cG^{(2)}_n \Big\vert  G \in \cG^{(1)}_n) \leq n^{\tilde{g}(2\beta_n) - 2g(\beta_n) + \epsilon}
+\end{equation*}
+Let $\cG'_n = \cG^{(1)}_n \cap \cG^{(2)}_n$
+\begin{align*}
+P_G(G \in \cG'_n) &= P_G(\cG^{(1)}_n) P_G(G \in \cG_n^{(2)} | G \in \cG_n^{(1)}) \\
+& \geq (1-n^{\tilde{g}(2\beta_n) - 2g(\beta_n) + \epsilon})(1-n^{g(\bar{\beta})}) \\
+&= 1-(1+o(1))\max\{n^{g(\bar{\beta})}, n^{\tilde{g}(2\beta_n) - 2g(\beta_n) + \epsilon} \}
+\end{align*}
+and for every $G\in\cG'_n$,
+\begin{equation*}
+\sum_{r=1}^n \exp(\beta_n (A_r^s - A_r^0)) = (1+o(1)) n^{g(\beta_n)}
+\end{equation*}
+Therefore, from \eqref{eq:knd} we have
+\begin{equation*}
+	\frac{P_{\sigma|G}(\Dist(\sigma, X)=1)}
+{P_{\sigma|G}(\sigma=X)} \geq (1+o(1)) n^{g(\beta_n)}
+\end{equation*}
+\end{proof}
+\begin{Lemma}\label{lem:small}
+	Suppose $\gamma < b $ and $\bar{\sigma}$ satisfies $\Dist(\bar{\sigma}, \mathbf{1}_n) \geq \frac{n}{\sqrt{\log  n}}$
+	and $D(\bar{\sigma}, \mathbf{1}_n)$.
+	Then the event
+	$P_{\sigma | G}(\sigma = \bar{\sigma} ) > \exp(-Cn) P_{\sigma | G}(\sigma = \mathbf{1}_n)$
+	happens with probability (w.r.t. SSBM) less than $\exp(-\tau(\alpha,\beta) n \sqrt{\log  n} )$ where $C$ is an arbitrary constant, $\tau(\alpha,\beta)$ is a positive number.
+\end{Lemma}
+\begin{proof}
+	Let $n_r = |\{\bar{\sigma}_i = w^r | i\in [n] \}|$. Then $n_0 \geq n_r$ for $r=1, \dots, k-1$ since  $\arg\,\min_{\sigma'\in \Lambda} \Dist(\bar{\sigma}, \sigma') = \mathbf{1}_n$.
+	Without loss of generality,
+	we suppose $n_0 \geq n_1 \dots \geq n_{k-1}$.
+	Define $N_{\bar{\sigma}} = \frac{1}{2}(n(n-1) - \sum_{r=0}^{k-1} n_r(n_r-1))
+	=\frac{1}{2}(n^2 - \sum_{r=0}^{k-1} n_r^2)$.
+	Denote the event $P_{\sigma | G}(\sigma = \bar{\sigma} ) > \exp(-Cn) P_{\sigma | G}(\sigma = \mathbf{1}_n)$ as $D'(\bar{\sigma}, C)$,
+	which can be transformed as
+	\begin{align}
+	(1 + \frac{\gamma \log n}{n})
+	\left( \sum_{\bar{\sigma}_i  \neq \bar{\sigma}_j, X_i = X_j} Z_{ij} +
+	\sum_{\bar{\sigma}_i  \neq \bar{\sigma}_j, X_i \neq X_j} Z_{ij} \right)\notag\\
+	\leq \frac{\gamma \log n}{n} N_{\bar{\sigma}} + \frac{C}{\beta} n\label{eq:small}
+	\end{align}
+		
+	Firstly we estimate the order of $N_{\bar{\sigma}}$, obviously $N_{\bar{\sigma}} \leq \frac{1}{2} n^2$.
+	Using the conclusion in Appendix A of \cite{chen2016information} we have
+	\begin{equation}
+	\sum_{r=0}^{k-1} n_r^2 \leq
+	\begin{cases}
+	n n_0 & n_0 \leq \frac{n}{2} \\
+	n^2 - 2n_0(n-n_0) & n_0 > \frac{n}{2}
+	\end{cases}
+	\end{equation}
+	By assumption of $\Dist(\bar{\sigma}, \mathbf{1}_n) \geq \frac{n}{\sqrt{\log n}}$, we have $n_0 \leq n - \frac{n}{\sqrt{\log n}}$
+	and $n_0 \geq \frac{n}{k}$ follows from $n_0 \geq n_r$.
+	When $n_0 > \frac{n}{2}$,
+	we have $N_{\bar{\sigma}} \geq n_0 (n - n_0) \geq \frac{n^2}{\sqrt{\log n}}(1+o(1))$.
+	The second inequality is achieved if $n_0 = n - \frac{n}{\sqrt{\log n}}$.
+	When $n_0 < \frac{n}{2}$,
+	$N_{\bar{\sigma}} \geq \frac{n^2 - nn_0}{2} \geq \frac{n^2}{4}$ and the second inequality is achieved when $n_0 = \frac{n}{2}$.
+	So generally we have $\frac{n^2}{\sqrt{\log n}}(1+o(1)) \leq N_{\bar{\sigma}} \leq \frac{n^2}{2}$.
+	
+	Since $\frac{C}{\beta} n = o(\frac{\log n}{n} N_{\bar{\sigma}})$ we can rewrite \eqref{eq:small} as
+	\begin{equation}
+	\left( \sum_{\substack{\bar{\sigma}_i  \neq \bar{\sigma}_j \\ X_i = X_j}} -Z_{ij}
+	+ \sum_{\substack{\bar{\sigma}_i  \neq \bar{\sigma}_j \\ X_i \neq X_j}} -Z_{ij} \right)\geq -\gamma\frac{\log n N_{\bar{\sigma}}}{n}(1+o(1))
+	\end{equation}
+	Let $N_1 = \sum_{\bar{\sigma}_i  \neq \bar{\sigma}_j, X_i = X_j} 1$
+	and $N_2 = \sum_{\bar{\sigma}_i  \neq \bar{\sigma}_j, X_i \neq X_j} 1 = N_{\bar{\sigma}} - N_1$
+	
+	Using Chernoff inequality we have
+	\begin{align*}
+	P_G(D'(\bar{\sigma}, C))&
+	\leq (\mathbb{E}[\exp(-s Z )])^{N_1} (\mathbb{E}[\exp(-s Z' )])^{N_2} \\
+	&\cdot \exp(\gamma \frac{\log n N_{\bar{\sigma}} s}{n}(1+o(1))) \\
+	&= \exp \Big( \frac{\log n}{n}(1+o(1))(e^{-s}-1)(aN_1 + bN_2) \\
+	&+\gamma \frac{\log n N_{\bar{\sigma}} s}{n}(1+o(1))\Big)
+	\end{align*}
+	Since $s > 0$ and $a>b$, we further have
+	\begin{align*}
+	P_G(D'(\bar{\sigma}, C))
+	& \leq \exp( \frac{N_{\bar{\sigma}}\log n }{n}(b(e^{-s}-1)+ \gamma s + o(1))) 
+	\end{align*}
+	Let $h_b(x) = x - b -x\log \frac{x}{b}$, which satisfies $h_b(x) < 0$ for $0<x<b$,
+	and take $s=-\log\frac{\gamma}{b} > 0$, using 
+	$N_{\bar{\sigma}} \geq \frac{n^2}{\sqrt{\log n}}$ we have
+	\begin{align*}
+	P_G(D'(\bar{\sigma}, C))&\leq \exp( N_{\bar{\sigma}} \frac{\log n}{n} h_b(\gamma)(1+o(1))) \\
+	& \leq \exp (h_b(\gamma) n \sqrt{\log n} (1+o(1)))
+	\end{align*}
+\end{proof}
+\begin{proof}[Proof of Theorem \ref{thm:phase_transition}]
+	1) Since $P_{\sigma}(\sigma \not \in S_k(X)) = \sum_{f\in S_k} P_{\sigma}(\sigma \neq f(X) | D(\sigma, f(X))) P_{\sigma}(D(\sigma, f(X)))$,
+	we only need to establish $P_{\sigma}(\sigma \neq X | D(\sigma, X)) \leq  n^{\tilde{g}(\beta)/2 + \epsilon}$.
+	From Lemma \ref{prop:small}, we can find $\cG_n^{(r)}$ for $r=1,\dots, n$.
+	Let $\cG'_n = \cap_{r=1}^n \cG_n^{(r)}$ and choose $\frac{\epsilon}{2}$, from (\ref{eq:Gr}, \ref{eq:Gr1}) we have
+	\begin{align*}
+	P_G(\cG'^c_n) &= P_G(\cup_{r=1}^n (\cG_n^{(r)})^c) \\
+	&\leq \sum_{r=1}^{n/\sqrt{\log n } } n^{r(\tilde{g}(\beta)/2 + \epsilon/2)}  + n e^{-n} \\
+	& \leq \frac{1}{2} n^{\tilde{g}(\beta)/2 + \epsilon}
+	\end{align*}
+	where the last equality follows from the estimation of sum of geometric series.
+	On the other hand, for every $G \in \cG'_n$, from (\ref{eq:psigmaX}, \ref{eq:psigmaX1})
+	we have
+	\begin{align*}
+	\frac{P_{\sigma | G}(\sigma \neq X | D(\sigma, X))}{1-P_{\sigma | G}(\sigma \neq X | D(\sigma, X))} &= \frac{P_{\sigma | G}(\sigma \neq X | D(\sigma, X))}{P_{\sigma|G}(\sigma=X | D(\sigma, X))} \\
+	&< \sum_{r=1}^{n/\sqrt{\log n }}  n^{r\tilde{g}(\beta)/2} + n e^{-n}
+	\end{align*}
+	from which we can get the estimation $P_{\sigma | G}(\sigma \neq X | D(\sigma, X))\leq \frac{1}{2}n^{\tilde{g}(\beta)/2 + \epsilon}$.
+	Finally, 
+	\begin{align*}
+	P_{\sigma}(\sigma \neq X|D(\sigma, X)) &= \sum_{G\in \cG'_n} P_G(G)P_{\sigma |G}(\sigma \neq X | D(\sigma, X)) \\
+	+ P_G(\cG'^c_n)
+	& \leq n^{\tilde{g}(\beta)/2 + \epsilon}
+	\end{align*}
+	
+	2) When $\beta < \beta^*$, using Lemma \ref{prop:large2}, for every $G \in \cG'_n$
+	we can get
+	$$
+	\frac{1-P_{\sigma | G}(\sigma=X | D(\sigma, X))}{P_{\sigma | G}(\sigma=X | D(\sigma, X))}\geq (1+o(1))n^{g(\beta_n)}
+	$$
+	We then have
+	$$
+	P_{\sigma | G}(\sigma=X| D(\sigma, X)) \leq (1+o(1)) n^{-g(\beta_n)}
+	$$
+	Then
+	\begin{align*}
+	&P_{\sigma}(\sigma=X| D(\sigma, X))  \leq  P(\cG'^c_n) \\
+	&+ \sum_{G\in \cG'_n}P_G(G) P_{\sigma|G}(\sigma=X| D(\sigma, X)) \\
+	& \leq (1+o(1))n^{-g(\beta_n)} + (1+o(1)) \max\{n^{g(\bar{\beta})}, n^{\tilde{g}(2\beta_n) - 2g(\beta_n) + \epsilon} \}\\
+	& \leq (1+o(1)) \max\{n^{g(\bar{\beta})}, n^{-g(\beta) + \epsilon}  \}
+	\end{align*}
+	3) When $\gamma < b$, for any $f\in S_k$, we have $\Dist(f(X), \Lambda) = \frac{(k-1)n}{k} > \frac{n}{\sqrt{\log n}}$.
+	Therefore, using Lemma \ref{lem:small}, we can find a graph $\cG'_n$ such that $P_C(\cG'_n) \leq \exp(-nC)$
+	and for any $G\not \in \cG'_n$, $P_{\sigma |G}(\sigma = f(X)) \leq \exp(-Cn)$. Therefore,
+	\begin{align*}
+	P_a(\hat{X}^*) \leq P_G(\cG'_n) + k! \exp(-Cn) = (1+k!)\exp(-Cn)
+	\end{align*}
+	The conclusion of $P_a(\hat{X}^*) \leq \exp(-Cn)$ follows since $C$ can take any positive value.
+\end{proof}
+
+\subsection{Proof of Theorem \ref{thm:error_rate}}
+
+
+\begin{Lemma}[Lemma 8 of \cite{abbe2015exact}]\label{lem:mZW}
+	Let $m$ be a positive number larger than $n$.
+	When $Z_1, \dots, Z_m$ are i.i.d. Bernoulli($\B$) and $W_1, \dots, W_m$ are i.i.d Bernoulli($\A$), independent of $Z_1, \dots, Z_m$,
+	then
+	\begin{equation}
+	P(\sum_{i=1}^m (Z_i  - W_i) \geq 0) \leq \exp(-\frac{m \log n}{n}(\sqrt{a} - \sqrt{b})^2)
+	\end{equation}
+\end{Lemma}
+\begin{proof}[Proof of Theorem \ref{thm:error_rate}]
+
+	Let $P_F^{(r)}$ denote the probability when there is $\sigma$ satisfying $\Dist(\sigma, X) = r$ and $H(\sigma) < H(X)$.
+	
+	From \eqref{eq:energy_diff}, when $\sigma$ differs from $X$ only by one coordinate, from Lemma \ref{lem:mZW} the probability for $H(\sigma) < H(X)$ is
+	bounded by $P_G(A_r^s - A_r^0 > 0) \leq n^{-\frac{(\sqrt{a}-\sqrt{b})^2}{k}}$. Therefore, $P_F^{(1)}  \leq (k-1)n^{g(\bar{\beta})}$.
+	Using Lemma \ref{lem:enhanced_fb}, we can get $P_F^{(r)} \leq (k-1)^r n^{rg(\bar{\beta})}$ for $ r \leq \frac{n}{\sqrt{\log n}}$.
+	For $ r \geq \frac{n}{\sqrt{\log n}}$, choosing $C=0$ in Lemma \ref{lem:sigmaX} we can get $\sum_{r\geq \frac{n}{\sqrt{\log n}}}P_F^{(r)} \leq e^{-n}$.
+	That is, the dominant term is $\sum_{r\leq \frac{n}{\sqrt{\log n}}}P_F^{(r)}$ since the other part decreases exponentially fast.
+	Therefore, the upper bound for error rate of $\hat{X}'$ is
+	\begin{align*}
+	P_F = & \sum_{r=1}^n P_F^{(r)} \leq (1+o(1)) \sum_{r=1}^{\infty} (k-1)^r n^{rg(\bar{\beta})}\\
+	\leq & (1+o(1))\frac{(k-1) n^{g(\bar{\beta})}}{1-(k-1) n^{g(\bar{\beta})}} = (k-1+o(1))n^{g(\bar{\beta})}
+	\end{align*}
+	
+When $\sigma \in W^*$, since $|\{r\in [n] | \sigma_r = \omega^i \}| = I'_i + \frac{n}{k} - I_i $, we have $I'_i = I_i$.
+From Lemma \ref{lem:minus}, we can see  $|B_{\bar{\sigma}}| = |A_{\bar{\sigma}}|$
+and $N_{\bar{\sigma}} = 0$. Then from \eqref{eq:Hgeneral}, $H(\bar{\sigma}) < H(X)$ is equivalent with $B_{\bar{\sigma}} > A_{\bar{\sigma}}$.
+
+Therefore, when $ \Dist(\bar{\sigma}, X) \geq \frac{n}{\sqrt{\log n} }$ and $D(\sigma, X)$,
+from \eqref{eq:Asigma}, we have $A_{\bar{\sigma}} \geq \frac{n^2}{k^2(k-1)\sqrt{\log n} } (1+o(1))$.
+We use Lemma \ref{lem:mZW} by letting $m=|A_{\bar{\sigma}}|$ when $m \geq \frac{n}{ \sqrt{\log n}}$, the error term is bounded
+by $\sum_{r\geq \frac{n}{ \sqrt{\log n}}} P_F^{(r)} \leq \sum_{r\geq \frac{n}{ \sqrt{\log n}}} (k-1)^r \exp(-\frac{(\sqrt{a} - \sqrt{b})^2}{k^2(k-1)} n \sqrt{\log n}))
+\leq \exp(-n)$, which decreases exponentially fast.
+For $m < \frac{n}{ \sqrt{\log n}}$, we can use Lemma \ref{lem:enhanced_fb} directly 
+by considering $\sum_{r=2}^{\frac{n}{ \sqrt{\log n}}} P_F^{(r)}$. The summation starts from $r=2$ since $\sigma \in W^*$.
+Therefore,
+\begin{align*}
+P_F = & \sum_{r=2}^n P_F^{(r)} \leq (1+o(1)) \sum_{r=2}^{\infty} (k-1)^r n^{rg(\bar{\beta})}\\
+\leq & ((k-1)^2+o(1))n^{2g(\bar{\beta})}
+\end{align*}
+\end{proof}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\section{Patents}
 %This section is not mandatory, but may be added if there are patents resulting from the work reported in this manuscript.
@@ -647,15 +1235,15 @@ LD & linear dichroism
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Optional
-\appendixtitles{no} % Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
-\appendix
-\section{}
-\unskip
-\subsection{}
-The appendix is an optional section that can contain details and data supplemental to the main text. For example, explanations of experimental details that would disrupt the flow of the main text, but nonetheless remain crucial to understanding and reproducing the research shown; figures of replicates for experiments of which representative data is shown in the main text can be added here if brief, or as Supplementary data. Mathematical proofs of results not central to the paper can be added as an appendix.
+%\appendixtitles{no} % Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
+%\appendix
+%%\section{}
+%\unskip
+%\subsection{}
+%The appendix is an optional section that can contain details and data supplemental to the main text. For example, explanations of experimental details that would disrupt the flow of the main text, but nonetheless remain crucial to understanding and reproducing the research shown; figures of replicates for experiments of which representative data is shown in the main text can be added here if brief, or as Supplementary data. Mathematical proofs of results not central to the paper can be added as an appendix.
 
-\section{}
-All appendix sections must be cited in the main text. In the appendixes, Figures, Tables, etc. should be labeled starting with `A', e.g., Figure A1, Figure A2, etc. 
+%\section{}
+%All appendix sections must be cited in the main text. In the appendixes, Figures, Tables, etc. should be labeled starting with `A', e.g., Figure A1, Figure A2, etc. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \reftitle{References}

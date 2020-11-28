@@ -2,7 +2,31 @@
 %  In case you need support, please attach all files that are necessary for compiling as well as the log file, and specify the details of your LaTeX setup (which operating system and LaTeX version / tools you are using).
 
 %=================================================================
-\documentclass[journal,article,submit,moreauthors,pdftex]{Definitions/mdpi} 
+\documentclass[entropy,article,submit,moreauthors,pdftex]{Definitions/mdpi} 
+
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bbm}
+\usepackage{bookmark}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{definition}{Definition}
+%\newtheorem{corollary}{Corollary}
+%\newtheorem{proposition}{Proposition}
+%\newtheorem{lemma}{Lemma}
+%\newtheorem{remark}{Remark}
+\newcommand{\A}{\frac{a \log n}{n}}
+\newcommand{\B}{\frac{b \log n}{n}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\1}{\mathbbm{1}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\SSBM}{SSBM}
+\DeclareMathOperator{\SIBM}{SIBM}
+\DeclareMathOperator{\Dist}{dist}
 
 % If you would like to post an early version of this manuscript as a preprint, you may use preprint as the journal and change 'submit' to 'accept'. The document class line would be, e.g., \documentclass[preprints,article,accept,moreauthors,pdftex]{mdpi}. This is especially recommended for submission to arXiv, where line numbers should be removed before posting. For preprints.org, the editorial staff will make this change immediately prior to posting.
 
@@ -66,30 +90,30 @@
 
 %=================================================================
 % Full title of the paper (Capitalized)
-\Title{Title}
+\Title{Exact Recovery of Stochastic Block Model by Ising Model}
 
 % Author Orchid ID: enter ID or remove command
-\newcommand{\orcidauthorA}{0000-0000-000-000X} % Add \orcidA{} behind the author's name
+%\newcommand{\orcidauthorA}{0000-0000-000-000X} % Add \orcidA{} behind the author's name
 %\newcommand{\orcidauthorB}{0000-0000-000-000X} % Add \orcidB{} behind the author's name
 
 % Authors, for the paper (add full first names)
-\Author{Firstname Lastname $^{1,\dagger,\ddagger}$\orcidA{}, Firstname Lastname $^{1,\ddagger}$ and Firstname Lastname $^{2,}$*}
+\Author{Feng Zhao $^{1,\dagger}$, Min Ye $^{2,\dagger}$ and Shao-Lun~Huang *}
 
 
 % Authors, for metadata in PDF
-\AuthorNames{Firstname Lastname, Firstname Lastname and Firstname Lastname}
+\AuthorNames{Feng Zhao, Min Ye and Shao-Lun~Huang}
 
 % Affiliations / Addresses (Add [1] after \address if there is only one affiliation.)
 \address{%
-$^{1}$ \quad Affiliation 1; e-mail@e-mail.com\\
-$^{2}$ \quad Affiliation 2; e-mail@e-mail.com}
+$^{1}$ \quad Department of Electronics, Tsinghua University; zhaof17@mails.tsinghua.edu.cn\\
+$^{2}$ \quad Tsinghua Berkeley Shenzhen Institute; yeemmi@sz.tsinghua.edu.cn}
 
 % Contact information of the corresponding author
-\corres{Correspondence: e-mail@e-mail.com; Tel.: (optional; include country code; if there are multiple corresponding authors, add author initials) +xx-xxxx-xxx-xxxx (F.L.)}
+\corres{Tsinghua Berkeley Shenzhen Institute; Correspondence: shaolun.huang@sz.tsinghua.edu.cn; }
 
 % Current address and/or shared authorship
-\firstnote{Current address: Affiliation 3} 
-\secondnote{These authors contributed equally to this work.}
+\firstnote{These authors contributed equally to this work.} 
+%\secondnote{}
 % The commands \thirdnote{} till \eighthnote{} are available for further notes
 
 %\simplesumm{} % Simple summary
@@ -97,10 +121,13 @@ $^{2}$ \quad Affiliation 2; e-mail@e-mail.com}
 %\conference{} % An extended version of a conference paper
 
 % Abstract (Do not insert blank lines, i.e. \\) 
-\abstract{A single paragraph of about 200 words maximum. For research articles, abstracts should give a pertinent overview of the work. We strongly encourage authors to use the following style of structured abstracts, but without headings: (1) Background: Place the question addressed in a broad context and highlight the purpose of the study; (2) Methods: Describe briefly the main methods or treatments applied; (3) Results: Summarize the article's main findings; and (4) Conclusion: Indicate the main conclusions or interpretations. The abstract should be an objective representation of the article, it must not contain results which are not presented and substantiated in the main text and should not exaggerate the main conclusions.}
+\abstract{Based on Ising model, we propose a stochastic algorithm to achieve the exact recovery for stochastic block model (SBM).
+	The stochastic algorithm can be transformed to an optimization problem, which includes the special case of maximum likelihood.
+	Besides, we give an unbiased convergent estimator for the parameters of SBM, which can be computed in constant time.
+	Finally, we use metropolis sampling to realize the stochastic algorithm and verify the error bound of our algorithm by experiments.}
 
 % Keywords
-\keyword{keyword 1; keyword 2; keyword 3}  % List three to ten pertinent keywords specific to the article, yet reasonably common within the subject discipline.
+\keyword{stochastic block model; exact recovery; Ising model; maximum likelihood; Metropolis sampling}  % List three to ten pertinent keywords specific to the article, yet reasonably common within the subject discipline.
 
 % The fields PACS, MSC, and JEL may be left empty or commented out if not applicable
 %\PACS{J0101}
@@ -136,128 +163,448 @@ $^{2}$ \quad Affiliation 2; e-mail@e-mail.com}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\setcounter{section}{-1} %% Remove this when starting to work on the template.
-\section{How to Use this Template}
-The template details the sections that can be used in a manuscript. Note that the order and names of article sections may differ from the requirements of the journal (e.g., the positioning of the Materials and Methods section). Please check the instructions for authors page of the journal to verify the correct order and names. For any questions, please contact the editorial office of the journal or support@mdpi.com. For LaTeX related questions please contact latex@mdpi.com.
+%\setcounter{section}{-1} %% Remove this when starting to work on the template.
+%\section{How to Use this Template}
+%The template details the sections that can be used in a manuscript. Note that the order and names of article sections may differ from the requirements of the journal (e.g., the positioning of the Materials and Methods section). Please check the instructions for authors page of the journal to verify the correct order and names. For any questions, please contact the editorial office of the journal or support@mdpi.com. For LaTeX related questions please contact latex@mdpi.com.
 %The order of the section titles is: Introduction, Materials and Methods, Results, Discussion, Conclusions for these journals: aerospace,algorithms,antibodies,antioxidants,atmosphere,axioms,biomedicines,carbon,crystals,designs,diagnostics,environments,fermentation,fluids,forests,fractalfract,informatics,information,inventions,jfmk,jrfm,lubricants,neonatalscreening,neuroglia,particles,pharmaceutics,polymers,processes,technologies,viruses,vision
 
 \section{Introduction}
-The introduction should briefly place the study in a broad context and highlight why it is important. It should define the purpose of the work and its significance. The current state of the research field should be reviewed carefully and key publications cited. Please highlight controversial and diverging hypotheses when necessary. Finally, briefly mention the main aim of the work and highlight the principal conclusions. As far as possible, please keep the introduction comprehensible to scientists outside your particular field of research. Citing a journal paper \cite{ref-journal}. And now citing a book reference \cite{ref-book}. Please use the command \citep{ref-journal} for the following MDPI journals, which use author-date citation: Administrative Sciences, Arts, Econometrics, Economies, Genealogy, Humanities, IJFS, JRFM, Languages, Laws, Religions, Risks, Social Sciences.
+Stochastic Block Model (SBM) is one of the most commonly used statistical modeling for community detection problems  \cite{holland1983stochastic, abbe2017community}.
+It provides benchmark artificial dataset to evaluate different community detection algorithms
+and inspires the design of many algorithms for community detection tasks. These algorithms, such as
+semi-definite relaxation, spectral clustering and label propagation, not only have theoretical guarantee when applied to SBM,
+but perform well on dataset without SBM assumption. The study on the theoretical guarantee on SBM model can be divided between
+the problem of exact recovery and that of partial recovery. For both cases, the asymptotic behavior of detection error
+is analyzed when the scale of graph tends to infinity. There are already some well-known results for the exact recovery problem
+on SBM.	To name but a few, Abbe and Mossel established the exact recovery region for a special sparse SBM with two communities  \cite{abbe2015exact, mossel2016}.
+Later on, the result is extended to general SBM with multiple communities \cite{abbe2015community}.
+
+Inference of parameters on SBM is often considered alongside the exact recovery problem.
+Previous inference methods require joint estimation of node labels and model parameters \cite{nowicki2001estimation}, which have high complexity since the recovery and inference task are done simultaneously.
+In this article, we will decouple the inference and recovery problem and propose an unbiased convergent estimator for SBM parameters when the number of communities is known. Once obtaining the estimator, the recovery condition can be checked to determine whether it is possible to recover the labels
+exactly. Besides, the estimated parameter will guide the choice of parameters for our proposed stochastic algorithm.
+
+In this article, the exact recovery of SBM is analyzed by considering
+Ising model, which is a probability distribution of node states \cite{ising1925beitrag}.
+Ising model is originally proposed in statistical mechanics to model the ferromagnetism phenomenon but has widely application in neuroscience, information theory
+and social networks. Among different variants of Ising models, the phase transition property is shared. Phase transition can be generally formulated when
+some information quantity changes sharply in a small neighborhood of parameters.
+Based on the random graph generated by SBM with two underlining communities,
+The connection of SBM and Ising model is first studied by \cite{ye2020exact}. Our work will extend the existing result to multiple community case, establish the phase transition
+property and give the recovery error upper bound. Both error bounds are polynomial decaying in different phases.
+Then we will propose an alternative approach to estimator the labels by finding the Ising state with maximal probability.
+Compared with sampling from Ising model directly,
+we will show that the optimization method has sharper error upper bound. This kind of method
+is a generalization of maximum likelihood and also has connection with maximum modularity.
+Searching the state with maximal probability
+could also be done within all balanced partition. We will show that the constrained search is equivalent with minimum cut problem and give the detection
+error upper bound for the constrained maximization.
+
+Exact solution to maximize the probability function or exact sampling from Ising model is NP hard. Many polynomial time algorithms have been proposed for approximation purpose.
+Among these algorithms, simulated annealing performs well and produces a solution very close to the true maximal value \cite{liu2010detecting}.
+On the other hand, in original Ising model,
+metropolis sequential sampling is used to generate samples for Ising model \cite{metropolis1953equation}. Simulated annealing can be regarded as metropolis sampling with decreasing temperature. In this article, we will
+use metropolis sampling technique to sample from Ising model on SBM. This approximation enables us to verify the phase transition property of our Ising model  numerically.
+
+This paper is organized as follows. Firstly, in section \ref{sec:psbm} we introduce SBM and give an estimator for the parameters of SBM.
+Then in the next section \ref{sec:sibm}, the Ising model is given and its phase transition property is obtained.
+Derived from the Ising model, in section \ref{sec:em}, we analyze the energy minimization method and establish its connection with maximum likelihood and modularity
+maximization algorithm. Furthermore, in section \ref{sec:ms},
+we realize the Ising model using metropolis algorithm to generate samples. Numerical experiments and conclusion are given at last to finish this paper.
+
+Throughout this paper, the number of community is denoted by $k$; $m$ is the number of samples; $\lfloor x \rfloor$ is the floor function of $x$; the random undirected graph $G$ is written as $G(V,E)$ with vertex set $V$ and edge set $E$;
+$V=\{1,\dots, n\} =: [n]$;
+the label of each node is $X_i$, which is chosen from $W= \{1, \omega, \dots, \omega^{k-1}\}$ and we further require $W$
+is a cyclic group with order $k$; $W^n$ is the n-ary Cartesian power of $W$;
+$f$ is a permutation function on $W$ and applied to $W^n$ in elementwise way;
+$U^c$ is the complement set of $U$;  
+the set $S_k$ is used to represent all permutation functions on $W$ and $S_k(\sigma):=\{f(\sigma)| f\in S_k\}$ for $\sigma \in W^n$;
+the indicator function $\delta(x,y)$ is defined as
+$\delta(x,y) = 1 $ when $x=y$, and $\delta(x,y)=0$ when $x\neq y$;
+$f(n) = O(g(n))$ if there exists constant $c > 0$ such that $ f(n) \leq c g(n)$
+for large $n$;
+$\Lambda := \{ \omega^j  \cdot \mathbf{1}_n | j=0, \dots,k-1\}$
+where $\mathbf{1}_n$ is the all one vector with dimension $n$;
+we define the distance of two vectors as:
+$\Dist(\sigma, \sigma')
+=|\{i\in[n]:\sigma_i\neq \sigma'_i\}| \textrm{ for } \sigma,\sigma'\in W^n
+$ and the distance of a vector to a space $S\subseteq W^n$
+as
+$\Dist(\sigma,S)
+:=\min\{\Dist(\sigma, \sigma') | \sigma' \in S\}
+$.
  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Results}
+\section{Related Works}
+The classical Ising model is defined on lattice and confined to two state $\{\pm 1\}$. This definition
+can be extended to general graph and multiple state case \cite{potts1952some}. In \cite{liu2017log}, Liu considered
+the Ising model defined on graph generated by sparse SBM and his focus is to compute the log partition function,
+which is averaged over the random graphs. In \cite{berthet2019exact}, an Ising model with repulsive interaction
+is considered on a fixed graph structure, and the phase transition condition is established which involves both the assortative and disassortative
+parameters. Our Ising model derives from the work of \cite{ye2020exact}, but we deepen the results by considering the error upper bound and
+multiple community case.
 
-This section may be divided by subheadings. It should provide a concise and precise description of the experimental results, their interpretation as well as the experimental conclusions that can be drawn.
-\begin{quote}
-This section may be divided by subheadings. It should provide a concise and precise description of the experimental results, their interpretation as well as the experimental conclusions that can be drawn.
-\end{quote}
+The exact recovery condition can be derived as a special case of many generalized models such as pairwise measurements \cite{chen2016information},
+minimax rates \cite{hajek2016achieving} and side information \cite{saad2018community}. Ising model in this paper provides another way to extend the
+SBM model and derives the recovery condition. Besides,
+the error upper bound for exact recovery of 2 community SBM by constrained maximum likelihood has been obtained in \cite{abbe2015exact}.
+Compared with previous results, we establish a sharper upper bound for multiple community case in this paper.
+
+The connection of maximum modularity and maximal likelihood is investigated in \cite{newman2016equivalence}. To get an optimal value
+of maximum modularity approximately, simulated annealing is exploited \cite{he2016fast}, which has close connection with Metropolis sampling
+used in this paper.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Subsection}
-\unskip
-\subsubsection{Subsubsection}
-
-Bulleted lists look like this:
-\begin{itemize}[leftmargin=*,labelsep=5.8mm]
-\item	First bullet
-\item	Second bullet
-\item	Third bullet
-\end{itemize}
-
-Numbered lists can be added as follows:
-\begin{enumerate}[leftmargin=*,labelsep=4.9mm]
-\item	First item 
-\item	Second item
-\item	Third item
-\end{enumerate}
-
-The text continues here.
-
-\subsection{Figures, Tables and Schemes}
-
-All figures and tables should be cited in the main text as Figure 1, Table 1, etc.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=2 cm]{Definitions/logo-mdpi}
-\caption{This is a figure, Schemes follow the same formatting. If there are multiple panels, they should be listed as: (\textbf{a}) Description of what is contained in the first panel. (\textbf{b}) Description of what is contained in the second panel. Figures should be placed in the main text near to the first time they are cited. A caption on a single line should be centered.}
-\end{figure}   
- 
-Text
-
-Text
-
-\begin{table}[H]
-\caption{This is a table caption. Tables should be placed in the main text near to the first time they are cited.}
-\centering
-%% \tablesize{} %% You can specify the fontsize here, e.g., \tablesize{\footnotesize}. If commented out \small will be used.
-\begin{tabular}{ccc}
-\toprule
-\textbf{Title 1}	& \textbf{Title 2}	& \textbf{Title 3}\\
-\midrule
-entry 1		& data			& data\\
-entry 2		& data			& data\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Text
-
-Text
-
-%\begin{listing}[H]
-%\caption{Title of the listing}
-%\rule{\textwidth}{1pt}
-%\raggedright Text of the listing. In font size footnotesize, small, or normalsize. Preferred format: left aligned and single spaced. Preferred border format: top border line and bottom border line.
-%\rule{\textwidth}{1pt}
-%\end{listing}
-
-
-\subsection{Formatting of Mathematical Components}
-
-This is an example of an equation:
-
+\section{Stochastic Block Model and Parameter Estimation}\label{sec:psbm}
+In this paper, we consider a special symmetric stochastic block model, which is defined as follows:
+	\begin{Definition}[SSBM with $k$ communities] \label{def:SSBM}
+	Let $0\leq q<p\leq 1$, $V=[n]$ and $X=(X_1,\dots,X_n)\in W^n$. $X$ satisfies the constraint that $|\{v \in [n] : X_v = u\}| = \frac{n}{k}$ for $u\in W$.
+	The random graph $G$ is generated under $\SSBM(n,k,p,q)$ if the following two conditions are satisfied.
+	\begin{enumerate}
+	\item There is an edge of $G$ between the vertices $i$ and $j$ with probability $p$ if $X_i=X_j$ and with probability $q$ if $X_i \neq X_j$.
+	\item The existence of each edge is independent with each other.
+	\end{enumerate}
+\end{Definition}
+To explain SSBM in more detail,
+we define the random variable $Z_{ij}:=\mathbbm{1}[\{i,j\} \in E(G)]$, which is the indicator function of the existence of an edge between node $i$ and $j$.
+Given the node labels $X$, $Z_{ij}$ follows Bernoulli distribution, whose expectation is given by:
 \begin{equation}
-a + b = c
+\mathbb{E}[Z_{ij}] =
+\begin{cases}
+p & \textrm{ if } X_i = X_j \\ 
+q & \textrm{ if }  X_i \neq X_j
+\end{cases}
 \end{equation}
-%% If the documentclass option "submit" is chosen, please insert a blank line before and after any math environment (equation and eqnarray environments). This ensures correct linenumbering. The blank line should be removed when the documentclass option is changed to "accept" because the text following an equation should not be a new paragraph. 
+Then the random graph $G$ with $n$ nodes
+is completely specified by $Z:=\{Z_{ij}, 1\leq i<j\leq n\}$ in which all $Z_{ij}$ are jointly independent.
+The probability distribution for SSBM can be written as:
+\begin{align}
+&P_G(Z = z| X) = p^{\sum_{X_i = X_j} z_{ij}}q^{\sum_{X_i \neq X_j} z_{ij}} \notag \\
+&\quad \cdot (1-p)^{\sum_{X_i = X_j} (1-z_{ij})}(1-q)^{\sum_{X_i \neq X_j} (1-z_{ij})} \label{eq:GmL}
+\end{align}
+We will use the notation $\cG_n$ to represent the set containing all graphs with $n$ nodes. By the normalization property,
+$P_G(\cG_n) = \sum_{G\in \cG_n}P_G(G)=1$.
 
-Please punctuate equations as regular text. Theorem-type environments (including propositions, lemmas, corollaries etc.) can be formatted as follows:
-%% Example of a theorem:
-\begin{Theorem}
-Example text of a theorem.
+In Definition \ref{def:SSBM}, we have supposed that the node label $X$ is given instead of uniformly distributed random variable
+. Since maximum posterior estimator is equivalent to maximum likehood when the prior is uniform,
+these two definitions are equivalent, and our assumption on $X$ makes the following analysis more concise.
+
+Given the SBM, the exact recovery problem can be formally defined as follows:
+\begin{Definition}[Exact recovery in SBM] \label{def:SSBMR}
+Given $X$, the random graph $G$ is drawn under $\SSBM(n,k,p,q)$. If there exists an algorithm that takes
+$G$ as input and outputs $\hat{X}$ such that
+\begin{equation*}
+P_a(\hat{X}):=P(\hat{X} \in S_k(X)) \to 1 \textrm{ as } n \to \infty
+\end{equation*}
+\end{Definition}
+
+In the above definition, the notation $P_a(\hat{X})$ is called the probability of accuracy for estimator $\hat{X}$.
+Let $P_e(\hat{X}) = 1 - P_a(\hat{X})$ represent the probability of error. Definition \ref{def:SSBMR} can also
+be formulated as $P_e(\hat{X}) \to 0$ as $n\to \infty$.
+The notation $\hat{X} \in S_k(X)$ means that we can only
+expect a recovery up to a global permutation of the ground truth label vector $X$. This is common in unsupervised
+learning as no anchor exists to assign labels to different communities.
+Besides, given a graph $G$, the algorithm can
+be either deterministic or stochastic. Generally speaking, the probability of $\hat{X} \in S_k(X)$ should be understood as 
+$\sum_{G \in \cG_n} P_G(G) P_{\hat{X}|G}(\hat{X} \in S_k(X))$, which reduced to 
+$P_G(\hat{X} \in S_k(X))$ for deterministic algorithm.
+
+For constant $p,q$, that is, $p,q$ is irrelevant with the graph size $n$,
+we can always find algorithms to recover $X$ such that the detection error decreases exponentially
+fast with $n$.
+That is to say, the task with dense graph is relatively easy to handle. Within this paper, we consider a sparse
+case when $p = \A, q = \B$. This case corresponds to the sparsest graph when exact recovery of SBM is possible.
+And under this condition, a well known result \cite{abbe2015community} states that
+exact recovery is possible if and only if
+\begin{equation}\label{eq:abk}
+\sqrt{a} - \sqrt{b} > \sqrt{k}
+\end{equation}
+
+Before diving into the exact recovery problem, we first consider the inference problem for SBM.
+Suppose $k$ is known and we want to estimate $a,b$ from the graph $G$.
+We give a simple method
+by counting the number of edges $T_1$ and the number of triangles $T_2$ of $G$, and the estimators $\hat{a}, \hat{b}$ are
+obtained by solving the following equation systems:
+\begin{align}
+\frac{x+(k-1)y}{2k} & = \frac{T_1}{n\log n} \label{eq:e_1}\\
+\frac{1}{k^2}
+\left(\frac{x^3}{6} + \frac{k-1}{2}xy^2 + (k-1)(k-2)\frac{y^3}{6}\right) & = \frac{T_2}{\log^3 n} \label{eq:e_2}
+\end{align}
+The theoretical guarantee for the solution is given by the following theorem:
+\begin{Theorem}\label{thm:ab12}
+When $n$ is large enough, the equation system \eqref{eq:e_1}, \eqref{eq:e_2} has unique solution $(\hat{a}, \hat{b})$,
+which are unbiased consistent estimators
+of $(a,b)$. That is,
+$\mathbb{E}[\hat{a}] = a, \mathbb{E}[\hat{b}] = b$ and $\hat{a}, \hat{b}$ converges to $a,b$ in probability respectively.
 \end{Theorem}
+Given a graph generated by SBM, we can use Theorem \ref{thm:ab12} to obtain the estimated $a,b$ and determine whether
+exact recovery of label $X$ is possible by \eqref{eq:abk}.
 
-The text continues here. Proofs must be formatted as follows:
+Here we conduct a simple experiment to verify our conclusion.
+We consider several combinations of $(a,b,k)$ and obtain the estimator $(\hat{a}, \hat{b})$. Using
+the empirical mean squared error $\frac{1}{m} \sum_{i=1}^m (\hat{a}-a)^2 + (\hat{b}-b)^2$ as the criterion
+and choosing $m=1000$, we obtain the following figure.
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.45\textwidth]{estimator-error-2020-11-22.eps}
+	\caption{estimation error with respect to $n$}
+\end{figure}
+From this figure we can see that as $n$ increases, MSE decreases polynomially fast. Therefore, the convergence
+of $\hat{a} \to a$ and $\hat{b} \to b$ can be verified from this experiment.
 
-%% Example of a proof:
-\begin{proof}[Proof of Theorem 1]
-Text of the proof. Note that the phrase `of Theorem 1' is optional if it is clear which theorem is being referred to.
-\end{proof}
-The text continues here.
+\section{Ising Model for Community Detection}\label{sec:sibm}
+Now we have defined SBM and its exact recovery problem, the definition of Ising model on a graph genered by SBM is given
+as follows:
+\begin{Definition}[Ising model with $k$ states]\label{def:ising}
+	The Ising model on a graph $G$ sampled from $\SSBM(n,k,\A,\B)$ with parameters $\gamma,\beta>0$
+	is a probability distribution on the state $\sigma\in W^n$ such that
+	\begin{align} \label{eq:isingma}
+	P_{\sigma|G}(\sigma=\bar{\sigma})=\frac{\exp(-\beta H(\bar{\sigma}))}{Z_G(\alpha,\beta)}
+	\end{align}
+	where
+	\begin{equation}\label{eq:energy}
+	H(\bar{\sigma}) = \gamma \frac{\log n}{n} \sum_{\{i,j\}\not\in E(G)} \delta(\bar{\sigma}_i, \bar{\sigma}_j)
+	- \sum_{\{i,j\}\in E(G)} \delta(\bar{\sigma}_i, \bar{\sigma}_j)
+	\end{equation}
+	The subscript in $P_{\sigma|G}$ indicates that the distribution depends on $G$, and
+	$Z_G(\alpha,\beta)$ is the normalizing constant for this distribution.
+\end{Definition}
+In physics, we often call $\beta$ the inverse temperature and $Z_G(\gamma, \beta)$ the partition function.
+The Hamiltonian energy $H(\bar{\sigma})$ consists of two terms: the repulsive interaction between nodes without edge connection
+and the attractive interaction between nodes with edge connection. The term $\gamma$ is the ratio of the power of these two
+interactions. We should add $\frac{\log n}{n}$ to balance the two terms because there are only $O(\frac{\log n}{n})$
+connecting edges for each node.
+The probability of each state is proportional to $\exp(-\beta H(\bar{\sigma}))$, and the state with the largest
+probability corresponds to that with the lowest energy.
 
+There are two main differences of Definition \ref{def:ising} with the classical one. Firstly we add a compulsory term
+between nodes without an edge connection. This makes these nodes have larger probability to take different labels.
+Secondly, we allow the state at each node to take $k$ values from $W$.
+When $\gamma = 0$ and $k=2$, Definition \ref{def:ising}
+reduces to the classical definition of Ising model up to a scaling factor.
+
+Definition \ref{def:ising} gives a stochastic estimator $\hat{X}^*$ for $X$. $\hat{X}^*$ is one sample generated from Ising model. The exact recovery error probability for $\hat{X}^*$ can be written as $P_e(\hat{X}^*) := \sum_{G \in \cG_n} P_G(G) P_{\sigma | G}(S^c_k(X))$. We can see from this expression that error probability is determined
+by two parameters $(\gamma, \beta)$. When these parameters take proper value, $ P_e(\hat{X}^*)\to 0$ and the exact recovery of SBM is achievable. On the contrary, $P_e(\hat{X}^*) \to 1$ if $(\gamma, \beta)$ takes other values.
+These two cases are summarized in the following theorem:
+\begin{Theorem}\label{thm:phase_transition}
+Define the function $g(\beta), \tilde{g}(\beta)$ as follows:
+\begin{equation}
+g(\beta) = \frac{be^{\beta} + a e^{-\beta}}{k} - \frac{a+b}{k} +1
+\end{equation}
+and
+\begin{equation}
+\tilde{g}(\beta) = \begin{cases}
+g(\beta) & \beta \leq \bar{\beta} = \frac{1}{2}\log \frac{a}{b} \\
+g(\bar{\beta}) = 1 - \frac{(\sqrt{a} - \sqrt{b})^2}{k} & \beta > \bar{\beta}
+\end{cases}
+\end{equation}
+where $\bar{\beta} =  \arg\min_{\beta > 0} g(\beta)$.
+Let $\beta^*$ be defined as
+$$
+\beta^* = \log(\frac{a + b - k - \sqrt{(a + b - k)^2 - 4 a b)}}{2  b})
+$$
+which is the solution to the equation $g(\beta) = 0$ and $\beta^* < \bar{\beta}$. Then depending on
+how $(\gamma, \beta)$ take values, $\forall \epsilon > 0$, when $n$ is sufficiently large, we have
+\begin{enumerate}
+\item If $\gamma > b$ and $\beta > \beta^*$,  $P_e(\hat{X}^*) \leq n^{\tilde{g}(\beta)/2 + \epsilon}$;
+\item If $\gamma > b$ and $\beta < \beta^*$, $P_a(\hat{X}^*) \leq (1+o(1))\max\{n^{g(\bar{\beta})}, n^{-g(\beta) + \epsilon}\}$;
+\item If $\gamma < b$, $P_a(\hat{X}^*) \leq \exp(-C n)$ for any $C>0$.
+\end{enumerate}
+\end{Theorem}
+By simple calculus, $\tilde{g}(\beta) < 0$ for $\beta> \beta^*$ and $g(\beta)>0$ for $\beta < \beta^*$.
+For sufficiently small $\epsilon$ and as $n \to \infty$, the upper bounds in Theorem \ref{thm:phase_transition} all converge to $0$ at least
+in polynomial speed.
+Therefore, Theorem \ref{thm:phase_transition} establishes the sharp phase transition property of Ising model, which is illustrated
+in Fig. \ref{fig:pt}.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.45\textwidth]{phase_trans.eps}
+	\caption{Phase transition region with respect to $(\beta, \gamma)$ plane}\label{fig:pt}
+\end{figure}
+
+Theorem
+\ref{thm:phase_transition} can also be understood from the marginal distribution for $\sigma: P_{\sigma}(\sigma =\bar{\sigma})
+=\sum_{G \in \cG_n}P_G(G)P_{\sigma |G}(\sigma=\bar{\sigma})$.
+Let $D(\sigma, \sigma')$ be the event when $\sigma$ is nearest to $\sigma'$ among all its permutations.
+That is
+\begin{equation}
+D(\sigma, \sigma') := \{ \sigma = \arg\min_{f \in S_k} \Dist(f(\sigma), \sigma')  \}
+\end{equation}
+Then Theorem \ref{thm:phase_transition} can be stated in the following way:
+\begin{Corollary}\label{cor:phase4}
+\begin{enumerate}
+	\item If $\gamma > b$ and $\beta > \beta^*$, $P_{\sigma}(\sigma = X | D(\sigma, X))  = 1-o(1)$;
+	\item If $\gamma > b$ and $\beta < \beta^*$, $P_{\sigma}(\sigma = X | D(\sigma, X))  = o(1)$;
+\end{enumerate}
+\end{Corollary}
+
+Below we outline the proof ideas of Theorem \ref{thm:phase_transition}, which relies on the analysis of the one-flip energy difference.
+This useful result is summarized in the following lemma:
+\begin{Lemma}\label{lem:lemmaDiff}
+	Suppose $\bar{\sigma}'$ differs from $\bar{\sigma}$ only at position $r$ by $\bar{\sigma}'_r = \omega^s \cdot \bar{\sigma}_r$.
+	Then the change of energy is
+	\begin{align}
+	H(\bar{\sigma}') - H(\bar{\sigma}) &= (1+\gamma \frac{\log n}{n})\sum_{i \in N_r(G)} J_s(\bar{\sigma}_r, \bar{\sigma}_i)
+	\notag \\
+	&+ \gamma \frac{\log n}{n} (m(\omega^s \cdot \bar{\sigma}_r)-m(\bar{\sigma}_r)+1) \label{eq:DeltaH}
+	\end{align}
+	where $m(\omega^j) := |\{i \in [n] | \bar{\sigma}_i = \omega^j | \}$ and $J_s(x, y) = \delta(x, y) - \delta(\omega_s \cdot x, y)$
+\end{Lemma}
+Lemma \ref{lem:lemmaDiff} gives an explicit way to compare the probability of two states by the following
+equality:
+\begin{equation}\label{eq:Pratio}
+\frac{P_{\sigma |G } (\sigma = \bar{\sigma}')}{P_{\sigma |G } (\sigma = \bar{\sigma})}
+= \exp(-\beta(H(\bar{\sigma}') - H(\bar{\sigma})))
+\end{equation}
+Besides, since the graph is sparse and every node has $O(\log n)$ neighbors, the computational cost (time complexity) for the energy difference
+is also $O(\log n)$. 
+
+When $H(\bar{\sigma}') > H(\bar{\sigma})$, we can expect $P_{\sigma | G}(\sigma = \bar{\sigma}')$ is far less than 
+$P_{\sigma | G}(\sigma = \bar{\sigma})$.
+If  $ \sum_{\Dist(\sigma', X)=1}\exp(-\beta(H(\bar{\sigma}') - H(X))) $ converges to zero,
+we can expect the probability of all other states differing from $S_k(X)$ converges to zero.
+On the contrary, if $ \sum_{\Dist(\sigma', X)=1}\exp(-\beta(H(\bar{\sigma}') - H(X))) $ tends to infinity,
+then we have $P_{\sigma}(S_k(X))$ converges to zero. This illustrates the idea behind
+the proof of
+Theorem \ref{thm:phase_transition}, which can be found in the Appendix.
+
+
+\section{Community Detection via Energy Minimization}\label{sec:em}
+Since $\beta^*$ is irrelevant with $n$, when $\gamma>b$, we can choose a sufficiently large $\beta$ such that
+$\beta > \beta^*$, then by Theorem \ref{thm:phase_transition}, with almost 1 probability $\sigma \in S_k(X)$, which
+implies that $P_{\sigma | G}(\sigma = X)$ has the largest probability for almost all graph $G$. Therefore, instead of generating
+the sample from the Ising model, we can directly maximize the conditional probability to find the state with the largest probability.
+Or equivalently, we can proceed by minimizing the energy term in \eqref{eq:energy}:
+\begin{equation}\label{eq:hatX}
+\hat{X}' := \arg\min_{\bar{\sigma} \in W^n} H(\bar{\sigma})
+\end{equation}
+
+In \eqref{eq:hatX}, we allow $\bar{\sigma}$ to take values from $W^n$. Since we know the ground truth label $X$ has equal
+size $|\{v \in [n] : X_v = u\}| = \frac{n}{k}$, another formulation is to restrict the search space to
+$W^*:= \{\sigma \big\vert |\{v \in [n] : \sigma_v = \omega^s\}| = \frac{n}{k}, s=0,\dots, k-1 \}$.
+When $\sigma \in W^*$, minimizing $H(\sigma)$ is equivalent to
+\begin{equation}
+\hat{X}'' = \arg\min_{\sigma \in W^*} \sum_{\{i,j\} \not\in E(G) } \delta(\sigma_i, \sigma_j)
+\end{equation}
+where the minimal value is the minimum cut between different detected communities.
+
+When $\hat{X}'' \neq X'$, we must have $\Dist(\hat{X}'' ,X)\geq 2$ to satisfy the constraint $\hat{X}'' \in W^*$.
+Besides, the estimator of $\hat{X}''$ is parameter-free while $\hat{X}'$ depends on $\gamma$. The extra parameter $\gamma$ in the expression of
+$\hat{X}'$ can be regarded as a kind of Lagrange multiplier for this integer programming problem. Thus the optimization problem for $\hat{X}'$
+is a relaxation of that for $\hat{X}''$ by introducing a penalized term and enlarging the searched space from $W^*$ to $W$.
+
+When $\beta > \bar{\beta}$, $\tilde{g}(\beta)$ becomes a constant value. Therefore, we can get $n^{g(\bar{\beta})/2}$ as the tightest error upper bound for Ising estimator $\hat{X}^*$ from Theorem \ref{thm:phase_transition}.
+For the estimator $\hat{X}'$ and $\hat{X}''$, we can obtain sharper error upper bound, which is
+summarized in the following theorem:
+\begin{Theorem}\label{thm:error_rate}
+When $\sqrt{a} - \sqrt{b} > \sqrt{k}$, for $n$ sufficiently large, 
+\begin{enumerate}
+	\item if $\gamma > b$, $P_G(\hat{X}' \not\in S_k(X)) \leq (k-1+o(1))n^{g(\bar{\beta})}$;
+	\item $P_G(\hat{X}'' \not\in S_k(X)) \leq ((k-1)^2+o(1))n^{2g(\bar{\beta})}$.
+\end{enumerate}
+\end{Theorem}
+As $g(\bar{\beta})<0$, $n^{2g(\bar{\beta})} < n^{g(\bar{\beta})} < n^{g(\bar{\beta})/2}$, then
+Theorem \ref{thm:error_rate} implies that $P_e(\hat{X}'')$ has the sharpest upper bound among the three estimators.
+This can be intuitively understood as the result of smaller search space.
+The proof technique of Theorem \ref{thm:error_rate} is to consider the probability of events when $P_G(G | X) < P_G(G | \sigma)$
+for $\Dist(\sigma, X) \geq 1$. Then using union bound to sum them up.
+This technique has been used in \cite{abbe2015exact} for $k=2$ to show that exact recovery by maximum likelihood is possible
+when $\sqrt{a} - \sqrt{b} > 2$. But only a loose bound $n^{g(\bar{\beta})/4}$ is obtained.
+For general case, since $\tilde{g}(\beta) = 1- \frac{(\sqrt{a} - \sqrt{b})^2}{k}$, Theorem \ref{thm:error_rate} implies that exact recovery is possible using $\hat{X}'$ as long as  
+$\sqrt{a} - \sqrt{b} > \sqrt{k}$ is satisfied.
+
+
+Estimator $\hat{X}'$ has one parameter $\gamma$. When $\gamma$ takes different values depending on $a,b$, $\hat{X}'$
+is equivalent with maximum likelihood or maximum modularity in asymptotic case. The following analysis shows
+such relationship intuitively.
+
+Maximum likelihood estimator is obtained by maximizing the log likelihood function.
+From \eqref{eq:GmL}, this function can be written as
+$$
+\log P_G(Z|X=\sigma) = -\log\frac{a}{b} \cdot H(\sigma) + C
+$$
+where the $\gamma$ term in $H(\sigma)$ satisfying $\gamma \frac{\log n}{n} = \frac{1}{\log(a/b)}(\log (1-\A) - \log (1-\B))$ and $C$ is a constant irrelevant with $\sigma$.
+When $n$ is sufficiently large, we have $\gamma \to \gamma_{ML} := \frac{a-b}{\log(a/b)}$.
+That is, maximum likelihood estimator is equivalent with $\hat{X}'$ when $\gamma = \gamma_{ML}$ asymptotically.
+
+
+Maximum modularity estimator is obtained by maximizing the modularity of a graph \cite{clauset2004finding}, which is defined by
+\begin{align}\label{eq:Q}
+Q &= \frac{1}{2 |E|} \sum_{ij} (A_{ij} - \frac{d_i d_j}{2 |E|}) \delta(C_i, C_j)
+\end{align}
+For the $i$-th node, $d_i$ is its degree and $C_i$ is its community belonging. $A$ is the adjacency matrix.
+Up to a scaling factor, the modularity $Q$ can be re-written using the label $\sigma$ as:
+\begin{align}
+Q(\sigma) = &-\sum_{\{i,j\} \not\in E(G) } \frac{d_i d_j}{2 |E|}\delta(\sigma_i,\sigma_j) \notag \\
+&+ \sum_{\{i,j\} \in E(G) } (1 - \frac{d_i d_j}{2 |E|}) \delta(\sigma_i,\sigma_j)  \label{eq:Qtransform}
+\end{align}
+From \eqref{eq:Qtransform}, we can see that $Q(\sigma) \to -H(\sigma)$ with $\gamma = \gamma_{MQ} = \frac{a+b}{2}$ as $n\to \infty$.
+Indeed, we have $d_i \sim \frac{(a+b)\log n}{2}, |E| \sim \frac{1}{2}n d_i$. Therefore, we have $\frac{d_id_j}{2|E|} \to \gamma_{MQ} \frac{\log n}{n} $. That is, maximum modularity estimator is equivalent with $\hat{X}'$ when $\gamma = \gamma_{MQ}$ asymptotically.
+
+
+Using $a>b$ and the inequality $x-1>\log x > 2 \frac{x-1}{x+1}$ for $x>1$ we can verify that $\gamma_{MQ} > \gamma_{ML} > b$. That is, both maximum likelihood and maximum modularity satisfy the exact recovery conditions in Theorem \ref{thm:error_rate}.
+
+
+\section{Community Detection based on Metropolis Sampling}\label{sec:ms}
+From Theorem \ref{thm:phase_transition}, if we could sample from the Ising model, then with large probability, the sample
+is aligned with $X$. However, the exact sampling is difficult when $n$ is very large since the cardinality of the state space increases in
+the rate of $k^n$. Therefore, some approximation is
+necessary. The most common way to generate an Ising sample is using Metropolis sampling \cite{metropolis1953equation}. 
+Empirically speaking, starting from a random state, Metropolis algorithm updates the state by randomly selecting one position to flip at each iteration step.
+Then after some initial burning time, the generated samples can be regarded as samples from Ising model.
+
+The theoretical guarantee of Metropolis sampling is based on Markov chain. Under some general conditions, Metropolis samples are converging to
+the steady state of the Markov chain, which is the probability distribution to be approximated. For Ising model, there are many previous works which have shown that the convergence of Metropolis sampling \cite{diaconis1998we}.
+
+For our specific Ising model and energy term in \eqref{eq:energy},
+the pseudo code of our algorithm is summarized in Algorithm \ref{alg:m}.
+This algorithm requires the number of the communities $k$ is known and the parameter $\gamma$ is given.
+The iteration time $N$ should also be specified in advance.
+\begin{algorithm}[H]
+	\caption{Metropolis sampling algorithm for SBM} \label{alg:m}
+	Inputs: the graph $G$, inverse temperature $\beta$, disassortative power $\gamma$ \\
+	Output: $\hat{X}$
+	\begin{algorithmic}[1]
+		\STATE random initialize $\sigma \in W^n$
+		\FOR{$i=1,2,\dots, N$}
+		\STATE propose a new state $\bar{\sigma}'$ according to Lemma \ref{lem:lemmaDiff} where $s, r$ are randomly chosen
+		\STATE compute $\Delta H(r,s) = H(\bar{\sigma}') - H(\bar{\sigma})$ using \eqref{eq:DeltaH}
+		\IF{$\Delta H(r,s)<0$}
+		\STATE $\sigma_r \leftarrow w^s \cdot \sigma_r$
+		\ELSE
+		\STATE with probability $\exp(-\beta \Delta H(r,s))$
+			such that $\sigma_r \leftarrow w^s \cdot \sigma_r$
+		\ENDIF
+		\ENDFOR
+	\end{algorithmic}
+\end{algorithm}
+The computation of $\Delta H(r,s)$ needs $O(\log n)$ time from Lemma \ref{lem:lemmaDiff}.
+For some special Ising model with disassortative interaction, it needs to take $N=O(n\log n)$ to generate the sample for good approximation \cite{mcmc}. For our model, it is unknown whether $O(n\log n)$ is sufficient, and we empirically choose $N=O(n^2)$ in the experiments.
+Then the time complexity of Algorithm \ref{alg:m} is $n^2 \log n$.
+
+Using Metropolis sampling, we conduct a moderate simulation to verify Theorem \ref{thm:phase_transition}.
+We choose $n=3200, k=2$, and the empirical accuracy is computed by $P_e = \frac{1}{m_1m_2}\sum_{i=1}^{m_1} \sum_{j=1}^{m_2} \mathbbm{1}[\hat{X}^* = \pm X]$. $m_1$ is the number of times to generate the random graph. For each $G$, we further sample $m_2$ states by Algorithm \ref{alg:m} consecutively.
+To make good approximation, we choose $m_1=1000,m_2=5000$.
+The result is shown in the following figure.
+\begin{figure}[!ht]
+	\includegraphics[width=0.45\textwidth]{beta_trans-2020-11-13.eps}
+	\caption{the accuracy of exact recovery by SIBM}
+\end{figure}
+
+The vertical red line $\beta=0.2$ represents the phase transition threshold. The point $(0.19,0.5)$ in the figure
+can be regarded as the empirical phase transition threshold, whose first coordinate is near to $\beta^* = 0.2$.
+The green line $(\beta, n^{g(\beta)/2})$ is the theoretical lower bound of accuracy for $\beta>0.2$ while the orange line
+$(\beta, n^{-g(\beta)})$ is the theoretical upper bound of accuracy for $\beta < 0.2$. It can be expected that
+as $n$ is larger, the empirical accuracy curve (blue line in the figure) will approach the step function, which jumps from
+0 to 1 at $\beta=0.2$.
+\section{Conclusion}
+In this paper, we have given one convergent estimator (in Theorem \ref{thm:ab12}) to infer the parameters of SBM and analyzed three estimators to detect communities of SBM.
+We give the exact recovery error upper bound for all the later three estimators (in Theorem \ref{thm:phase_transition}, \ref{thm:error_rate})
+and study their relationships. By introducing Ising model, our work makes a new path to study the exact recovery problem for SBM. More
+theoretical and empirical work will be done in the future such as the convergence analysis on modularity (in \eqref{eq:Qtransform}), the necessary iteration time (in Algorithm \ref{alg:m}) for Metropolis sampling, and so on.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Discussion}
-
-Authors should discuss the results and how they can be interpreted in perspective of previous studies and of the working hypotheses. The findings and their implications should be discussed in the broadest context possible. Future research directions may also be highlighted.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Materials and Methods}
-
-Materials and Methods should be described with sufficient details to allow others to replicate and build on published results. Please note that publication of your manuscript implicates that you must make all materials, data, computer code, and protocols associated with the publication available to readers. Please disclose at the submission stage any restrictions on the availability of materials or information. New methods and protocols should be described in detail while well-established methods can be briefly described and appropriately cited.
-
-Research manuscripts reporting large datasets that are deposited in a publicly available database should specify where the data have been deposited and provide the relevant accession numbers. If the accession numbers have not yet been obtained at the time of submission, please state that they will be provided during review. They must be provided prior to publication.
-
-Interventionary studies involving animals or humans, and other studies require ethical approval must list the authority that provided approval and the corresponding ethical approval code. 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Conclusions}
-
-This section is not mandatory, but can be added to the manuscript if the discussion is unusually long or complex.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Patents}
-This section is not mandatory, but may be added if there are patents resulting from the work reported in this manuscript.
+%\section{Patents}
+%This section is not mandatory, but may be added if there are patents resulting from the work reported in this manuscript.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \vspace{6pt} 
@@ -319,20 +666,13 @@ All appendix sections must be cited in the main text. In the appendixes, Figures
 %=====================================
 % References, variant A: external bibliography
 %=====================================
-%\externalbibliography{yes}
-%\bibliography{your_external_BibTeX_file}
+\externalbibliography{yes}
+\bibliography{exportlist.bib}
 
 %=====================================
 % References, variant B: internal bibliography
 %=====================================
-\begin{thebibliography}{999}
-% Reference 1
-\bibitem[Author1(year)]{ref-journal}
-Author1, T. The title of the cited article. {\em Journal Abbreviation} {\bf 2008}, {\em 10}, 142--149.
-% Reference 2
-\bibitem[Author2(year)]{ref-book}
-Author2, L. The title of the cited contribution. In {\em The Book Title}; Editor1, F., Editor2, A., Eds.; Publishing House: City, Country, 2007; pp. 32--58.
-\end{thebibliography}
+
 
 % The following MDPI journals use author-date citation: Arts, Econometrics, Economies, Genealogy, Humanities, IJFS, JRFM, Laws, Religions, Risks, Social Sciences. For those journals, please follow the formatting guidelines on http://www.mdpi.com/authors/references
 % To cite two works by the same author: \citeauthor{ref-journal-1a} (\citeyear{ref-journal-1a}, \citeyear{ref-journal-1b}). This produces: Whittaker (1967, 1975)

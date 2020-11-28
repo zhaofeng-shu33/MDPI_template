@@ -9,8 +9,8 @@
 \usepackage{amssymb}
 \usepackage{bbm}
 \usepackage{bookmark}
-\usepackage{algorithm}
 \usepackage{algorithmic}
+\usepackage{algorithm}
 \usepackage{graphicx}
 %\newtheorem{theorem}{Theorem}
 %\newtheorem{definition}{Definition}
@@ -587,7 +587,8 @@ We choose $n=3200, k=2$, and the empirical accuracy is computed by $P_e = \frac{
 To make good approximation, we choose $m_1=1000,m_2=5000$.
 The result is shown in the following figure.
 \begin{figure}[!ht]
-	\includegraphics[width=0.45\textwidth]{beta_trans-2020-11-13.eps}
+		\centering
+	\includegraphics[width=0.5\textwidth]{beta_trans-2020-11-13.eps}
 	\caption{the accuracy of exact recovery by SIBM}
 \end{figure}
 
@@ -1206,16 +1207,20 @@ P_F = & \sum_{r=2}^n P_F^{(r)} \leq (1+o(1)) \sum_{r=2}^{\infty} (k-1)^r n^{rg(\
 % \supplementary{The following are available at \linksupplementary{s1}, Figure S1: title, Table S1: title, Video S1: title. A supporting video article is available at doi: link.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\authorcontributions{For research articles with several authors, a short paragraph specifying their individual contributions must be provided. The following statements should be used ``Conceptualization, X.X. and Y.Y.; methodology, X.X.; software, X.X.; validation, X.X., Y.Y. and Z.Z.; formal analysis, X.X.; investigation, X.X.; resources, X.X.; data curation, X.X.; writing--original draft preparation, X.X.; writing--review and editing, X.X.; visualization, X.X.; supervision, X.X.; project administration, X.X.; funding acquisition, Y.Y. All authors have read and agreed to the published version of the manuscript.'', please turn to the  \href{http://img.mdpi.org/data/contributor-role-instruction.pdf}{CRediT taxonomy} for the term explanation. Authorship must be limited to those who have contributed substantially to the work reported.}
+\authorcontributions{The work of this paper is conceptualized by Min Ye, who also developed the mathematical analysis methodology for the proof of main
+	theorem of this paper. All simulation code is written by Feng Zhao, who also extended the idea of Min Ye, concreted the proof and wrote this paper.
+	The work is supervised and funded by Shao-Lun Huang. All authors have read and agreed to the published version of the manuscript.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\funding{Please add: ``This research received no external funding'' or ``This research was funded by NAME OF FUNDER grant number XXX.'' and  and ``The APC was funded by XXX''. Check carefully that the details given are accurate and use the standard spelling of funding agency names at \url{https://search.crossref.org/funding}, any errors may affect your future funding.}
+\funding{
+	This research was supported in part by the Natural Science Foundation of China under Grant 61807021, in part by the Shenzhen Science and Technology Program under Grant KQTD20170810150821146, and in part by the Innovation and Entrepreneurship Project for Overseas High-Level Talents of Shenzhen under Grant KQJSCX20180327144037831.
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\acknowledgments{In this section you can acknowledge any support given which is not covered by the author contribution or funding sections. This may include administrative and technical support, or donations in kind (e.g., materials used for experiments).}
+%\acknowledgments{In this section you can acknowledge any support given which is not covered by the author contribution or funding sections. This may include administrative and technical support, or donations in kind (e.g., materials used for experiments).}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\conflictsofinterest{Declare conflicts of interest or state ``The authors declare no conflict of interest.'' Authors must identify and declare any personal circumstances or interest that may be perceived as inappropriately influencing the representation or interpretation of reported research results. Any role of the funders in the design of the study; in the collection, analyses or interpretation of data; in the writing of the manuscript, or in the decision to publish the results must be declared in this section. If there is no role, please state ``The funders had no role in the design of the study; in the collection, analyses, or interpretation of data; in the writing of the manuscript, or in the decision to publish the results''.} 
+\conflictsofinterest{The authors declare no conflict of interest.} 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Only for journal Encyclopedia
@@ -1227,10 +1232,9 @@ P_F = & \sum_{r=2}^n P_F^{(r)} \leq (1+o(1)) \sum_{r=2}^{\infty} (k-1)^r n^{rg(\
 
 \noindent 
 \begin{tabular}{@{}ll}
-MDPI & Multidisciplinary Digital Publishing Institute\\
-DOAJ & Directory of open access journals\\
-TLA & Three letter acronym\\
-LD & linear dichroism
+SBM & Stochastic Block Model\\
+SSBM & Symmetric Stochastic Block Model\\
+ML & maximum likelihood
 \end{tabular}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1269,7 +1273,7 @@ LD & linear dichroism
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Optional
-\sampleavailability{Samples of the compounds ...... are available from the authors.}
+%\sampleavailability{Samples of the compounds ...... are available from the authors.}
 
 %% for journal Sci
 %\reviewreports{\\

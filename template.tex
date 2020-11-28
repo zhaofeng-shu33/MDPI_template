@@ -122,10 +122,11 @@ $^{2}$ \quad Tsinghua Berkeley Shenzhen Institute; yeemmi@sz.tsinghua.edu.cn}
 
 % Abstract (Do not insert blank lines, i.e. \\) 
 \abstract{In this paper, we study the phase transition property of Ising model defined on a special random graph -- stochastic block model (SBM).
-	Based on Ising model, we propose a stochastic algorithm to achieve the exact recovery for SBM.
-	The stochastic algorithm can be transformed to an optimization problem, which includes the special case of maximum likelihood.
-	Besides, we give an unbiased convergent estimator for the parameters of SBM, which can be computed in constant time.
-	Finally, we use metropolis sampling to realize the stochastic algorithm and verify the error bound of our algorithm by experiments.}
+	Based on Ising model, we propose a stochastic estimator to achieve the exact recovery for SBM.
+	The stochastic algorithm can be transformed to an optimization problem, which includes the special case of maximum likelihood
+	and maximum modularity.
+	Besides, we give an unbiased convergent estimator for the model parameters of SBM, which can be computed in constant time.
+	Finally, we use metropolis sampling to realize the stochastic estimator and verify the phase transition phenomenon by experiments.}
 
 % Keywords
 \keyword{stochastic block model; exact recovery; Ising model; maximum likelihood; Metropolis sampling}  % List three to ten pertinent keywords specific to the article, yet reasonably common within the subject discipline.
@@ -401,9 +402,9 @@ g(\bar{\beta}) = 1 - \frac{(\sqrt{a} - \sqrt{b})^2}{k} & \beta > \bar{\beta}
 \end{equation}
 where $\bar{\beta} =  \arg\min_{\beta > 0} g(\beta)$.
 Let $\beta^*$ be defined as
-$$
+\begin{equation}\label{eq:beta_star}
 \beta^* = \log(\frac{a + b - k - \sqrt{(a + b - k)^2 - 4 a b)}}{2  b})
-$$
+\end{equation}
 which is the solution to the equation $g(\beta) = 0$ and $\beta^* < \bar{\beta}$. Then depending on
 how $(\gamma, \beta)$ take values, $\forall \epsilon > 0$, when $n$ is sufficiently large, we have
 \begin{enumerate}
@@ -584,21 +585,21 @@ For some special Ising model with disassortative interaction, it needs to take $
 Then the time complexity of Algorithm \ref{alg:m} is $n^2 \log n$.
 
 Using Metropolis sampling, we conduct a moderate simulation to verify Theorem \ref{thm:phase_transition}.
-We choose $n=3200, k=2$, and the empirical accuracy is computed by $P_e = \frac{1}{m_1m_2}\sum_{i=1}^{m_1} \sum_{j=1}^{m_2} \mathbbm{1}[\hat{X}^* = \pm X]$. $m_1$ is the number of times to generate the random graph. For each $G$, we further sample $m_2$ states by Algorithm \ref{alg:m} consecutively.
-To make good approximation, we choose $m_1=1000,m_2=5000$.
+We choose $n=9000, k=2$, and the empirical accuracy is computed by $P_e = \frac{1}{m_1m_2}\sum_{i=1}^{m_1} \sum_{j=1}^{m_2} \mathbbm{1}[\hat{X}^* = \pm X]$. $m_1$ is the number of times to generate the random graph. For each $G$, we further sample $m_2$ states by Algorithm \ref{alg:m} consecutively.
+To make good approximation, we choose $m_1=2100,m_2=6000$.
 The result is shown in the following figure.
 \begin{figure}[!ht]
 		\centering
-	\includegraphics[width=0.5\textwidth]{beta_trans-2020-11-13.eps}
+	\includegraphics[width=0.5\textwidth]{beta_trans-2020-11-28.eps}
 	\caption{the accuracy of exact recovery by SIBM}
 \end{figure}
 
-The vertical red line $\beta=0.2$ represents the phase transition threshold. The point $(0.19,0.5)$ in the figure
-can be regarded as the empirical phase transition threshold, whose first coordinate is near to $\beta^* = 0.2$.
-The green line $(\beta, n^{g(\beta)/2})$ is the theoretical lower bound of accuracy for $\beta>0.2$ while the orange line
-$(\beta, n^{-g(\beta)})$ is the theoretical upper bound of accuracy for $\beta < 0.2$. It can be expected that
+The vertical red line $\beta=\beta^* = 0.198$, computed from \eqref{eq:beta_star}, represents the phase transition threshold. The point $(0.199,0.5)$ in the figure
+can be regarded as the empirical phase transition threshold, whose first coordinate is near to $\beta^*$.
+The green line $(\beta, n^{g(\beta)/2})$ is the theoretical lower bound of accuracy for $\beta>\beta^*$ while the purple line
+$(\beta, n^{-g(\beta)})$ is the theoretical upper bound of accuracy for $\beta < \beta^*$. It can be expected that
 as $n$ is larger, the empirical accuracy curve (blue line in the figure) will approach the step function, which jumps from
-0 to 1 at $\beta=0.2$.
+0 to 1 at $\beta=\beta^*$.
 \section{Conclusion}
 In this paper, we have given one convergent estimator (in Theorem \ref{thm:ab12}) to infer the parameters of SBM and analyzed three estimators to detect communities of SBM.
 We give the exact recovery error upper bound for all the later three estimators (in Theorem \ref{thm:phase_transition}, \ref{thm:error_rate})

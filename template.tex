@@ -214,19 +214,19 @@ Derived from the Ising model, in section \ref{sec:em}, we analyze the energy min
 maximization algorithm. Furthermore, in section \ref{sec:ms},
 we realize the Ising model using metropolis algorithm to generate samples. Numerical experiments and conclusion are given at last to finish this paper.
 
-Throughout this paper, the number of community is denoted by $k$; $m$ is the number of samples; $\lfloor x \rfloor$ is the floor function of $x$; the random undirected graph $G$ is written as $G(V,E)$ with vertex set $V$ and edge set $E$;
+Throughout this paper, the number of community is denoted by $k$;
+the random undirected graph $G$ is written as $G(V,E)$ with vertex set $V$ and edge set $E$;
 $V=\{1,\dots, n\} =: [n]$;
 the label of each node is $X_i$, which is chosen from $W= \{1, \omega, \dots, \omega^{k-1}\}$ and we further require $W$
-is a cyclic group with order $k$; $W^n$ is the n-ary Cartesian power of $W$;
-$f$ is a permutation function on $W$ and applied to $W^n$ in elementwise way;
-$U^c$ is the complement set of $U$;  
+is a cyclic group with order $k$;
+$W^n$ is the n-ary Cartesian power of $W$;
+$f$ is a permutation function on $W$ and extended to $W^n$ in elementwise way;
+$U^c$ is the complement set of $U$ and $|U|$ is the cardinality of $U$;  
 the set $S_k$ is used to represent all permutation functions on $W$ and $S_k(\sigma):=\{f(\sigma)| f\in S_k\}$ for $\sigma \in W^n$;
 the indicator function $\delta(x,y)$ is defined as
 $\delta(x,y) = 1 $ when $x=y$, and $\delta(x,y)=0$ when $x\neq y$;
 $f(n) = O(g(n))$ if there exists constant $c > 0$ such that $ f(n) \leq c g(n)$
 for large $n$;
-$\Lambda := \{ \omega^j  \cdot \mathbf{1}_n | j=0, \dots,k-1\}$
-where $\mathbf{1}_n$ is the all one vector with dimension $n$;
 we define the distance of two vectors as:
 $\Dist(\sigma, \sigma')
 =|\{i\in[n]:\sigma_i\neq \sigma'_i\}| \textrm{ for } \sigma,\sigma'\in W^n
@@ -234,8 +234,10 @@ $ and the distance of a vector to a space $S\subseteq W^n$
 as
 $\Dist(\sigma,S)
 :=\min\{\Dist(\sigma, \sigma') | \sigma' \in S\}
-$.
- 
+$. For example, when $n=2$ and $k=2$, $\sigma=(1, \omega) \in W^2$;
+$\omega^0 = 1$; $\omega \cdot \omega = \omega^2 = 1$; let $f$ be a mapping such that $f(1) = \omega$ and $f(\omega)=1$,
+then $f \in S_2$ and $f(\sigma) = (\omega, 1)$; $\Dist(\sigma, f(\sigma)) = 2$; $S_k(\sigma) = \{\sigma, f(\sigma)\}$;
+$S_k^c(\sigma) = \{(1, 1), (\omega, \omega)\}$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Related Works}
 The classical Ising model is defined on lattice and confined to two state $\{\pm 1\}$. This definition
@@ -1033,6 +1035,8 @@ Therefore, from \eqref{eq:knd} we have
 {P_{\sigma|G}(\sigma=X)} \geq (1+o(1)) n^{g(\beta_n)}
 \end{equation*}
 \end{proof}
+Let $\Lambda := \{ \omega^j  \cdot \mathbf{1}_n | j=0, \dots,k-1\}$
+where $\mathbf{1}_n$ is the all one vector with dimension $n$, and we have the following lemma:
 \begin{Lemma}\label{lem:small}
 	Suppose $\gamma < b $ and $\bar{\sigma}$ satisfies $\Dist(\bar{\sigma}, \mathbf{1}_n) \geq \frac{n}{\sqrt{\log  n}}$
 	and $D(\bar{\sigma}, \mathbf{1}_n)$.

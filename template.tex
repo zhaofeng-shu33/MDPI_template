@@ -416,8 +416,8 @@ how $(\gamma, \beta)$ take values, $\forall \epsilon > 0$, when $n$ is sufficien
 \item If $\gamma < b$, $P_a(\hat{X}^*) \leq \exp(-C n)$ for any $C>0$.
 \end{enumerate}
 \end{Theorem}
-By simple calculus, $\tilde{g}(\beta) < 0$ for $\beta> \beta^*$ and $g(\beta)>0$ for $\beta < \beta^*$.
-For sufficiently small $\epsilon$ and as $n \to \infty$, the upper bounds in Theorem \ref{thm:phase_transition} all converge to $0$ at least
+By simple calculus, $\tilde{g}(\beta) < 0$ for $\beta> \beta^*$ and $g(\beta)>0$ for $\beta < \beta^*$. $g(\bar{\beta}) < 0$ follows from \eqref{eq:abk}.
+Therefore, for sufficiently small $\epsilon$ and as $n \to \infty$, the upper bounds in Theorem \ref{thm:phase_transition} all converge to $0$ at least
 in polynomial speed.
 Therefore, Theorem \ref{thm:phase_transition} establishes the sharp phase transition property of Ising model, which is illustrated
 in Figure \ref{fig:pt}.
@@ -493,7 +493,7 @@ When $\sigma \in W^*$, minimizing $H(\sigma)$ is equivalent to
 \end{equation}
 where the minimal value is the minimum cut between different detected communities.
 
-When $\hat{X}'' \neq X'$, we must have $\Dist(\hat{X}'' ,X)\geq 2$ to satisfy the constraint $\hat{X}'' \in W^*$.
+When $\hat{X}'' \neq X$, we must have $\Dist(\hat{X}'' ,X)\geq 2$ to satisfy the constraint $\hat{X}'' \in W^*$.
 Besides, the estimator of $\hat{X}''$ is parameter-free while $\hat{X}'$ depends on $\gamma$. The extra parameter $\gamma$ in the expression of
 $\hat{X}'$ can be regarded as a kind of Lagrange multiplier for this integer programming problem. Thus the optimization problem for $\hat{X}'$
 is a relaxation of that for $\hat{X}''$ by introducing a penalized term and enlarging the searched space from $W^*$ to $W$.
@@ -508,20 +508,20 @@ When $\sqrt{a} - \sqrt{b} > \sqrt{k}$, for $n$ sufficiently large,
 	\item $P_G(\hat{X}'' \not\in S_k(X)) \leq ((k-1)^2+o(1))n^{2g(\bar{\beta})}$.
 \end{enumerate}
 \end{Theorem}
-As $g(\bar{\beta})<0$, $n^{2g(\bar{\beta})} < n^{g(\bar{\beta})} < n^{g(\bar{\beta})/2}$, then
+As $g(\bar{\beta})<0$, $n^{2g(\bar{\beta})} < n^{g(\bar{\beta})} < n^{g(\bar{\beta})/2}$,
 Theorem \ref{thm:error_rate} implies that $P_e(\hat{X}'')$ has the sharpest upper bound among the three estimators.
 This can be intuitively understood as the result of smaller search space.
-The proof technique of Theorem \ref{thm:error_rate} is to consider the probability of events when $P_G(G | X) < P_G(G | \sigma)$
+The proof technique of Theorem \ref{thm:error_rate} is to consider the probability of events when $H(X) > H(\bar{\sigma})$
 for $\Dist(\sigma, X) \geq 1$. Then using union bound to sum them up.
 This technique has been used in \cite{abbe2015exact} for $k=2$ to show that exact recovery by maximum likelihood is possible
-when $\sqrt{a} - \sqrt{b} > 2$. But only a loose bound $n^{g(\bar{\beta})/4}$ is obtained.
+when $\sqrt{a} - \sqrt{b} > 2$, but only a loose bound $n^{g(\bar{\beta})/4}$ is obtained.
 For general case, since $\tilde{g}(\beta) = 1- \frac{(\sqrt{a} - \sqrt{b})^2}{k}$, Theorem \ref{thm:error_rate} implies that exact recovery is possible using $\hat{X}'$ as long as  
 $\sqrt{a} - \sqrt{b} > \sqrt{k}$ is satisfied.
 
 
 Estimator $\hat{X}'$ has one parameter $\gamma$. When $\gamma$ takes different values depending on $a,b$, $\hat{X}'$
 is equivalent with maximum likelihood or maximum modularity in asymptotic case. The following analysis shows
-such relationship intuitively.
+their relationship intuitively.
 
 Maximum likelihood estimator is obtained by maximizing the log likelihood function.
 From \eqref{eq:GmL}, this function can be written as
@@ -558,13 +558,14 @@ necessary. The most common way to generate an Ising sample is using Metropolis s
 Empirically speaking, starting from a random state, Metropolis algorithm updates the state by randomly selecting one position to flip at each iteration step.
 Then after some initial burning time, the generated samples can be regarded as samples from Ising model.
 
-The theoretical guarantee of Metropolis sampling is based on Markov chain. Under some general conditions, Metropolis samples are converging to
+The theoretical guarantee of Metropolis sampling is based on Markov chain. Under some general conditions, Metropolis samples converge to
 the steady state of the Markov chain, which is the probability distribution to be approximated. For Ising model, there are many previous works which have shown that the convergence of Metropolis sampling \cite{diaconis1998we}.
 
 For our specific Ising model and energy term in \eqref{eq:energy},
 the pseudo code of our algorithm is summarized in Algorithm \ref{alg:m}.
-This algorithm requires the number of the communities $k$ is known and the parameter $\gamma$ is given. We can choose $\gamma > b$ where $b$ is estimated
-by the estimator mentioned Theorem \ref{thm:ab12}.
+This algorithm requires the number of the communities $k$ is known and the parameter $\gamma$ is given.
+We should choose $\gamma > b$ where $b$ is estimated
+by the estimator mentioned in Theorem \ref{thm:ab12}.
 The iteration time $N$ should also be specified in advance.
 \begin{algorithm}[H]
 	\caption{Metropolis sampling algorithm for SBM} \label{alg:m}
@@ -588,7 +589,7 @@ The computation of $\Delta H(r,s)$ needs $O(\log n)$ time from Lemma \ref{lem:le
 For some special Ising model with disassortative interaction, it needs to take $N=O(n\log n)$ to generate the sample for good approximation \cite{mcmc}. For our model, it is unknown whether $O(n\log n)$ is sufficient, and we empirically choose $N=O(n^2)$ in the experiments.
 Then the time complexity of Algorithm \ref{alg:m} is $n^2 \log n$.
 
-Using Metropolis sampling, we conduct a moderate simulation to verify Theorem \ref{thm:phase_transition}.
+Using Metropolis sampling, we conduct a moderate simulation to verify Theorem \ref{thm:phase_transition} for $\gamma > b$.
 We choose $n=9000, k=2$, and the empirical accuracy is computed by $P_e = \frac{1}{m_1m_2}\sum_{i=1}^{m_1} \sum_{j=1}^{m_2} \mathbbm{1}[\hat{X}^* = \pm X]$. $m_1$ is the number of times to generate the random graph. For each $G$, we further sample $m_2$ states by Algorithm \ref{alg:m} consecutively.
 To make good approximation, we choose $m_1=2100,m_2=6000$.
 The result is shown in the following figure.

@@ -295,7 +295,7 @@ these two definitions are equivalent. Although the random variable definition is
 
 Given the SBM, the exact recovery problem can be formally defined as follows:
 \begin{Definition}[Exact recovery in SBM] \label{def:SSBMR}
-Given $X$, the random graph $G$ is drawn under $\SSBM(n,k,p,q)$. If there exists an algorithm that takes
+Given $X$, the random graph $G$ is drawn under $\SSBM(n,k,p,q)$. We say the exact recovery is solvable for $\SSBM(n,k,p,q)$ if there exists an algorithm that takes
 $G$ as input and outputs $\hat{X}$ such that
 \begin{equation*}
 P_a(\hat{X}):=P(\hat{X} \in S_k(X)) \to 1 \textrm{ as } n \to \infty
@@ -375,14 +375,14 @@ as follows:
 	$Z_G(\alpha,\beta)$ is the normalizing constant for this distribution.
 \end{Definition}
 In physics, we often call $\beta$ the inverse temperature and $Z_G(\gamma, \beta)$ the partition function.
-The Hamiltonian energy $H(\bar{\sigma})$ consists of two terms: the repulsive interaction between nodes without edge connection
-and the attractive interaction between nodes with edge connection. The term $\gamma$ is the ratio of the power of these two
+The Hamiltonian energy $H(\bar{\sigma})$ consists of two terms: the repelling interaction between nodes without edge connection
+and the attracting interaction between nodes with edge connection. The term $\gamma$ is the ratio of the power of these two
 interactions. We should add $\frac{\log n}{n}$ to balance the two terms because there are only $O(\frac{\log n}{n})$
 connecting edges for each node.
 The probability of each state is proportional to $\exp(-\beta H(\bar{\sigma}))$, and the state with the largest
 probability corresponds to that with the lowest energy.
 
-There are two main differences of Definition \ref{def:ising} with the classical one. Firstly we add a compulsory term
+There are two main differences of Definition \ref{def:ising} with the classical one. Firstly, we add a compulsory term
 between nodes without an edge connection. This makes these nodes have larger probability to take different labels.
 Secondly, we allow the state at each node to take $k$ values from $W$.
 When $\gamma = 0$ and $k=2$, Definition \ref{def:ising}
@@ -476,7 +476,7 @@ Theorem \ref{thm:phase_transition}, which can be found in section \ref{sec:pm}.
 
 \section{Community Detection via Energy Minimization}\label{sec:em}
 Since $\beta^*$ is irrelevant with $n$, when $\gamma>b$, we can choose a sufficiently large $\beta$ such that
-$\beta > \beta^*$, then by Theorem \ref{thm:phase_transition}, with almost 1 probability $\sigma \in S_k(X)$, which
+$\beta > \beta^*$, then by Theorem \ref{thm:phase_transition}, $\sigma \in S_k(X)$ almost surely, which
 implies that $P_{\sigma | G}(\sigma = X)$ has the largest probability for almost all graph $G$. Therefore, instead of generating
 the sample from the Ising model, we can directly maximize the conditional probability to find the state with the largest probability.
 Or equivalently, we can proceed by minimizing the energy term in \eqref{eq:energy}:
@@ -569,7 +569,7 @@ by the estimator mentioned in Theorem \ref{thm:ab12}.
 The iteration time $N$ should also be specified in advance.
 \begin{algorithm}[H]
 	\caption{Metropolis sampling algorithm for SBM} \label{alg:m}
-	Inputs: the graph $G$, inverse temperature $\beta$, disassortative power $\gamma$ \\
+	Inputs: the graph $G$, inverse temperature $\beta$, the parameter $\gamma$ \\
 	Output: $\hat{X}$
 	\begin{algorithmic}[1]
 		\STATE random initialize $\sigma \in W^n$ \vskip 0.5em
@@ -586,7 +586,7 @@ The iteration time $N$ should also be specified in advance.
 	\end{algorithmic}
 \end{algorithm}
 The computation of $\Delta H(r,s)$ needs $O(\log n)$ time from Lemma \ref{lem:lemmaDiff}.
-For some special Ising model with disassortative interaction, it needs to take $N=O(n\log n)$ to generate the sample for good approximation \cite{mcmc}. For our model, it is unknown whether $O(n\log n)$ is sufficient, and we empirically choose $N=O(n^2)$ in the experiments.
+For some special Ising model, it needs to take $N=O(n\log n)$ to generate the sample for good approximation \cite{mcmc}. For our model, it is unknown whether $O(n\log n)$ is sufficient, and we empirically choose $N=O(n^2)$ in the experiments.
 Then the time complexity of Algorithm \ref{alg:m} is $n^2 \log n$.
 
 Using Metropolis sampling, we conduct a moderate simulation to verify Theorem \ref{thm:phase_transition} for $\gamma > b$.
@@ -614,7 +614,7 @@ theoretical and empirical work will be done in the future such as the convergenc
 \section{Proof of Main Theorems}\label{sec:pm}
 \subsection{Proof of Theorem \ref{thm:ab12}}
 \begin{Lemma}\label{lem:ER_tr_counting}
-	Consider Erdos Renyi random graph $G$ with $n$ nodes, in which edges are placed independently with probability $p$ \cite{erdHos1960evolution}. Suppose
+	Consider Erdős–Rényi random graph $G$ with $n$ nodes, in which edges are placed independently with probability $p$ \cite{erdHos1960evolution}. Suppose
 	$p=\A$, the number of edges is denoted by $|E|$ while the number of triangles is $T$. Then
 	$\frac{|E|}{n \log n} \to \frac{a}{2}$ and $\frac{T}{\log^3 n} \to \frac{a^3}{6}$ in probability.
 \end{Lemma}
@@ -768,7 +768,7 @@ in which we use $A_{\bar{\sigma}}$ (or $B_{\bar{\sigma}}$) to represent the bino
 respectively and $N_{\bar{\sigma}}$ is a deterministic positive number depending on $\bar{\sigma}$ but irrelevant with the graph structure.
 The following lemma gives the expression of $A_{\bar{\sigma}}, B_{\bar{\sigma}}$ and $N_{\bar{\sigma}}$:
 \begin{Lemma}\label{lem:minus}
-	For SSBM$(n,k,p,q)$, suppose the ground truth label is $X$ while $\bar{\sigma}$ differs from $X$ in $|\cI|:=\Dist(\bar{\sigma}, X)$ coordinate.
+	For SSBM$(n,k,p,q)$, we assume $\bar{\sigma}$ differs from the ground truth label vector $X$ in $|\cI|:=\Dist(\bar{\sigma}, X)$ coordinate.
 	Let $I_{ij} = |\{r\in [n] | X_r = w^i, \sigma_r = w^j \}$ for $i\neq j$ and $I_{ii} = 0$. We further denote the row sum as $I_i = \sum_{j=0}^{k-1} I_{ij}$ and
 	the column sum as $I'_i = \sum_{j=0}^{k-1} I_{ji}$.
 	Then
@@ -814,8 +814,8 @@ establish the properties of Ising model.
 	\end{enumerate}
 	If neither of the above two condition holds, then from condition 1 we have
 	$I_{ij} < \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}}$ or $I_{ij} > \frac{n}{k} - \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}}$ for any $0 \leq i,j\leq k-1$.
-	Since $\sum_{i,j} I_{ij} = |\cI| \geq \frac{n}{\sqrt{\log n}}$ there exists $i,j$ such that $I_{ij} > \frac{n}{k} - \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}}$.
-	Under such condition, if $I_{ji} > \frac{n}{k} - \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}}$.
+	Since $\sum_{i,j} I_{ij} = |\cI| \geq \frac{n}{\sqrt{\log n}}$, there exists $i,j$ such that $I_{ij} > \frac{n}{k} - \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}}$.
+	Under such condition, we also assume $I_{ji} > \frac{n}{k} - \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}}$.
 	Let $X'$ be the vector which exchanges value of $w^i$ with $w^j$ in $X$. We consider
 	\begin{align}
 	 \Dist(\bar{\sigma}, X') & - \Dist(\bar{\sigma}, X)= |\{ r \in [n]|X_r=w^i, \bar{\sigma}_r \neq w^j \}| \notag\\

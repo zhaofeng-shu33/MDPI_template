@@ -179,7 +179,9 @@ It provides benchmark artificial dataset to evaluate different community detecti
 and inspires the design of many algorithms for community detection tasks. These algorithms, such as
 semi-definite relaxation, spectral clustering and label propagation, not only have theoretical guarantee when applied to SBM,
 but perform well on dataset without SBM assumption. The study on the theoretical guarantee on SBM model can be divided between
-the problem of exact recovery and that of partial recovery. For both cases, the asymptotic behavior of detection error
+the problem of exact recovery and that of partial recovery. Exact recovery requires that the estimated community should be exactly
+the same with the underlining community structure of SBM while partial recovery expects the ratio of misclassified node as small as possible.
+For both cases, the asymptotic behavior of detection error
 is analyzed when the scale of graph tends to infinity. There are already some well-known results for the exact recovery problem
 on SBM.	To name but a few, Abbe and Mossel established the exact recovery region for a special sparse SBM with two communities  \cite{abbe2015exact, mossel2016}.
 Later on, the result is extended to general SBM with multiple communities \cite{abbe2015community}.

@@ -1,31 +1,64 @@
 \documentclass[answers]{exam}
+\usepackage{amsmath}
+\DeclareMathOperator{\SSBM}{SSBM}
+\newcommand{\cI}{\mathcal{I}}
+\DeclareMathOperator{\Dist}{dist}
 \renewcommand{\solutiontitle}{\noindent\textbf{Answer:}\par\noindent}
 \unframedsolutions
 \begin{document}
 	\pagestyle{empty}
-	Thanks for your careful review of my manuscript. Below is my reply to each point of your question.
+	Thanks for your careful review of my manuscript. Below is my reply to each point of your questions.
 \begin{questions}
 \question Please improve description of "community detection" and the meaning of "exact recovery". Unless one already works in this field it is not easy to understand from the current introduction.
 \begin{solution}
-	I have added background of community detection and explanations for exact recovery to the first paragraph of the manuscript.
-	The revised part goes like this:
-	
+	I have added the background of community detection and more explanations for exact recovery to the first paragraph of the manuscript.
+	The revised part goes like this.
+
+	In network analysis, community detection is inferring the group of vertices which
+	are more densely connected in a graph. It has been used in many domains like recommendation systems,
+	task allocation in distributed computing, gene expressions, and so on. ... Exact recovery requires that the estimated community should be exactly
+	the same with the underlining community structure of SBM while partial recovery expects the ratio of misclassified node as small as possible.
+
+
 \end{solution}
 \question My main problem with the paper is the language, and probably som minor errors, which makes it hard to follow parts of the ms. For example, definition 2 seems to be missing an essential part: "If there exists...such that" but there is no "then" part to describe what is defined. 
-
+\begin{solution}
+	The mentioned sentence does not have a subject, I have fixed this grammar error by changing it to
+	"We say that the exact recovery is solvable for $\SSBM(n,k,p,q)$ if there exists...".
+\end{solution}
 \question On line 109 the authors mention the "ground truth label vector", what does this mean? Is X always a ground truth label vector? 
-
+\begin{solution}
+	The ground truth label vector $X$ means that we assume the graph $G$ is generated based on the label of $X$. Upon observing the graph $G$,
+	we will use an algorithm to recover $X$. Through this article, we assume $X$ always a ground truth label vector.
+\end{solution}
 \question The figure on page 4 is missing the powers of 10 on the y-axis.
-
+\begin{solution}
+	I do not quite understand the missing point. Could you please explain a little further what is "the powers of 10"?
+\end{solution}
 \question On line 131-132 the use of repulsive and attractive looks strange, should it be repellent (or repelling) and attracting? On line 217 and in Algorithm 1, what does disassortative mean?
-
+\begin{solution}
+	I am sorry the adjective word used in this manuscript is not consistent. I used "repulsive, attractive" and "assortative, disassortative"
+	interchangeably. The group of word "repelling, attracting" are better. I have modified all adjective words of previous two groups to
+	"repelling, attracting". Repelling interaction term is $\gamma \frac{\log n}{n} \sum_{\{i,j\}\not\in E(G)} \delta(\bar{\sigma}_i, \bar{\sigma}_j)$
+	while attracting interaction term is $- \sum_{\{i,j\}\in E(G)} \delta(\bar{\sigma}_i, \bar{\sigma}_j)$.
+\end{solution}
 \question At the bottom of page 6 the "almost 1" should perhaps be "almost surely"?
-
+\begin{solution}
+This sentence has been modified to "$\sigma \in S_k(X)$ almost surely".
+\end{solution}
 \question Lemma 2: Umlauts missing on Erdos.
+\begin{solution}
+This proper noun has been modified to "Erdős–Rényi".
+\end{solution}
 
 \question Lemma 6: The ending of the first sentence looks strange, perhaps from defining |I| and using it at once. Split it up?
-
+\begin{solution}
+This sentence has been modified to "We assume $\bar{\sigma}$ differs from the ground truth label vector $X$ in $|\cI|:=\Dist(\bar{\sigma}, X)$ coordinate."
+\end{solution}
 \question Sentence at top of page 14: "Under such condition..." has a period after the formula, should probably be a comma.
+\begin{solution}
+	This sentence has been modified to "We also assume $I_{ji} > \frac{n}{k} - \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}}$".
+\end{solution}
 \end{questions}
 Besides, I have revised my manuscript to improve its English style.
 \end{document}

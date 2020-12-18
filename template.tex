@@ -12,6 +12,7 @@
 \usepackage{algorithmic}
 \usepackage{algorithm}
 \usepackage{graphicx}
+\usepackage{subcaption}
 %\newtheorem{theorem}{Theorem}
 %\newtheorem{definition}{Definition}
 %\newtheorem{corollary}{Corollary}
@@ -397,7 +398,9 @@ Secondly, we allow the state at each node to take $k$ values from $W$ instead of
 When $\gamma = 0$ and $k=2$, Definition \ref{def:ising}
 reduces to the classical definition of Ising model up to a scaling factor.
 
-Definition \ref{def:ising} gives a stochastic estimator $\hat{X}^*$ for $X$: $\hat{X}^*$ is one sample generated from Ising model. The exact recovery error probability for $\hat{X}^*$ can be written as $P_e(\hat{X}^*) := \sum_{G \in \cG_n} P_G(G) P_{\sigma | G}(S^c_k(X))$. We can see from this expression that error probability is determined
+Definition \ref{def:ising} gives a stochastic estimator $\hat{X}^*$ for $X$: $\hat{X}^*$ is one sample generated from Ising model, which is denoted as
+$\hat{X}^* \sim \textrm{Ising}(\gamma, \beta)$.
+The exact recovery error probability for $\hat{X}^*$ can be written as $P_e(\hat{X}^*) := \sum_{G \in \cG_n} P_G(G) P_{\sigma | G}(S^c_k(X))$. We can see from this expression that error probability is determined
 by two parameters $(\gamma, \beta)$. When these parameters take proper value, $ P_e(\hat{X}^*)\to 0$ and the exact recovery of SBM is achievable. On the contrary, $P_e(\hat{X}^*) \to 1$ if $(\gamma, \beta)$ takes other values.
 These two cases are summarized in the following theorem:
 \begin{Theorem}\label{thm:phase_transition}
@@ -431,9 +434,15 @@ in polynomial speed.
 Therefore, Theorem \ref{thm:phase_transition} establishes the sharp phase transition property of Ising model, which is illustrated
 in Figure \ref{fig:pt}.
 \begin{figure}
-	\centering
-	\includegraphics[width=0.45\textwidth]{phase_trans.eps}
-	\caption{Phase transition region with respect to $(\beta, \gamma)$ plane}\label{fig:pt}
+\begin{subfigure}{0.5\textwidth}
+	\includegraphics[width=\textwidth]{phase_trans.eps}
+	\caption{Phase transition region with respect to $(\beta, \gamma)$ plane.
+	The exact recovery of SSBM is solvable only in Region I.}\label{fig:pt}
+\end{subfigure}~
+\begin{subfigure}{0.43\textwidth}
+	\includegraphics[width=\textwidth]{g-16-4-2.eps}
+	\caption{$g(\beta),\tilde{g}(\beta)$ when $a=16,b=4,k=2$}\label{fig:g}
+\end{subfigure}
 \end{figure}
 
 Theorem
@@ -446,9 +455,10 @@ D(\sigma, \sigma') := \{ \sigma = \arg\min_{f \in S_k} \Dist(f(\sigma), \sigma')
 \end{equation}
 Then Theorem \ref{thm:phase_transition} can be stated with respect to the marginal distribution $P_{\sigma}$:
 \begin{Corollary}\label{cor:phase4}
+Suppose $\gamma > b$, depending on how $\beta$ takes values,
 \begin{enumerate}
-	\item If $\gamma > b$ and $\beta > \beta^*$, $P_{\sigma}(\sigma = X | D(\sigma, X))  = 1-o(1)$;
-	\item If $\gamma < b$ or $\beta < \beta^*$, $P_{\sigma}(\sigma = X | D(\sigma, X))  = o(1)$.
+	\item when $\beta > \beta^*$, $P_{\sigma}(\sigma = X | D(\sigma, X))  = 1-o(1)$;
+	\item when $\beta < \beta^*$, $P_{\sigma}(\sigma = X | D(\sigma, X))  = o(1)$.
 \end{enumerate}
 \end{Corollary}
 

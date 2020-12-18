@@ -232,7 +232,7 @@ the set $S_k$ is used to represent all permutation functions on $W$ and $S_k(\si
 the indicator function $\delta(x,y)$ is defined as
 $\delta(x,y) = 1 $ when $x=y$, and $\delta(x,y)=0$ when $x\neq y$;
 $f(n) = O(g(n))$ if there exists constant $c > 0$ such that $ f(n) \leq c g(n)$
-for large $n$;
+for large $n$; $f(n)=o(g(n))$ holds if $\lim_{n\to\infty} \frac{f(n)}{g(n)} = 0$;
 we define the distance of two vectors as:
 $\Dist(\sigma, \sigma')
 =|\{i\in[n]:\sigma_i\neq \sigma'_i\}| \textrm{ for } \sigma,\sigma'\in W^n
@@ -385,11 +385,11 @@ There are two main differences between Definition \ref{def:ising} and the classi
 between nodes without an edge connection. This makes these nodes have larger probability to take different labels.
 Secondly, we allow the state at each node to take $k$ values from $W$ instead of two values $\pm 1$.
 When $\gamma = 0$ and $k=2$, Definition \ref{def:ising}
-reduces to the classical definition of Ising model up to a scaling factor.
+is reduced to the classical definition of Ising model up to a scaling factor.
 
 Definition \ref{def:ising} gives a stochastic estimator $\hat{X}^*$ for $X$: $\hat{X}^*$ is one sample generated from Ising model, which is denoted as
 $\hat{X}^* \sim \textrm{Ising}(\gamma, \beta)$.
-The exact recovery error probability for $\hat{X}^*$ can be written as $P_e(\hat{X}^*) := \sum_{G \in \cG_n} P_G(G) P_{\sigma | G}(S^c_k(X))$. We can see from this expression that error probability is determined
+The exact recovery error probability for $\hat{X}^*$ can be written as $P_e(\hat{X}^*) := \sum_{G \in \cG_n} P_G(G) P_{\sigma | G}(S^c_k(X))$. We can see from this expression that the error probability is determined
 by two parameters $(\gamma, \beta)$. When these parameters take proper value, $ P_e(\hat{X}^*)\to 0$ and the exact recovery of SBM is achievable. On the contrary, $P_e(\hat{X}^*) \to 1$ if $(\gamma, \beta)$ takes other values.
 These two cases are summarized in the following theorem:
 \begin{Theorem}\label{thm:phase_transition}
@@ -410,7 +410,7 @@ Let $\beta^*$ be defined as
 \beta^* = \log\left(\frac{a + b - k - \sqrt{(a + b - k)^2 - 4 a b)}}{2  b}\right)
 \end{equation}
 which is the solution to the equation $g(\beta) = 0$ and $\beta^* < \bar{\beta}$. Then depending on
-how $(\gamma, \beta)$ take values, $\forall \epsilon > 0$, when $n$ is sufficiently large, we have
+how $(\gamma, \beta)$ take values, for any given $\epsilon > 0$ and $\hat{X}^* \sim \textrm{Ising}(\gamma, \beta)$, when $n$ is sufficiently large, we have
 \begin{enumerate}
 \item If $\gamma > b$ and $\beta > \beta^*$,  $P_e(\hat{X}^*) \leq n^{\tilde{g}(\beta)/2 + \epsilon}$;
 \item If $\gamma > b$ and $\beta < \beta^*$, $P_a(\hat{X}^*) \leq (1+o(1))\max\{n^{g(\bar{\beta})}, n^{-g(\beta) + \epsilon}\}$;
@@ -429,7 +429,7 @@ in Figure \ref{fig:pt}.
 \end{subfigure}~
 \begin{subfigure}{0.5\textwidth}
 	\includegraphics[width=\textwidth]{phase_trans.eps}
-	\caption{Phase transition region with respect to $(\beta, \gamma)$ plane.
+	\caption{Phase transition region in $(\beta, \gamma)$ plane.
 	The exact recovery of SSBM is solvable only in Region I.}\label{fig:pt}
 \end{subfigure}
 \caption{Illustration of Theorem \ref{thm:phase_transition} }

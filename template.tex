@@ -371,10 +371,10 @@ as follows:
 	The subscript in $P_{\sigma|G}$ indicates that the distribution depends on $G$, and
 	$Z_G(\alpha,\beta)$ is the normalizing constant for this distribution.
 \end{Definition}
-In physics, $\beta$ is referred to the inverse temperature and $Z_G(\gamma, \beta)$ is called the partition function.
+In physics, $\beta$ refers to the inverse temperature and $Z_G(\gamma, \beta)$ is called the partition function.
 The Hamiltonian energy $H(\bar{\sigma})$ consists of two terms: the repelling interaction between nodes without edge connection
 and the attracting interaction between nodes with edge connection. The parameter $\gamma$ indicates the ratio of the strength of these two
-interactions. We should add $\frac{\log n}{n}$ to balance the two terms because there are only $O(\frac{\log n}{n})$
+interactions. The term $\frac{\log n}{n}$ is added to balance the two interactions because there are only $O(\frac{\log n}{n})$
 connecting edges for each node.
 The probability of each state is proportional to $\exp(-\beta H(\bar{\sigma}))$, and the state with the largest
 probability corresponds to that with the lowest energy.
@@ -389,7 +389,7 @@ is reduced to the classical definition of Ising model up to a scaling factor.
 
 Definition \ref{def:ising} gives a stochastic estimator $\hat{X}^*$ for $X$: $\hat{X}^*$ is one sample generated from Ising model, which is denoted as
 $\hat{X}^* \sim \textrm{Ising}(\gamma, \beta)$.
-The exact recovery error probability for $\hat{X}^*$ can be written as $P_e(\hat{X}^*) := \sum_{G \in \cG_n} P_G(G) P_{\sigma | G}(S^c_k(X))$. We can see from this expression that the error probability is determined
+The exact recovery error probability for $\hat{X}^*$ can be written as $P_e(\hat{X}^*) := \sum_{G \in \cG_n} P_G(G) P_{\sigma | G}(S^c_k(X))$. From this expression we can see that the error probability is determined
 by two parameters $(\gamma, \beta)$. When these parameters take proper value, $ P_e(\hat{X}^*)\to 0$ and the exact recovery of SBM is achievable. On the contrary, $P_e(\hat{X}^*) \to 1$ if $(\gamma, \beta)$ takes other values.
 These two cases are summarized in the following theorem:
 \begin{Theorem}\label{thm:phase_transition}
@@ -417,7 +417,7 @@ how $(\gamma, \beta)$ take values, for any given $\epsilon > 0$ and $\hat{X}^* \
 \item If $\gamma < b$, $P_a(\hat{X}^*) \leq \exp(-C n)$ for any $C>0$.
 \end{enumerate}
 \end{Theorem}
-By simple calculus, $\tilde{g}(\beta) < 0$ for $\beta> \beta^*$ and $g(\beta)>0$ for $\beta < \beta^*$. $g(\bar{\beta}) < 0$ follows from \eqref{eq:abk}. The illustration of $g(\beta), \tilde{g}(\beta)$ is shown in Fig \ref{fig:g}.
+By simple calculus, $\tilde{g}(\beta) < 0$ for $\beta> \beta^*$ and $g(\beta)>0$ for $\beta < \beta^*$. $g(\bar{\beta}) < 0$ follows from \eqref{eq:abk}. The illustration of $g(\beta), \tilde{g}(\beta)$ is shown in Figure \ref{fig:g}.
 Therefore, for sufficiently small $\epsilon$ and as $n \to \infty$, the upper bounds in Theorem \ref{thm:phase_transition} all converge to $0$ at least
 in polynomial speed.
 Therefore, Theorem \ref{thm:phase_transition} establishes the sharp phase transition property of Ising model, which is illustrated
@@ -438,7 +438,7 @@ in Figure \ref{fig:pt}.
 Theorem
 \ref{thm:phase_transition} can also be understood from the marginal distribution for $\sigma: P_{\sigma}(\sigma =\bar{\sigma})
 =\sum_{G \in \cG_n}P_G(G)P_{\sigma |G}(\sigma=\bar{\sigma})$.
-Let $D(\sigma, \sigma')$ be the event when $\sigma$ is nearest to $\sigma'$ among all its permutations.
+Let $D(\sigma, \sigma')$ be the event when $\sigma$ is closest to $\sigma'$ among all its permutations.
 That is
 \begin{equation}
 D(\sigma, \sigma') := \{ \sigma = \arg\min_{f \in S_k} \Dist(f(\sigma), \sigma')  \}
@@ -452,7 +452,7 @@ Suppose $\gamma > b$, depending on how $\beta$ takes values,
 \end{enumerate}
 \end{Corollary}
 
-Below we outline the proof ideas of Theorem \ref{thm:phase_transition}, which is generalized from the analysis of the one-flip energy difference.
+Below we outline the proof ideas of Theorem \ref{thm:phase_transition}. The insight is obtained from the analysis of the one-flip energy difference.
 This useful result is summarized in the following lemma:
 \begin{Lemma}\label{lem:lemmaDiff}
 	Suppose $\bar{\sigma}'$ differs from $\bar{\sigma}$ only at position $r$ by $\bar{\sigma}'_r = \omega^s \cdot \bar{\sigma}_r$.
@@ -464,7 +464,7 @@ This useful result is summarized in the following lemma:
 	\end{align}
 	where $m(\omega^j) := |\{i \in [n] | \bar{\sigma}_i = \omega^j | \}$, $N_r(G):=\{j | (r, j) \in E(G) \}$ and $J_s(x, y) = \delta(x, y) - \delta(\omega_s \cdot x, y)$
 \end{Lemma}
-Lemma \ref{lem:lemmaDiff} gives an explicit way to compare the probability of two states by the following
+Lemma \ref{lem:lemmaDiff} gives an explicit way to compare the probability of two neighboring states by the following
 equality:
 \begin{equation}\label{eq:Pratio}
 \frac{P_{\sigma |G } (\sigma = \bar{\sigma}')}{P_{\sigma |G } (\sigma = \bar{\sigma})}
@@ -475,37 +475,37 @@ is also $O(\log n)$.
 
 When $H(\bar{\sigma}') > H(\bar{\sigma})$, we can expect $P_{\sigma | G}(\sigma = \bar{\sigma}')$ is far less than 
 $P_{\sigma | G}(\sigma = \bar{\sigma})$.
-If  $ \sum_{\Dist(\sigma', X)=1}\exp(-\beta(H(\bar{\sigma}') - H(X))) $ converges to zero,
+Roughly speaking, if  $ \sum_{\Dist(\sigma', X)=1}\exp(-\beta(H(\bar{\sigma}') - H(X))) $ converges to zero,
 we can expect the probability of all other states differing from $S_k(X)$ converges to zero.
 On the contrary, if $ \sum_{\Dist(\sigma', X)=1}\exp(-\beta(H(\bar{\sigma}') - H(X))) $ tends to infinity,
 then we have $P_{\sigma}(S_k(X))$ converges to zero. This illustrates the idea behind
 the proof of
-Theorem \ref{thm:phase_transition}, which can be found in section \ref{sec:pm}.
+Theorem \ref{thm:phase_transition}. The rigorous proof can be found in section \ref{sec:pm}.
 
 
 \section{Community Detection via Energy Minimization}\label{sec:em}
 Since $\beta^*$ is irrelevant with $n$, when $\gamma>b$, we can choose a sufficiently large $\beta$ such that
 $\beta > \beta^*$, then by Theorem \ref{thm:phase_transition}, $\sigma \in S_k(X)$ almost surely, which
-implies that $P_{\sigma | G}(\sigma = X)$ has the largest probability for almost all graph $G$. Therefore, instead of generating
-the sample from the Ising model, we can directly maximize the conditional probability to find the state with the largest probability.
+implies that $P_{\sigma | G}(\sigma = X)$ has the largest probability for almost all graph $G$. Therefore, instead of
+sampling from the Ising model, we can directly maximize the conditional probability to find the state with the largest probability.
 Or equivalently, we can proceed by minimizing the energy term in \eqref{eq:energy}:
 \begin{equation}\label{eq:hatX}
 \hat{X}' := \arg\min_{\bar{\sigma} \in W^n} H(\bar{\sigma})
 \end{equation}
 
-In \eqref{eq:hatX}, we allow $\bar{\sigma}$ to take values from $W^n$. Since we know the ground truth label $X$ has equal
-size $|\{v \in [n] : X_v = u\}| = \frac{n}{k}$, another formulation is to restrict the search space to
-$W^*:= \{\sigma \big\vert |\{v \in [n] : \sigma_v = \omega^s\}| = \frac{n}{k}, s=0,\dots, k-1 \}$.
+In \eqref{eq:hatX}, we allow $\bar{\sigma}$ to take values from $W^n$. Since we know $X$ has equal
+size $|\{v \in [n] : X_v = u\}| = \frac{n}{k}$ for each label $u$, another formulation is to restrict the search space to
+$W^*:= \{\sigma\in W^n \big\vert |\{v \in [n] : \sigma_v = \omega^s\}| = \frac{n}{k}, s=0,\dots, k-1 \}$.
 When $\sigma \in W^*$, minimizing $H(\sigma)$ is equivalent to
 \begin{equation}
-\hat{X}'' = \arg\min_{\sigma \in W^*} \sum_{\{i,j\} \not\in E(G) } \delta(\sigma_i, \sigma_j)
+\hat{X}'' := \arg\min_{\sigma \in W^*} \sum_{\{i,j\} \not\in E(G) } \delta(\sigma_i, \sigma_j)
 \end{equation}
 where the minimal value is the minimum cut between different detected communities.
 
 When $\hat{X}'' \neq X$, we must have $\Dist(\hat{X}'' ,X)\geq 2$ to satisfy the constraint $\hat{X}'' \in W^*$.
 Besides, the estimator of $\hat{X}''$ is parameter-free while $\hat{X}'$ depends on $\gamma$. The extra parameter $\gamma$ in the expression of
-$\hat{X}'$ can be regarded as a kind of Lagrange multiplier for this integer programming problem. Thus the optimization problem for $\hat{X}'$
-is a relaxation of that for $\hat{X}''$ by introducing a penalized term and enlarging the searched space from $W^*$ to $W$.
+$\hat{X}'$ can be regarded as a kind of Lagrange multiplier for this integer programming problem. Thus, the optimization problem for $\hat{X}'$
+is the relaxation of that for $\hat{X}''$ by introducing a penalized term and enlarging the searched space from $W^*$ to $W^n$.
 
 When $\beta > \bar{\beta}$, $\tilde{g}(\beta)$ becomes a constant value. Therefore, we can get $n^{g(\bar{\beta})/2}$ as the tightest error upper bound for Ising estimator $\hat{X}^*$ from Theorem \ref{thm:phase_transition}.
 For the estimator $\hat{X}'$ and $\hat{X}''$, we can obtain sharper error upper bound, which is
@@ -520,24 +520,23 @@ When $\sqrt{a} - \sqrt{b} > \sqrt{k}$, for $n$ sufficiently large,
 As $g(\bar{\beta})<0$, $n^{2g(\bar{\beta})} < n^{g(\bar{\beta})} < n^{g(\bar{\beta})/2}$,
 Theorem \ref{thm:error_rate} implies that $P_e(\hat{X}'')$ has the sharpest upper bound among the three estimators.
 This can be intuitively understood as the result of smaller search space.
-The proof technique of Theorem \ref{thm:error_rate} is to consider the probability of events when $H(X) > H(\bar{\sigma})$
-for $\Dist(\sigma, X) \geq 1$. Then using union bound to sum them up.
-This technique has been used in \cite{abbe2015exact} for $k=2$ to show that exact recovery by maximum likelihood is possible
-when $\sqrt{a} - \sqrt{b} > 2$, but only a loose bound $n^{g(\bar{\beta})/4}$ is obtained.
+The proof technique of Theorem \ref{thm:error_rate} is to consider the probability of events $H(X) > H(\bar{\sigma})$
+for $\Dist(\sigma, X) \geq 1$. Then using union bound to sum these error probabilities up.
+We note that a loose bound $n^{g(\bar{\beta})/4}$ is obtained in \cite{abbe2015exact} for the estimator $\hat{X}''$ when $k=2$.
 For general case, since $\tilde{g}(\beta) = 1- \frac{(\sqrt{a} - \sqrt{b})^2}{k}$, Theorem \ref{thm:error_rate} implies that exact recovery is possible using $\hat{X}'$ as long as  
 $\sqrt{a} - \sqrt{b} > \sqrt{k}$ is satisfied.
 
 
-Estimator $\hat{X}'$ has one parameter $\gamma$. When $\gamma$ takes different values depending on $a,b$, $\hat{X}'$
+Estimator $\hat{X}'$ has one parameter $\gamma$. When $\gamma$ takes different values, $\hat{X}'$
 is equivalent with maximum likelihood or maximum modularity in asymptotic case. The following analysis shows
 their relationship intuitively.
 
-Maximum likelihood estimator is obtained by maximizing the log likelihood function.
+Maximum likelihood estimator is obtained by maximizing the log-likelihood function.
 From \eqref{eq:GmL}, this function can be written as
 $$
 \log P_G(Z|X=\sigma) = -\log\frac{a}{b} \cdot H(\sigma) + C
 $$
-where the $\gamma$ term in $H(\sigma)$ satisfying $\gamma \frac{\log n}{n} = \frac{1}{\log(a/b)}(\log (1-\A) - \log (1-\B))$ and $C$ is a constant irrelevant with $\sigma$.
+where the parameter $\gamma$ in $H(\sigma)$ satisfying $\gamma \frac{\log n}{n} = \frac{1}{\log(a/b)}(\log (1-\A) - \log (1-\B))$ and $C$ is a constant irrelevant with $\sigma$.
 When $n$ is sufficiently large, we have $\gamma \to \gamma_{ML} := \frac{a-b}{\log(a/b)}$.
 That is, maximum likelihood estimator is equivalent with $\hat{X}'$ when $\gamma = \gamma_{ML}$ asymptotically.
 
@@ -547,7 +546,7 @@ Maximum modularity estimator is obtained by maximizing the modularity of a graph
 Q &= \frac{1}{2 |E|} \sum_{ij} (A_{ij} - \frac{d_i d_j}{2 |E|}) \delta(C_i, C_j)
 \end{align}
 For the $i$-th node, $d_i$ is its degree and $C_i$ is its community belonging. $A$ is the adjacency matrix.
-Up to a scaling factor, the modularity $Q$ can be re-written using the label $\sigma$ as:
+Up to a scaling factor, the modularity $Q$ can be re-written using the label vector $\sigma$ as:
 \begin{align}
 Q(\sigma) = &-\sum_{\{i,j\} \not\in E(G) } \frac{d_i d_j}{2 |E|}\delta(\sigma_i,\sigma_j) \notag \\
 &+ \sum_{\{i,j\} \in E(G) } (1 - \frac{d_i d_j}{2 |E|}) \delta(\sigma_i,\sigma_j)  \label{eq:Qtransform}
@@ -556,7 +555,7 @@ From \eqref{eq:Qtransform}, we can see that $Q(\sigma) \to -H(\sigma)$ with $\ga
 Indeed, we have $d_i \sim \frac{(a+b)\log n}{2}, |E| \sim \frac{1}{2}n d_i$. Therefore, we have $\frac{d_id_j}{2|E|} \to \gamma_{MQ} \frac{\log n}{n} $. That is, maximum modularity estimator is equivalent with $\hat{X}'$ when $\gamma = \gamma_{MQ}$ asymptotically.
 
 
-Using $a>b$ and the inequality $x-1>\log x > 2 \frac{x-1}{x+1}$ for $x>1$ we can verify that $\gamma_{MQ} > \gamma_{ML} > b$. That is, both maximum likelihood and maximum modularity satisfy the exact recovery conditions in Theorem \ref{thm:error_rate}.
+Using $a>b$ and the inequality $x-1>\log x > 2 \frac{x-1}{x+1}$ for $x>1$ we can verify that $\gamma_{MQ} > \gamma_{ML} > b$. That is, both maximum likelihood and maximum modularity estimator satisfy the exact recovery conditions $\gamma > b $ in Theorem \ref{thm:error_rate}.
 
 
 \section{Community Detection based on Metropolis Sampling}\label{sec:ms}
@@ -749,7 +748,7 @@ Therefore, we can get a unique solution $y$ within $(0, 2e_1)$. Since $(a,b)$ is
 By taking expectation on both sizes of \eqref{eq:e_1}, \eqref{eq:e_2} we can show $\mathbb{E}[\hat{a}] = a,
 \mathbb{E}[\hat{b}] = b$. By the continuous property of $g(y)$, $\hat{b} \to b$ and $\hat{a} \to a$ follows similarly.
 \end{proof}
-\subsection{Proof of Theorem \ref{thm:phase_transition}}
+\subsection{Proof of Theorem \ref{thm:phase_transition}}\label{subsec:pt}
 \begin{proof}[Proof of Lemma \ref{lem:lemmaDiff}]
 	First we rewrite the energy term in \eqref{eq:energy} as:
 	\begin{equation*}

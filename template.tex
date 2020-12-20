@@ -562,25 +562,26 @@ Using $a>b$ and the inequality $x-1>\log x > 2 \frac{x-1}{x+1}$ for $x>1$ we can
 From Theorem \ref{thm:phase_transition}, if we could sample from the Ising model, then with large probability, the sample
 is aligned with $X$. However, the exact sampling is difficult when $n$ is very large since the cardinality of the state space increases in
 the rate of $k^n$. Therefore, some approximation is
-necessary. The most common way to generate an Ising sample is using Metropolis sampling \cite{metropolis1953equation}. 
-Empirically speaking, starting from a random state, Metropolis algorithm updates the state by randomly selecting one position to flip at each iteration step.
-Then after some initial burning time, the generated samples can be regarded as samples from Ising model.
+necessary, and the most common way to generate an Ising sample is using Metropolis sampling \cite{metropolis1953equation}. 
+Empirically speaking, starting from a random state, Metropolis algorithm updates the state by randomly selecting one position to flip its state at each iteration step.
+Then after some initial burning time, the generated samples can be regarded as sampling from Ising model.
 
 The theoretical guarantee of Metropolis sampling is based on Markov chain. Under some general conditions, Metropolis samples converge to
-the steady state of the Markov chain, which is the probability distribution to be approximated. For Ising model, there are many previous works which have shown that the convergence of Metropolis sampling \cite{diaconis1998we}.
+the steady state of the Markov chain, and the steady state follows the probability distribution to be approximated. For Ising model, there are many previous works which have shown that the convergence of Metropolis sampling \cite{diaconis1998we}.
 
 For our specific Ising model and energy term in \eqref{eq:energy},
 the pseudo code of our algorithm is summarized in Algorithm \ref{alg:m}.
-This algorithm requires the number of the communities $k$ is known and the parameter $\gamma$ is given.
+This algorithm requires that the number of the communities $k$ is known and the 
+strength ratio parameter $\gamma$ is given.
 We should choose $\gamma > b$ where $b$ is estimated
-by the estimator mentioned in Theorem \ref{thm:ab12}.
+by $\hat{b}$ in Theorem \ref{thm:ab12}.
 The iteration time $N$ should also be specified in advance.
 \begin{algorithm}[H]
 	\caption{Metropolis sampling algorithm for SBM} \label{alg:m}
 	Inputs: the graph $G$, inverse temperature $\beta$, the strength ratio parameter $\gamma$ \\
-	Output: $\hat{X}$
+	Output: $\hat{X} = \bar{\sigma}$
 	\begin{algorithmic}[1]
-		\STATE random initialize $\sigma \in W^n$ \vskip 0.5em
+		\STATE random initialize $\bar{\sigma} \in W^n$ \vskip 0.5em
 		\FOR{$i=1,2,\dots, N$}
 		\STATE propose a new state $\bar{\sigma}'$ according to Lemma \ref{lem:lemmaDiff} where $s, r$ are randomly chosen \vskip 0.5em
 		\STATE compute $\Delta H(r,s) = H(\bar{\sigma}') - H(\bar{\sigma})$ using \eqref{eq:DeltaH} \vskip 0.5em
@@ -594,8 +595,8 @@ The iteration time $N$ should also be specified in advance.
 	\end{algorithmic}
 \end{algorithm}
 The computation of $\Delta H(r,s)$ needs $O(\log n)$ time from Lemma \ref{lem:lemmaDiff}.
-For some special Ising model, it needs to take $N=O(n\log n)$ to generate the sample for good approximation \cite{mcmc}. For our model, it is unknown whether $O(n\log n)$ is sufficient, and we empirically choose $N=O(n^2)$ in the experiments.
-Then the time complexity of Algorithm \ref{alg:m} is $n^2 \log n$.
+For some special Ising model, it needs to take $N=O(n\log n)$ to generate the sample for good approximation \cite{mcmc}. For our model, it is unknown whether $O(n\log n)$ is sufficient, and we empirically choose $N=O(n^2)$ in numerical experiments.
+Then the time complexity of Algorithm \ref{alg:m} is $O(n^2 \log n)$.
 
 In the remaining part of this section, we conduct experiments to verify our theoretical results.
 Firstly, we consider several combinations of $(a,b,k)$ and obtain the estimator $(\hat{a}, \hat{b})$ by Theorem \ref{thm:ab12}. Using
@@ -611,7 +612,7 @@ We choose $m_1=2100,m_2=6000$, which is fairly large to make good approximation 
 The result is shown in Figure \ref{fig:erh}.
 \begin{figure}[!ht]
 \begin{subfigure}{0.5\textwidth}
-	\includegraphics[width=\textwidth]{estimator-error-2020-11-22.eps}
+	\includegraphics[width=\textwidth]{estimator-error-2020-12-20.eps}
 	\caption{Estimation error of $\hat{a}, \hat{b}$ with respect to $n$}\label{fig:estimator}
 \end{subfigure}~
 \begin{subfigure}{0.5\textwidth}
@@ -622,7 +623,7 @@ The result is shown in Figure \ref{fig:erh}.
 \end{figure}
 
 The vertical red line $\beta=\beta^* = 0.198$, computed from \eqref{eq:beta_star}, represents the phase transition threshold. The point $(0.199,\frac{1}{2})$ in the figure
-can be regarded as the empirical phase transition threshold, whose first coordinate is near to $\beta^*$.
+can be regarded as the empirical phase transition threshold, whose first coordinate is close to $\beta^*$.
 The green line $(\beta, n^{g(\beta)/2})$ is the theoretical lower bound of accuracy for $\beta>\beta^*$ while the purple line
 $(\beta, n^{-g(\beta)})$ is the theoretical upper bound of accuracy for $\beta < \beta^*$. It can be expected that
 as $n$ becomes larger, the empirical accuracy curve (blue line in the figure) will approach the step function, which jumps from
@@ -631,7 +632,7 @@ as $n$ becomes larger, the empirical accuracy curve (blue line in the figure) wi
 In this paper, we have given one convergent estimator (in Theorem \ref{thm:ab12}) to infer the parameters of SBM and analyzed three label estimators to detect communities of SBM.
 We give the exact recovery error upper bound for all label estimators (in Theorem \ref{thm:phase_transition}, \ref{thm:error_rate})
 and study their relationships. By introducing Ising model, our work makes a new path to study the exact recovery problem for SBM. More
-theoretical and empirical work will be done in the future such as the convergence analysis on modularity (in \eqref{eq:Qtransform}), the necessary iteration time (in Algorithm \ref{alg:m}) for Metropolis sampling and so on.
+theoretical and empirical work will be done in the future such as the convergence analysis on modularity (in \eqref{eq:Qtransform}), the necessary iteration time (in Algorithm \ref{alg:m}) for Metropolis sampling, and so on.
 
 \section{Proof of Main Theorems}\label{sec:pm}
 \subsection{Proof of Theorem \ref{thm:ab12}}

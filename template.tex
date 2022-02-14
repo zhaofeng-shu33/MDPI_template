@@ -379,7 +379,7 @@ as follows:
 	Given a graph $G$ sampled from\linebreak $\SSBM(n,k,\A,\B)$, the~Ising model with parameters $\gamma,\beta>0$
 	is a probability distribution of the state vector $\sigma\in W^n$ whose probability mass function is
 \begin{align} \label{eq:isingma}
-	P_{\sigma|G}(\sigma=\bar{\sigma})=\frac{\exp(-\beta H(\bar{\sigma}))}{Z_G(\alpha,\beta)}
+	P_{\sigma|G}(\sigma=\bar{\sigma})=\frac{\exp(-\beta H(\bar{\sigma}))}{Z_G(\gamma,\beta)}
 	\end{align}
 	where
 \begin{equation}\label{eq:energy}
@@ -387,7 +387,7 @@ as follows:
 	- \sum_{\{i,j\}\in E(G)} \delta(\bar{\sigma}_i, \bar{\sigma}_j)
 	\end{equation}
 	
-	The subscript in $P_{\sigma|G}$ indicates that the distribution depends on $G$, and~	$Z_G(\alpha,\beta)$ is the normalizing constant for this distribution.
+	The subscript in $P_{\sigma|G}$ indicates that the distribution depends on $G$, and~	$Z_G(\gamma,\beta)$ is the normalizing constant for this distribution.
 \end{Definition}
 In physics, $\beta$ refers to the inverse temperature and $Z_G(\gamma, \beta)$ is called the partition function.
 The Hamiltonian energy $H(\bar{\sigma})$ consists of two terms: the repelling interaction between nodes without edge connection

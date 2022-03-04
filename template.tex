@@ -348,7 +348,8 @@ exact recovery is possible if and only if:
 \sqrt{a} - \sqrt{b} > \sqrt{k}
 \end{equation}
 
-Before diving into the exact recovery problem, we first consider the inference problem for SBM.
+In the following, we assume \eqref{eq:abk} always hold,
+and before diving into the exact recovery problem, we first consider the inference problem for SBM.
 Suppose $k$ is known, and~we want to estimate $a,b$ from the graph $G$.
 We offer a simple method
 by counting the number of edges $T_1$ and the number of triangles $T_2$ of $G$, and~the estimators $\hat{a}, \hat{b}$ are
@@ -438,7 +439,7 @@ how $(\gamma, \beta)$ take values, for~any given $\epsilon > 0$ and $\hat{X}^* \
 By simple calculus, $\tilde{g}(\beta) < 0$ for $\beta> \beta^*$ and $g(\beta)>0$ for $\beta < \beta^*$. $g(\bar{\beta}) < 0$ follows from Equation \eqref{eq:abk}. The~illustration of $g(\beta), \tilde{g}(\beta)$ is shown in Figure~\ref{fig1}a.
 Therefore, for~sufficiently small $\epsilon$ and as $n \to \infty$, the~upper bounds in Theorem \ref{thm:phase_transition} all converge to $0$ at least
 in polynomial speed.
-Therefore, Theorem \ref{thm:phase_transition} establishes the sharp phase transition property of the Ising model, which is illustrated
+In this way, Theorem \ref{thm:phase_transition} establishes the sharp phase transition property of the Ising model, which is illustrated
 in Figure~\ref{fig1}b.
 % start a new page without indent 4.6cm
 %\clearpage

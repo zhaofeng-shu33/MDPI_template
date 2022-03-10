@@ -821,13 +821,13 @@ Therefore, we can get a unique solution $y$ within $(0, 2e_1)$. Since $(a,b)$ is
 	\end{align*}
 \end{proof}
 Before diving into the technical proof of Theorem \ref{thm:phase_transition}, we need to introduce some extra
-notations. When $\bar{\sigma}$ differs from $X$ only at position $r$, taking $\bar{\sigma}=X$ in Lemma \ref{lem:lemmaDiff}, we have:
+notations. When $\bar{\sigma}'$ differs from $X$ only at position $r$, taking $\bar{\sigma}=X$ in Lemma \ref{lem:lemmaDiff}, we have:
 \begin{equation}\label{eq:energy_diff}
 H(\bar{\sigma}') - H(\bar{\sigma}) = (1+\gamma \frac{\log n}{n})(A^0_r - A^s_r) + \gamma\frac{\log n}{n}
 \end{equation}
 where $A^s_r$ is defined as $A^s_r = |\{j \in [n]\backslash \{r\}: \{j, r\} \in E(G), X_j = \omega^s \cdot X_r \}|$.
 Since the existence of each edge in $G$ is independent, $A^s_r \sim \textrm{Bernoulli}(\frac{n}{k}, \B ) $ for $s\neq 0$
-and $A^s_0 \sim \textrm{Bernoulli}(\frac{n}{k}-1, \A )$.
+and $A^0_r \sim \textrm{Bernoulli}(\frac{n}{k}-1, \A )$.
 
 % Some additional notation is needed for the proof.
 For the general case, we can write:

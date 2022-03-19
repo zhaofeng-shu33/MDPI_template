@@ -845,8 +845,8 @@ The following lemma gives the expression of $A_{\bar{\sigma}}, B_{\bar{\sigma}}$
 	Then:
 \begin{align}
 	N_{\bar{\sigma}} &= \frac{1}{2}\sum_{i=0}^{k-1} (I_i - I_i')^2 \label{eq:N_w} \\
-	B_{\bar{\sigma}} & \sim \textrm{Bernoulli}(\frac{n}{k}|\cI| + \frac{1}{2}\sum_{i=0}^{k-1}  (-2 I'_i I_i  + I'^2_i - \sum_{j=0}^{k-1} I^2_{ji}) , q)\\
-	A_{\bar{\sigma}} & \sim \textrm{Bernoulli}(\frac{n}{k}|\cI| - \frac{1}{2}\sum_{i=0}^{k-1}  (I^2_i + \sum_{j=0}^{k-1} I^2_{ij}), p) \label{eq:A_w}
+	B_{\bar{\sigma}} & \sim \textrm{Binomial}(\frac{n}{k}|\cI| + \frac{1}{2}\sum_{i=0}^{k-1}  (-2 I'_i I_i  + I'^2_i - \sum_{j=0}^{k-1} I^2_{ji}) , q)\\
+	A_{\bar{\sigma}} & \sim \textrm{Binomial}(\frac{n}{k}|\cI| - \frac{1}{2}\sum_{i=0}^{k-1}  (I^2_i + \sum_{j=0}^{k-1} I^2_{ij}), p) \label{eq:A_w}
 	\end{align}
 \end{Lemma}
 The proof of Lemma \ref{lem:minus} is mainly composed of careful counting techniques, and~we omit it here.

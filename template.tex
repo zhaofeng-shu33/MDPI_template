@@ -869,8 +869,9 @@ establish the properties of the Ising model.
 	Let $\gamma > b$. When $\Dist(\bar{\sigma}, X) \geq \frac{n}{\sqrt{\log n}}$ and $D(\bar{\sigma}, X)$, the~event\linebreak
 	$P_{\sigma | G}(\sigma = \bar{\sigma} ) > \exp(-Cn) P_{\sigma | G}(\sigma = X)$
 	happens with a probability (with respect to %define is appropriate
-	SSBM) less than $\exp(-\tau(\alpha,\beta) n \sqrt{\log  n} )$,
-	where $C$ is an arbitrary constant and $\tau(\alpha,\beta)$ is a positive number.
+	SSBM) less than $\exp(-\tau(\gamma,\beta) n \sqrt{\log  n} )$,
+	where $C$ is an arbitrary constant and $\tau(\gamma, \beta)$
+	is a positive number.
 \end{Lemma}
 \begin{proof}
 	We denote the event $P_{\sigma | G}(\sigma = \bar{\sigma} ) > \exp(-Cn) P_{\sigma | G}(\sigma = X)$ as $\widetilde{D}(\bar{\sigma}, C)$.
@@ -899,7 +900,7 @@ establish the properties of the Ising model.
 	& = \frac{n}{k} - I_{ij} +  \frac{n}{k} - I_{ji} - I_i - I_j\label{eq:distsmall} \\
 	& < \frac{2}{k(k-1)}\frac{n}{\sqrt{\log n}} - I_i - I_j < 0\notag
 	\end{align}
-	which contracts with the fact that $\bar{\sigma}$ is nearest to $X$.
+	which contradicts with the fact that $\bar{\sigma}$ is nearest to $X$.
 	Therefore, we should have $I_{ji} < \frac{1}{k(k-1)}\frac{n}{\sqrt{\log n}}$.
 	Now the $(i, j)$ pair satisfies condition 2, which contracts with the fact that $\bar{\sigma}$ satisfies neither of the two~conditions.
 	
@@ -931,7 +932,7 @@ establish the properties of the Ising model.
 	Let $Z \sim \textrm{Bernoulli}(\A), Z' \sim \textrm{Bernoulli}(\B)$, then:
 	\begin{align*}
 	&P_G(\widetilde{D}(\bar{\sigma}, C))
-	\leq (\mathbb{E}[\exp(sZ)])^{|B_{\bar{\sigma}}|}(\mathbb{E}[\exp(-sZ')])^{|A_{\bar{\sigma}}|}\\
+	\leq (\mathbb{E}[\exp(sZ')])^{|B_{\bar{\sigma}}|}(\mathbb{E}[\exp(-sZ)])^{|A_{\bar{\sigma}}|}\\
 	&\cdot \exp(-s(\frac{\gamma \log n}{n} N_{\bar{\sigma}}  - \frac{C}{\beta}n)) \\
 	& \leq \exp\Big(|B_{\bar{\sigma}}|\frac{b\log n}{n}(e^s -1) + |A_{\bar{\sigma}}|\frac{a\log n}{n} (e^{-s} - 1) \\
 	&-s(\frac{\gamma \log n}{n} N_{\bar{\sigma}}  - \frac{C}{\beta}n)\Big) 

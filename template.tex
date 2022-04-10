@@ -1018,7 +1018,7 @@ P_G(\Lambda_n(G,r)^c) \\
 &+ P_G(\Xi_n(r) \geq n^{r \tilde{g}(\beta) /2} |\Lambda_n(G,r) )
 \end{align*}
 
-For the first term, since $|\{ \bar{\sigma} | \Dist(\bar{\sigma}, X) = r \}|=(k-1)^r n^r$,
+For the first term, since $|\{ \bar{\sigma} | \Dist(\bar{\sigma}, X) = r \}|  \leq (k-1)^r n^r$,
 by Lemma \ref{lem:enhanced_fb},\linebreak
 $P_G(\Lambda_n(G,r)^c) \leq (k-1)^r n^{rg(\bar{\beta})} \leq n^{r (\tilde{g}(\beta) /2 + \epsilon/2)}$.
 For the second term, we use Markov~inequality:
@@ -1036,7 +1036,7 @@ The conditional expectation can be estimated as follows:
 \sum_{\Dist(\bar{\sigma}, X) = r}\sum_{tr\log n = r\frac{b-a}{k}\log n }^{-1} \\
 & P_G(B_{\bar{\sigma}} -A_{\bar{\sigma}}=tr\log n)\exp(\beta_n tr \log n)
 \end{align*}
-$r+r\beta_n(b-a)/k = f_{\beta_n}(\frac{b-a}{k}) < \tilde{g}(\beta_n)$, therefore,
+$1+\beta_n(b-a)/k = f_{\beta_n}(\frac{b-a}{k}) < \tilde{g}(\beta_n)$, therefore,
 $(k-1)^r n^{r+r\beta_n (b-a)/k}n^{-r \tilde{g}(\beta) /2} \leq$\linebreak $n^{r (\tilde{g}(\beta) /2 + \epsilon/2)} $.
 Using Lemma \ref{lem:enhanced_fb}, we have:
 \begin{align*}
@@ -1048,9 +1048,9 @@ Since $\beta_n \to \beta$, $\forall \epsilon$, when $n$ is sufficiently large
 we have $\tilde{g}(\beta_n) \leq \tilde{g}(\beta) + \epsilon /2$.
 Therefore,
 \begin{align*}
-&\sum_{\Dist(\bar{\sigma}, X) = r}\sum_{\substack{tr\log n = \\ r(b-a)/k\log n} }^{-1}
+&n^{-r \tilde{g}(\beta) /2}\sum_{\Dist(\bar{\sigma}, X) = r}\sum_{\substack{tr\log n = \\ r(b-a)/k\log n} }^{-1}
 P_G(B_{\bar{\sigma}} -A_{\bar{\sigma}}=t\log n)\exp(\beta_n rt \log n) \\
-& \leq  n^{r(\tilde{g}(\beta_n) - \tilde{g}(\beta)/2)}\\
+& \leq  (k-1)^r r\frac{b-a}{k} ( \log n ) n^{r(\tilde{g}(\beta_n) - \tilde{g}(\beta)/2)}\\
 & \leq  n^{r(\tilde{g}(\beta)/2 + \epsilon/2)} O(\log n) (k-1)^r
 \end{align*}
 

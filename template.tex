@@ -863,7 +863,7 @@ When $|\cI|$ is small compared to $n$, we have the following Lemma, which is an 
 	\end{equation}
 	where $f_{\beta}(t) = \min_{s\geq 0} (g(s) - st) + \beta t \leq \tilde{g}(\beta) $.
 \end{Lemma}
-Corresponding to the three cases of Theorem \ref{thm:phase_transition}, we use three non-trivial lemmas to 
+Corresponding to the three cases of Theorem \ref{thm:phase_transition}, we use several non-trivial lemmas to 
 establish the properties of the Ising model.
 \begin{Lemma}\label{lem:sigmaX}
 	Let $\gamma > b$. When $\Dist(\bar{\sigma}, X) \geq \frac{n}{\sqrt{\log n}}$ and $D(\bar{\sigma}, X)$, the~event\linebreak
@@ -1064,7 +1064,8 @@ When $r>\frac{n}{\sqrt{\log n}}$, using Lemma \ref{lem:sigmaX}, we can choose a 
 such that $k^n\exp(-Cn) < e^{-n}$:
 \begin{align*}
 \frac{P_{\sigma|G}(\Dist(\sigma, X)=r | D(\sigma, X))}
-{P_{\sigma|G}(\sigma=X | D(\sigma, X))} &= \sum_{\substack{D(\sigma, X) \\ \Dist(\sigma, X)=r}} \frac{P_{\sigma | G}(\sigma = \bar{\sigma}) }{P_{\sigma | X}(\sigma = X)} \\
+{P_{\sigma|G}(\sigma=X | D(\sigma, X))} &= \sum_{\substack{D(\bar{\sigma}, X) \\ \Dist(\bar{\sigma}, X)=r}}
+\frac{P_{\sigma | G}(\sigma = \bar{\sigma}) }{P_{\sigma | X}(\sigma = X)} \\
 &> \exp(-n)
 \end{align*}
 happens with probability less than $e^{-n}$. Therefore,  Equation \eqref{eq:psigmaX1} holds.

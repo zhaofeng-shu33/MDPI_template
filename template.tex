@@ -1078,7 +1078,7 @@ If $\gamma > b$ and $\beta < \beta^*$, we have the following lemma:
 	and:
 \begin{align}
 	\mathbb{E}[\sum_{r=1}^n \exp(\beta_n (A_r^s - A_r^0)) | G \in \cG^{(1)}_n] &= (1+o(1))n^{g(\beta_n)} \\
-	\Var[\sum_{r=1}^n \exp(\beta_n (A_r^s - A_r^0)) | G \in \cG^{(1)}_n] &\leq (1+o(1)) n^{g(2\beta_n)} 
+	\Var[\sum_{r=1}^n \exp(\beta_n (A_r^s - A_r^0)) | G \in \cG^{(1)}_n] &\leq n^{g(\beta_n)}
 	\end{align}
 \end{Lemma}
 Lemma \ref{lem:7} is an extension of Proposition 10 in~\cite{ye2020exact} and can be proved using almost the same analysis. Thus we omit the
@@ -1086,7 +1086,7 @@ proof of Lemma \ref{lem:7} here.
 \begin{Lemma}\label{prop:large2}
 	If $\gamma > b$ and $\beta < \beta^*$, there is a set $\cG'_n$ such that:
 \begin{equation}
-	P_G(\cG'_n) \geq 1 - (1+o(1))\max\{n^{g(\bar{\beta})}, n^{\tilde{g}(2\beta_n) - 2g(\beta_n) + \epsilon} \}
+	P_G(\cG'_n) \geq 1 - (1+o(1))\max\{n^{g(\bar{\beta})}, n^{ - g(\beta_n) + \epsilon} \}
 	\end{equation}
 	and for every $G \in \cG'_n$,
 \begin{equation}\label{eq:diff1g}
@@ -1107,14 +1107,14 @@ and $\cG^{(2)}_n: = \{|\sum_{r=1}^n \exp(\beta_n (A_r^s - A_r^0)) -\linebreak (1
 
 Using Chebyshev's inequality, we have:
 \begin{equation*}
-P_G(G \not\in \cG^{(2)}_n \Big\vert  G \in \cG^{(1)}_n) \leq n^{\tilde{g}(2\beta_n) - 2g(\beta_n) + \epsilon}
+P_G(G \not\in \cG^{(2)}_n \Big\vert  G \in \cG^{(1)}_n) \leq n^{- g(\beta_n) + \epsilon}
 \end{equation*}
 
 Let $\cG'_n = \cG^{(1)}_n \cap \cG^{(2)}_n$:
 \begin{align*}
 P_G(G \in \cG'_n) &= P_G(\cG^{(1)}_n) P_G(G \in \cG_n^{(2)} | G \in \cG_n^{(1)}) \\
-& \geq (1-n^{\tilde{g}(2\beta_n) - 2g(\beta_n) + \epsilon})(1-n^{g(\bar{\beta})}) \\
-&= 1-(1+o(1))\max\{n^{g(\bar{\beta})}, n^{\tilde{g}(2\beta_n) - 2g(\beta_n) + \epsilon} \}
+& \geq (1-n^{ - g(\beta_n) + \epsilon})(1-n^{g(\bar{\beta})}) \\
+&= 1-(1+o(1))\max\{n^{g(\bar{\beta})}, n^{- g(\beta_n) + \epsilon} \}
 \end{align*}
 and for every $G\in\cG'_n$,
 \begin{equation*}
@@ -1244,7 +1244,7 @@ where $\mathbf{1}_n$ is the all-ones vector %confirm.
 	\begin{align*}
 	&P_{\sigma}(\sigma=X| D(\sigma, X))  \leq  P(\cG'^c_n) \\
 	&+ \sum_{G\in \cG'_n}P_G(G) P_{\sigma|G}(\sigma=X| D(\sigma, X)) \\
-	& \leq (1+o(1))n^{-g(\beta_n)} + (1+o(1)) \max\{n^{g(\bar{\beta})}, n^{\tilde{g}(2\beta_n) - 2g(\beta_n) + \epsilon} \}\\
+	& \leq (1+o(1))n^{-g(\beta_n)} + (1+o(1)) \max\{n^{g(\bar{\beta})}, n^{- g(\beta_n) + \epsilon} \}\\
 	& \leq (1+o(1)) \max\{n^{g(\bar{\beta})}, n^{-g(\beta) + \epsilon}  \}
 	\end{align*}
 	

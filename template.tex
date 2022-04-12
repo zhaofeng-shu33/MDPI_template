@@ -1091,7 +1091,7 @@ proof of Lemma \ref{lem:7} here.
 	and for every $G \in \cG'_n$,
 \begin{equation}\label{eq:diff1g}
 	\frac{P_{\sigma|G}(\Dist(\sigma, X)=1 | D(\sigma, X))}
-	{P_{\sigma|G}(\sigma=X | D(\sigma, X))} \geq (1+o(1))n^{g(\beta_n)}
+	{P_{\sigma|G}(\sigma=X | D(\sigma, X))} \geq (k-1+o(1))n^{g(\beta_n)}
 	\end{equation}
 	
 \end{Lemma}
@@ -1124,7 +1124,7 @@ and for every $G\in\cG'_n$,
 Therefore, from Equation~\eqref{eq:knd} we have:
 \begin{equation*}
 	\frac{P_{\sigma|G}(\Dist(\sigma, X)=1)}
-{P_{\sigma|G}(\sigma=X)} \geq (1+o(1)) n^{g(\beta_n)}
+{P_{\sigma|G}(\sigma=X)} \geq (k-1+o(1)) n^{g(\beta_n)}
 \end{equation*}
 \end{proof}
 
@@ -1232,19 +1232,19 @@ where $\mathbf{1}_n$ is the all-ones vector %confirm.
 	(2) When $\beta < \beta^*$, using Lemma \ref{prop:large2}, for~every $G \in \cG'_n$
 	we can obtain:
 	$$
-	\frac{1-P_{\sigma | G}(\sigma=X | D(\sigma, X))}{P_{\sigma | G}(\sigma=X | D(\sigma, X))}\geq (1+o(1))n^{g(\beta_n)}
+	\frac{1-P_{\sigma | G}(\sigma=X | D(\sigma, X))}{P_{\sigma | G}(\sigma=X | D(\sigma, X))}\geq (k-1+o(1))n^{g(\beta_n)}
 	$$
 	
 	We then have:
 	$$
-	P_{\sigma | G}(\sigma=X| D(\sigma, X)) \leq (1+o(1)) n^{-g(\beta_n)}
+	P_{\sigma | G}(\sigma=X| D(\sigma, X)) \leq \left(\frac{1}{k-1}+o(1) \right) n^{-g(\beta_n)}
 	$$
 	
 	Then:
 	\begin{align*}
 	&P_{\sigma}(\sigma=X| D(\sigma, X))  \leq  P(\cG'^c_n) \\
 	&+ \sum_{G\in \cG'_n}P_G(G) P_{\sigma|G}(\sigma=X| D(\sigma, X)) \\
-	& \leq (1+o(1))n^{-g(\beta_n)} + (1+o(1)) \max\{n^{g(\bar{\beta})}, n^{- g(\beta_n) + \epsilon} \}\\
+	& \leq (\frac{1}{k-1}+o(1))n^{-g(\beta_n)} + (1+o(1)) \max\{n^{g(\bar{\beta})}, n^{- g(\beta_n) + \epsilon} \}\\
 	& \leq (1+o(1)) \max\{n^{g(\bar{\beta})}, n^{-g(\beta) + \epsilon}  \}
 	\end{align*}
 	

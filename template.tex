@@ -567,7 +567,7 @@ From \eqref{eq:GmL}, this function can be written as:
 $$
 \log P_G(Z|X=\sigma) = -\log\frac{a}{b} \cdot H(\sigma) + C
 $$
-where the parameter $\gamma$ in $H(\sigma)$ satisfies \mbox{$\gamma \frac{\log n}{n} = \frac{1}{\log(a/b)}(\log (1-\A) - \log (1-\B))$} \textls[-20]{and $C$ is a constant irrelevant with $\sigma$.
+where the parameter $\gamma$ in $H(\sigma)$ satisfies \mbox{$\gamma \frac{\log n}{n} = \frac{1}{\log(a/b)}(\log (1-\B) - \log (1-\A))$} \textls[-20]{and $C$ is a constant irrelevant with $\sigma$.
 When $n$ is sufficiently large, we have} \mbox{$\gamma \to \gamma_{ML} := \frac{a-b}{\log(a/b)}$}.
 That is, the  maximum likelihood estimator is equivalent to $\hat{X}'$ when $\gamma = \gamma_{ML}$ asymptotically.
 
@@ -584,11 +584,11 @@ Q(\sigma) = &-\sum_{\{i,j\} \not\in E(G) } \frac{d_i d_j}{2 |E|}\delta(\sigma_i,
 &+ \sum_{\{i,j\} \in E(G) } (1 - \frac{d_i d_j}{2 |E|}) \delta(\sigma_i,\sigma_j)  \label{eq:Qtransform}
 \end{align}
 
-From \eqref{eq:Qtransform}, we can see that $Q(\sigma) \to -H(\sigma)$ with $\gamma = \gamma_{MQ} = \frac{a+b}{2}$ as $n\to \infty$.
-Indeed, we have $d_i \sim \frac{(a+b)\log n}{2}, |E| \sim \frac{1}{2}n d_i$. Therefore, we have $\frac{d_id_j}{2|E|} \to \gamma_{MQ} \frac{\log n}{n} $. That is, the maximum modularity estimator is equivalent with $\hat{X}'$ when $\gamma = \gamma_{MQ}$ asymptotically.
+From \eqref{eq:Qtransform}, we can see that $Q(\sigma) \to -H(\sigma)$ with $\gamma = \gamma_{MQ} = \frac{a+(k-1)b}{k}$ as $n\to \infty$.
+Indeed, we have $d_i \sim \frac{(a+(k-1)b)\log n}{k}, |E| \sim \frac{1}{2}n d_i$. Therefore, we have $\frac{d_id_j}{2|E|} \to \gamma_{MQ} \frac{\log n}{n} $. That is, the maximum modularity estimator is equivalent with $\hat{X}'$ when $\gamma = \gamma_{MQ}$ asymptotically.
 
 
-Using $a>b$ and the inequality $x-1>\log x > 2 \frac{x-1}{x+1}$ for $x>1$ we can verify that $\gamma_{MQ} > \gamma_{ML} > b$. That is, both the maximum likelihood and the maximum modularity estimator satisfy the exact recovery conditions $\gamma > b $ in Theorem \ref{thm:error_rate}.
+Using $a>b$ and the inequality $x-1>\log x $ for $x>1$ we can verify that $\gamma_{MQ} >b$ and  $\gamma_{ML} > b$. That is, both the maximum likelihood and the maximum modularity estimator satisfy the exact recovery conditions $\gamma > b $ in Theorem \ref{thm:error_rate}.
 
 
 \section{Community Detection Based on Metropolis~Sampling}\label{sec:ms}

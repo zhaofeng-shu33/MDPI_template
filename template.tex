@@ -517,7 +517,7 @@ Theorem \ref{thm:phase_transition}. The~rigorous proof can be found in Section~\
 \section{Community Detection via Energy~Minimization}\label{sec:em}
 Since $\beta^*$ is irrelevant with $n$, when $\gamma>b$, we can choose a sufficiently large $\beta$ such that
 $\beta > \beta^*$, then by Theorem \ref{thm:phase_transition}, $\sigma \in S_k(X)$ almost surely, which
-implies that $P_{\sigma | G}(\sigma = X)$ has the largest probability for almost all graphs $G$ sampled from the SBM. Therefore, instead of
+implies that $P_{\sigma | G}(\sigma = X)$ has the largest value for almost all graphs $G$ sampled from the SBM. Therefore, instead of
 sampling from the Ising model, we can directly maximize the conditional probability to find the state with the largest probability.
 Equivalently, we can proceed by minimizing the energy term in Equation \eqref{eq:energy}:
 \begin{equation}\label{eq:hatX}
@@ -552,7 +552,7 @@ As $g(\bar{\beta})<0$, $n^{2g(\bar{\beta})} < n^{g(\bar{\beta})} < n^{g(\bar{\be
 Theorem \ref{thm:error_rate} implies that $P_e(\hat{X}'')$ has the sharpest upper bound among the three estimators.
 This can be intuitively understood as the result of smaller search space.
 The proof technique of Theorem \ref{thm:error_rate} is to consider the probability of events $H(X) > H(\bar{\sigma})$
-for $\Dist(\sigma, X) \geq 1$. Then by union bound, these error probabilities can be summed up.
+for $\Dist(\bar{\sigma}, X) \geq 1$. Then by union bound, these error probabilities can be summed up.
 We note that a loose bound $n^{g(\bar{\beta})/4}$ was obtained in~\cite{abbe2015exact} for the estimator $\hat{X}''$ when $k=2$.
 For a general case, since $\tilde{g}(\beta) = 1- \frac{(\sqrt{a} - \sqrt{b})^2}{k}$, Theorem \ref{thm:error_rate} implies that exact recovery is possible using $\hat{X}'$ as long as  
 $\sqrt{a} - \sqrt{b} > \sqrt{k}$ is~satisfied.

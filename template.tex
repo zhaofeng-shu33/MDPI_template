@@ -685,7 +685,7 @@ theoretical and empirical work will be done in the future, such as convergence a
 \end{Lemma}
 \begin{proof}
 		Let $X_{ij}$ represent a Bernoulli random variable with parameter $p$. Then $|E| = \sum_{i,j} X_{ij}$, $X_{ij}$ are i.i.d.
-	$\mathbb{E}[T(G)] = \frac{n(n-1)}{2}p = \frac{(n-1)\log n}{2}a$ and $\Var[|E|] = \frac{n(n-1)}{2} p(1-p) < a\frac{(n-1)\log n}{2}$.
+	$\mathbb{E}[|E|] = \frac{n(n-1)}{2}p = \frac{(n-1)\log n}{2}a$ and $\Var[|E|] = \frac{n(n-1)}{2} p(1-p) < a\frac{(n-1)\log n}{2}$.
 	Then by Chebyshev's inequality,
 	\begin{align*}
 	P(\Big|\frac{|E|}{n \log n } - \frac{a}{2} \frac{n-1}{n}\Big| > \epsilon) & \leq
@@ -726,7 +726,7 @@ graph can be extended directly to the SBM since the existence of each edge is in
 However, for $T$, it is a little tricky since the existences of each triangle are mutually dependent. The~following two lemmas
 give the formula for the variance of inter-community triangles in the SBM.
 \begin{Lemma}\label{lem:SBM_tr_counting_cross}
-	Consider a two-community SBM $(2n, p, q)$ and count the number of triangles $T$, which has a node in $S_1$ and an edge in $S_2$.
+	Consider $\SSBM(2n,2, p, q)$ and count the number of triangles $T$, which has a node in $S_1$ and an edge in $S_2$.
 Then the variance of $T$ is:
 \begin{align}
 \Var[T] & = \frac{n^2(n-1)}{2}q^2p + n^2(n-1)(n-2)p^2q^3 \notag \\
@@ -734,7 +734,7 @@ Then the variance of $T$ is:
 \end{align}
 \end{Lemma}
 \begin{Lemma}\label{lem:SBM_tr_counting_3}
-	Consider a three-community SBM$(3n, p, q)$ and count the number of triangles $T$, which has a node in $S_1$, one node in $S_2$, and one node in $S_3$.
+	Consider $\SSBM(3n,3, p, q)$ and count the number of triangles $T$, which has a node in $S_1$, one node in $S_2$, and one node in $S_3$.
 	Then the variance of $T$ is:
 	\begin{equation*}\label{eq:SBM_tr_counting_three}
 	\Var[T] = n^3 q^3  + 3n^3(n-1) q^4  + 3 n^3 (n-1)^2 q^5 - n^3(3n^2-3n+1)q^6
@@ -742,7 +742,7 @@ Then the variance of $T$ is:
 \end{Lemma}
 The proof of the above two lemmas uses some counting techniques and is similar to that in~\cite{holland1977method}, and~we omit it here.
 \begin{Lemma}\label{lem:sbmV}
-	For a SBM$(n, k, p, q)$ where $p=\frac{a\log n}{n}, q = \frac{b\log n}{n}$. The~number of triangles is $T$.
+	For $\SSBM(n, k, p, q)$ where $p=\frac{a\log n}{n}, q = \frac{b\log n}{n}$. The~number of triangles is $T$.
 	Then $\frac{T}{(\log n)^3}$ converges to $\frac{1}{k^2}(\frac{a^3}{6} + \frac{k-1}{2}ab^2 + (k-1)(k-2)\frac{b^3}{6} )$ in probability as $n \to \infty$.
 \end{Lemma}
 \begin{proof}
@@ -1263,7 +1263,7 @@ where $\mathbf{1}_n$ is the all-ones vector %confirm.
 
 \begin{Lemma}[Lemma 8 of~\cite{abbe2015exact}]\label{lem:mZW}
 	Let $m$ be a positive number larger than $n$.
-	When $Z_1, \dots, Z_m$ are i.i.d. Bernoulli($\B$) and $W_1, \dots, W_m$ are i.i.d Bernoulli($\A$), independent of $Z_1, \dots, Z_m$,
+	When $Z_1, \dots, Z_m$ are i.i.d. Bernoulli($\B$) and $W_1, \dots, W_m$ are i.i.d. Bernoulli($\A$), independent of $Z_1, \dots, Z_m$,
 	then:
 \begin{equation}
 	P(\sum_{i=1}^m (Z_i  - W_i) \geq 0) \leq \exp(-\frac{m \log n}{n}(\sqrt{a} - \sqrt{b})^2)

@@ -727,7 +727,8 @@ graph can be extended directly to the SBM since the existence of each edge is in
 However, for $T$, it is a little tricky since the existences of each triangle are mutually dependent. The~following two lemmas
 give the formula for the variance of inter-community triangles in the SBM.
 \begin{Lemma}\label{lem:SBM_tr_counting_cross}
-	Consider a two-community SBM $(2n, p, q)$ and count the number of triangles $T$, which has a node in $S_1$ and an edge in $S_2$.
+	Consider SBM $(2n, p, q)$ which has two communities denoted as $S_1$ and $S_2$.
+    Count the number of those triangles $T$, which has a node in $S_1$ and its corresponding edge in $S_2$.
 Then the variance of $T$ is:
 \begin{align}
 \Var[T] & = \frac{n^2(n-1)}{2}q^2p + n^2(n-1)(n-2)p^2q^3 \notag \\
@@ -735,7 +736,8 @@ Then the variance of $T$ is:
 \end{align}
 \end{Lemma}
 \begin{Lemma}\label{lem:SBM_tr_counting_3}
-	Consider a three-community SBM$(3n, p, q)$ and count the number of triangles $T$, which has a node in $S_1$, one node in $S_2$, and one node in $S_3$.
+	Consider SBM$(3n, p, q)$ which has three communities denoted as $S_1, S_2$ and $S_3$.
+	Count the number of those triangles $T$, which has a node in $S_1$, one node in $S_2$, and one node in $S_3$.
 	Then the variance of $T$ is:
 	\begin{equation*}\label{eq:SBM_tr_counting_three}
 	\Var[T] = n^3 q^3  + 3n^3(n-1) q^4  + 3 n^3 (n-1)^2 q^5 - n^3(3n^2-3n+1)q^6

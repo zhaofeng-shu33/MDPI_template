@@ -632,9 +632,10 @@ For some special Ising model, it needs to take $N=O(n\log n)$ to generate the sa
 Then the time complexity of Algorithm \ref{alg:m} is $O(n^2 \log n)$.
 
 In the remaining part of this section, we present  experiments conducted to verify our theoretical results.
-Firstly, we considered several combinations of $(a,b,k)$ and obtained the estimator $(\hat{a}, \hat{b})$ by Theorem \ref{thm:ab12}. Using
+Firstly, we considered several combinations of $(a,b,k)$ and obtained the estimator $(\hat{a}, \hat{b})$ by Theorem \ref{thm:ab12}.
+We use
 the empirical mean squared error (MSE) $\frac{1}{m} \sum_{i=1}^m (\hat{a}-a)^2 + (\hat{b}-b)^2$ as the criterion
-and choosing $m=1000$, the~result is shown in Figure~\ref{fig2}a. As~we can see, as~$n$ increases, the MSE decreases polynomially fast. Therefore, the~convergence
+where $m=1000$, and obtain the result shown in Figure~\ref{fig2}a. As~we can see, as~$n$ increases, the MSE decreases polynomially fast. Therefore, the~convergence
 of $\hat{a} \to a$ and $\hat{b} \to b$ was~verified.
 
 Secondly, using Metropolis sampling, we conducted a moderate simulation to verify Theorem \ref{thm:phase_transition} for the case $\gamma > b$.
@@ -747,7 +748,7 @@ The proof of the above two lemmas uses some counting techniques and is similar t
 \end{Lemma}
 \begin{proof}
 	We split $T$ into three parts: the~first is the number of triangles within community $i$, $T_i$. There are $k$ terms of $T_i$.
-	The second is the number of triangles that have one node in community $i$ and one edge in community $j$, $T_{ij}$. There are $k(k-1)$ terms of $T_{ij}$. The~third is the number of triangles that have one node in community $i$, one node in community $j$ and one node in community $k$.
+	The second is the number of triangles that have one node in community $i$ and its corresponding edge in community $j$, $T_{ij}$. There are $k(k-1)$ terms of $T_{ij}$. The~third is the number of triangles that have one node in community $i$, one node in community $j$ and one node in community $k$.
 	
 	We only need to show that:
 \begin{align}
